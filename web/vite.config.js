@@ -17,4 +17,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    fs: {
+      allow: [
+        // Allow access to your project directory
+        '/home/vansh/harsh/KharidLow/web',
+        // Allow access to slick-carousel fonts
+        '/home/vansh/node_modules/slick-carousel/slick/fonts',
+      ]
+    }
+  }
 })
