@@ -1,14 +1,18 @@
 import './App.css'
-import { Button } from "@/components/ui/button"
+import Home from './Components/Home/Home'
+import Header from './comman/Header'
 
 function App() {
 
   return (
     <>
-      <div>
-        <Button>Click me</Button>
-        <div>Hello</div>
-      </div>
+    {/* Header Comman component for all routes */}
+     <Header>
+
+     </Header>
+     <Home>
+      
+     </Home>
     </>
   )
 }

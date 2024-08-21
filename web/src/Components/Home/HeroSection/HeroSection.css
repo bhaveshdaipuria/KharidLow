@@ -1,0 +1,77 @@
+/* Apply box-sizing globally */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.hero-container {
+  position: relative;
+  height: 60vh; /* Adjust height as needed */
+  overflow: hidden;
+  width: 100vw; /* Ensure it takes the full viewport width */
+}
+
+.carousel-container {
+  position: relative;
+  height: 100%;
+  width: 100%; /* Ensure it takes the full width of its container */
+}
+
+.carousel-slide {
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carousel-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.25rem; /* Adjust as needed */
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1; /* Ensure text is visible */
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 100%; /* Ensure it takes the full width of its container */
+}
+
+@media (max-width: 767px) {
+  .hero-container {
+    height: auto; /* Adjust height for mobile screens */
+  }
+
+  .carousel-container {
+    order: 1; /* Move carousel on top */
+  }
+
+  .text-container {
+    order: 2; /* Move text below carousel */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .carousel-text {
+    bottom: 10px;
+    left: 10px;
+    font-size: 1rem; /* Adjust for smaller screens */
+  }
+}
