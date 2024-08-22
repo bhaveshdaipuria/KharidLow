@@ -3,22 +3,10 @@ const Schema = mongoose.Schema;
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/kharidlow";
 
-main().then(() => {
-    console.log("Connected to DB");
-}).catch((err) => {
-    console.log(err); 
-});
-
-async function main() {
-    await mongoose.connect(MONGO_URL);
-};
+mongoose.connect(MONGO_URL);
 
 const userSchema = new Schema({
     name: {
-        type: String,
-        require: true
-    },
-    role: {
         type: String,
         require: true
     },
@@ -34,10 +22,14 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
+    role: {
+        type: String,
+        default: "customer"
+    },
     contactNo: {
         type: Number,
         require: true
     }
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("user", userSchema);
