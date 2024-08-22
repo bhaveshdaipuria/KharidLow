@@ -22,10 +22,10 @@ const HeroSection = () => {
       {/* Carousel */}
       <Box className="carousel-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'}>
         <Slider {...settings}>
-          <Box className="carousel-slide" style={{ backgroundImage: "url('../../../public/images/image1.jpg')" }}>
+          <Box className="carousel-slide" style={{ backgroundImage: "url('../../../public/image1.jpg')" }}>
             <Text className="carousel-text">Text for Image 1</Text>
           </Box>
-          <Box className="carousel-slide" style={{ backgroundImage: "url('/images/image2.jpg')" }}>
+          <Box className="carousel-slide" style={{ backgroundImage: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" }}>
             <Text className="carousel-text">Text for Image 2</Text>
           </Box>
           <Box className="carousel-slide" style={{ backgroundImage: "url('/images/image3.jpg')" }}>
