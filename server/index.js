@@ -6,10 +6,9 @@ const jwt = require("jsonwebtoken");
 const userModel = require("./models/user");
 const productModel = require("./models/product");
 const authenticate = require("./middleware/authentication");
+const cors = require("cors");
 
-
-app.set("view engine", "ejs");
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -20,7 +19,7 @@ app.get("/", authenticate, (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render("index");
+  res.send("registration form");
 })
 
 app.get("/login", (req, res) => {
@@ -110,9 +109,12 @@ app.post("/addproduct", async (req, res) => {
     productCode
   });
 
-  console.log(addProduct);
   res.send("Product Created Successfully");
 
+});
+
+app.get("/getdata", (req, res) => {
+  res.send("Data from backend");
 });
 
 app.post("/allproduct", async (req, res) => {
