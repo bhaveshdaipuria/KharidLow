@@ -2,6 +2,8 @@ import React from 'react';
 import Slider from 'react-slick';
 import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import './HeroSection.css';
+import logo from '../../../assets/kllogo.png';
+// import image1 from '../../../../public/images/image1.png'
 
 const HeroSection = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -18,24 +20,105 @@ const HeroSection = () => {
   };
 
   return (
-    <Flex className="hero-container" flexDirection={isMobile ? 'column' : 'row'}>
+    <Flex className="hero-container" flexDirection={isMobile ? 'column' : 'row'} background="#D1C4E9">
       {/* Carousel */}
       <Box className="carousel-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'}>
         <Slider {...settings}>
-          <Box className="carousel-slide" style={{ backgroundImage: "url('../../../public/image1.jpg')" }}>
-            <Text className="carousel-text">Text for Image 1</Text>
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="400px"
+            background="#D1C4E9"
+          >
+            <img 
+              src='images/image1.png'
+              alt="Slide 1"
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'contain',
+                borderRadius: '10px'
+              }} 
+            />
+            {/* Uncomment the following if you want to overlay text */}
+            {/* <Text 
+              position="absolute"
+              color="white"
+              fontSize="2xl"
+              backgroundColor="rgba(0, 0, 0, 0.5)" 
+              padding="10px"
+              borderRadius="md"
+            >
+              Text for Image 1
+            </Text> */}
           </Box>
-          <Box className="carousel-slide" style={{ backgroundImage: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80" }}>
-            <Text className="carousel-text">Text for Image 2</Text>
+          {/* <div className=""></div> */}
+          
+          
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="400px"
+            background="#D1C4E9"
+          >
+            <img 
+              src='images/image2.png'
+              alt="Slide 1"
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'contain',
+                borderRadius: '10px'
+              }} 
+            />
+            {/* Uncomment the following if you want to overlay text */}
+            {/* <Text 
+              position="absolute"
+              color="white"
+              fontSize="2xl"
+              backgroundColor="rgba(0, 0, 0, 0.5)" 
+              padding="10px"
+              borderRadius="md"
+            >
+              Text for Image 1
+            </Text> */}
           </Box>
-          <Box className="carousel-slide" style={{ backgroundImage: "url('/images/image3.jpg')" }}>
-            <Text className="carousel-text">Text for Image 3</Text>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="400px"
+            background="#D1C4E9"
+          >
+            <img 
+              src='images/image3.png'
+              alt="Slide 1"
+              style={{ 
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'contain',
+                borderRadius: '10px'
+              }} 
+            />
+            {/* Uncomment the following if you want to overlay text */}
+            {/* <Text 
+              position="absolute"
+              color="white"
+              fontSize="2xl"
+              backgroundColor="rgba(0, 0, 0, 0.5)" 
+              padding="10px"
+              borderRadius="md"
+            >
+              Text for Image 1
+            </Text> */}
           </Box>
         </Slider>
       </Box>
 
       {/* Text Content */}
-      <Box className="text-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'} padding="16px">
+      <Box className="text-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'} padding="16px" background="#D1C4E9">
         <Text fontSize="2xl" fontWeight="bold" color="black">
           Hero Section Title
         </Text>

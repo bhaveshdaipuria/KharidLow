@@ -1,3 +1,4 @@
+import Footer from "../../comman/Footer/Footer";
 import ProductScroll from "../../comman/ProductScroll/ProductScroll";
 import CategoriesScroll from "./CategoriesScroll/CategoriesScroll";
 import HeroSection from "./HeroSection/HeroSection";
@@ -12,12 +13,13 @@ function Home() {
 
             </HeroSection>
 
+            <PromotionCards></PromotionCards>
+
             <CategoriesScroll></CategoriesScroll>
 
             <ProductScroll></ProductScroll>
 
-            <PromotionCards></PromotionCards>
-
+            <Footer></Footer>
         </>
     )
 }

@@ -1,10 +1,12 @@
 /* Container Styles */
 .header-container {
-  background-color: #319795; /* teal.500 */
+  background-color: #232832;
+  /* teal.500 */
   padding: 16px;
   color: white;
   width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
   display: flex;
   justify-content: center;
 }
@@ -25,9 +27,11 @@
 }
 
 .logo-text {
-  font-size: 1.5rem; /* Slightly larger */
+  font-size: 1.5rem;
+  /* Slightly larger */
   font-weight: bold;
   letter-spacing: 1px;
+  width: 100px;
 }
 
 /* Navigation Menu Styles */
@@ -35,20 +39,22 @@
   flex: 3;
   max-width: 50%;
   justify-content: center;
-  display: none; /* Hidden by default */
+  display: none;
+  /* Hidden by default */
 }
 
 .nav-item {
   font-size: 1rem;
   margin-right: 24px;
   font-weight: 600;
-  color: white;
+  color: #fff;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .nav-item:hover {
-  color: #2d3748; /* dark gray */
+  color: #7a93b99a;
+  /* dark gray */
 }
 
 /* Search Bar Styles */
@@ -57,27 +63,32 @@
   max-width: 35%;
   display: flex;
   align-items: center;
-  position: relative;
+  position: relative !important;
 }
 
 .search-bar input {
   width: 100%;
-  padding-right: 2.5rem; /* Make space for the icon */
+  padding-right: 2.5rem;
+  /* Make space for the icon */
   border-radius: 999px;
-  background-color: white;
-  color: #2d3748; /* dark gray */
+  background-color: #fff;
+  color: #2d3748;
+  /* dark gray */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-icon {
-  position: absolute;
-  right: 0.75rem; /* Adjust the right position to ensure proper spacing */
+  position: absolute !important;
+  right: 0.75rem;
+  /* Adjust the right position to ensure proper spacing */
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-55%);
   background: none;
   border: none;
-  color: #319795; /* teal */
+  color: #319795;
+  /* teal */
   cursor: pointer;
+  color: #232832 !important;
 }
 
 /* Icons Section Styles */
@@ -97,20 +108,50 @@
 .icon-button svg {
   width: 24px;
   height: 24px;
-  color: white;
+  color: #fff;
 }
 
 .icon-button:hover svg {
-  color: #2d3748; /* dark gray */
+  color: #2d3748;
+  /* dark gray */
+}
+
+.header-icon{
+  color: #fff;
 }
 
 /* Responsive Design */
 @media (min-width: 768px) {
   .nav-menu {
-    display: flex; /* Display menu on screens 768px and up */
+    display: flex;
+    /* Display menu on screens 768px and up */
   }
 
   .search-bar {
-    max-width: 35%; /* Slightly wider on larger screens */
+    max-width: 35%;
+    /* Slightly wider on larger screens */
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* .icons-section{
+    display: none !important;
+  } */
+
+  .search-bar {
+    margin-left: 40px;
+    font-size: 14px;
+    max-width: 55%;
+    /* Slightly wider on larger screens */
+  }
+
+  .logo-text {
+    min-width: 70px;
+  }
+
+  .search-input {
+    height: 35px !important;
+    font-size: 12px !important;
   }
 }

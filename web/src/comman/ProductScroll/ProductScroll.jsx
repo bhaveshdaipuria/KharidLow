@@ -61,7 +61,7 @@ const ProductScroll = () => {
                         <Divider />
                         <CardFooter>
                             <ButtonGroup spacing='2'>
-                                <Button variant='solid' colorScheme='blue' fontSize='small'>
+                                <Button variant='solid' className='btn-buynow' colorScheme='' fontSize='small'>
                                     Buy now
                                 </Button>
                                 <Button variant='ghost' colorScheme='blue' fontSize='small'>
