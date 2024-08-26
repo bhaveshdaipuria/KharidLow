@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Flex, Text, Input, HStack, Link, IconButton, useColorMode } from '@chakra-ui/react';
+import { Box, Flex, Text, Input, HStack, Link, IconButton, useColorMode, useMediaQuery } from '@chakra-ui/react';
 import { SearchIcon, AtSignIcon, StarIcon, InfoIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import './Header.css';
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
 
   return (
     <Box className="header-container" boxShadow="md">
@@ -15,11 +16,13 @@ const Header = () => {
         </Box>
 
         {/* Navigation Menu - Only visible on larger screens */}
-        <HStack className="nav-menu">
-          <Link href="#" className="nav-item">Home</Link>
-          <Link href="#" className="nav-item">Products</Link>
-          <Link href="#" className="nav-item">Contact Us</Link>
-        </HStack>
+        {isLargerThan768 && (
+          <HStack className="nav-menu">
+            <Link href="#" className="nav-item">Home</Link>
+            <Link href="#" className="nav-item">Products</Link>
+            <Link href="#" className="nav-item">Contact Us</Link>
+          </HStack>
+        )}
 
         {/* Search Bar */}
         <Box className="search-bar">
@@ -29,6 +32,7 @@ const Header = () => {
             color="gray.800"
             borderRadius="full"
             pl={4}
+            pr="3rem" /* Adjust padding to make space for the icon */
             boxShadow="sm"
           />
           <IconButton
@@ -36,6 +40,7 @@ const Header = () => {
             icon={<SearchIcon />}
             colorScheme="teal"
             className="search-icon"
+            variant="unstyled" /* Removes default button styling */
           />
         </Box>
 

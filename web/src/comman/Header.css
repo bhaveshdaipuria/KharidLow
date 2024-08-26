@@ -1,77 +1,116 @@
+/* Container Styles */
 .header-container {
-    background-color: #319795; /* teal.500 */
-    padding: 16px;
-    color: white;
-    width: 100vw;
-    margin: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
-  
-  .header-flex {
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .logo {
-    flex: 1;
-    max-width: 10%;
-  }
-  
-  .logo-text {
-    font-size: 1.5rem; /* Slightly larger */
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-  
+  background-color: #319795; /* teal.500 */
+  padding: 16px;
+  color: white;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  justify-content: center;
+}
+
+/* Flexbox for Header Content */
+.header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Logo Styles */
+.logo {
+  flex: 1;
+  max-width: 10%;
+}
+
+.logo-text {
+  font-size: 1.5rem; /* Slightly larger */
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Navigation Menu Styles */
+.nav-menu {
+  flex: 3;
+  max-width: 50%;
+  justify-content: center;
+  display: none; /* Hidden by default */
+}
+
+.nav-item {
+  font-size: 1rem;
+  margin-right: 24px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #2d3748; /* dark gray */
+}
+
+/* Search Bar Styles */
+.search-bar {
+  flex: 2;
+  max-width: 35%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-bar input {
+  width: 100%;
+  padding-right: 2.5rem; /* Make space for the icon */
+  border-radius: 999px;
+  background-color: white;
+  color: #2d3748; /* dark gray */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  right: 0.75rem; /* Adjust the right position to ensure proper spacing */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #319795; /* teal */
+  cursor: pointer;
+}
+
+/* Icons Section Styles */
+.icons-section {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.icon-button svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.icon-button:hover svg {
+  color: #2d3748; /* dark gray */
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
   .nav-menu {
-    flex: 4;
-    max-width: 40%;
-    justify-content: center;
-    display: none; /* Hidden by default */
+    display: flex; /* Display menu on screens 768px and up */
   }
-  
-  .nav-item {
-    font-size: 1rem;
-    margin-right: 24px;
-    font-weight: 600;
-    color: white;
-    transition: color 0.3s;
-  }
-  
-  .nav-item:hover {
-    color: #2d3748; /* dark gray */
-  }
-  
+
   .search-bar {
-    flex: 3;
-    max-width: 30%;
-    display: block; /* Always visible */
-    position: relative;
+    max-width: 35%; /* Slightly wider on larger screens */
   }
-  
-  .search-icon {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .icons-section {
-    flex: 2;
-    max-width: 20%;
-    justify-content: flex-end;
-  }
-  
-  @media (min-width: 1024px) {
-    .nav-menu {
-      display: flex; /* Display menu on large screens and up */
-    }
-  
-    .search-bar {
-      max-width: 30%; /* Ensure the search bar doesn't get too wide */
-    }
-  }
-  
+}
