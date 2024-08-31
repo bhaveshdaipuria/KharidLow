@@ -3,6 +3,7 @@ import './App.css'
 import Home from './Components/Home/Home'
 import Header from './comman/Header'
 import axios from 'axios';
+import Registration from './components/Registration/Registration';
 
 function App() {
   const [data, setData] = useState("");
@@ -19,12 +20,9 @@ function App() {
   return (
     <>
       {/* Header Comman component for all routes */}
-      <Header>
-
-      </Header>
-      <Home>
-
-      </Home>
+      <Header></Header>
+      <Home></Home>
+      {/* <Registration></Registration> */}
     </>
   )
 }

@@ -120,6 +120,12 @@
   color: #fff;
 }
 
+.icons-inner-section:hover {
+  .header-icon {
+    color: #2d3748;
+  }
+}
+
 /* Responsive Design */
 @media (min-width: 768px) {
   .nav-menu {
