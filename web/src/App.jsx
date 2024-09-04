@@ -5,6 +5,7 @@ import Header from './comman/Header'
 import axios from 'axios';
 import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Registration from './Components/Registration/Registration';
 
 function App() {
   // const [data, setData] = useState("");
@@ -34,6 +35,9 @@ function App() {
       <Footer>
         
       </Footer>
+      {/* <Header></Header>
+      <Home></Home> */}
+      {/* <Registration></Registration> */}
     </>
   )
 }
