@@ -3,18 +3,20 @@ import './App.css'
 import Home from './Components/Home/Home'
 import Header from './comman/Header'
 import axios from 'axios';
+import Footer from './comman/Footer/Footer';
+import ProductDetails from './Components/ProductDetails/ProductDetails';
 
 function App() {
-  const [data, setData] = useState("");
+  // const [data, setData] = useState("");
 
-  const getData = async () => {
-    const response = await axios.get("http://localhost:3000/getData");
-    setData(response.data);
-  }
+  // const getData = async () => {
+  //   const response = await axios.get("http://localhost:3000/getData");
+  //   setData(response.data);
+  // }
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <>
@@ -22,9 +24,16 @@ function App() {
       <Header>
 
       </Header>
-      <Home>
+      
+      <ProductDetails></ProductDetails>
+      
+      {/* <Home>
 
-      </Home>
+      </Home> */}
+
+      <Footer>
+        
+      </Footer>
     </>
   )
 }
