@@ -21,9 +21,9 @@ const Header = () => {
         {/* Navigation Menu - Only visible on larger screens */}
         {isLargerThan768 && (
           <HStack className="nav-menu">
-            <Link href="#" className="nav-item">Home</Link>
-            <Link href="#" className="nav-item">Category</Link>
-            <Link href="#" className="nav-item">New Arrival</Link>
+            <Link href="/" className="nav-item">Home</Link>
+            <Link href="/category" className="nav-item">Category</Link>
+            <Link href="/new-arrival" className="nav-item">New Arrival</Link>
           </HStack>
         )}
 
@@ -52,7 +52,7 @@ const Header = () => {
         <HStack className="icons-section">
           <IconButton className="icons-inner-section" aria-label="Cart" icon={<FaCartShopping size={25} className='header-icon' />} variant="ghost" />
           <IconButton className="icons-inner-section" aria-label="Profile" icon={<FaRegHeart size={25} className='header-icon' />} variant="ghost" />
-          <IconButton className="icons-inner-section" aria-label="Profile" icon={<RiAccountCircleFill size={25} className='header-icon' />} variant="ghost" />
+          <a href="/registration"><IconButton className="icons-inner-section" aria-label="Profile" icon={<RiAccountCircleFill size={25} className='header-icon' />} variant="ghost" /></a>
         </HStack>
       </Flex>
     </Box>
