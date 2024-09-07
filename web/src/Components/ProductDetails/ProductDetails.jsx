@@ -63,33 +63,33 @@ function ProductDetails() {
 
                             </div>
 
-                           <CountCalculator></CountCalculator>
+                            <CountCalculator></CountCalculator>
 
-                           <div className="product-variations">
-                            <div className="variation-heading">Sizes</div>
-                            <div className="variation-items">
-                                <div className="item">28</div>
-                                <div className="item">30</div>
-                                <div className="item">32</div>
-                                <div className="item">34</div>
-                                <div className="item">36</div>
-                                <div className="item">38</div>
+                            <div className="product-variations">
+                                <div className="variation-heading">Sizes</div>
+                                <div className="variation-items">
+                                    <div className="item">28</div>
+                                    <div className="item">30</div>
+                                    <div className="item">32</div>
+                                    <div className="item">34</div>
+                                    <div className="item">36</div>
+                                    <div className="item">38</div>
+                                </div>
                             </div>
-                           </div>
-                           <div className="product-variations">
-                           <div className="variation-heading">Colors</div>
-                           <div className="variation-items">
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
-                                <div className="item"></div>
+                            <div className="product-variations">
+                                <div className="variation-heading">Colors</div>
+                                <div className="variation-items">
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                    <div className="item"></div>
+                                </div>
                             </div>
-                           </div>
-                           <ButtonGroup spacing='2' className='product-buttons'>
+                            <ButtonGroup spacing='2' className='product-buttons'>
                                 <Button variant='solid' colorScheme='blue' fontSize='medium'>
                                     Buy now
                                 </Button>
@@ -101,6 +101,42 @@ function ProductDetails() {
                             <div className="product-summary">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam et sunt, aut magnam nostrum qui numquam eligendi voluptas consequuntur quod veritatis iusto amet deleniti aspernatur animi inventore nemo earum possimus consectetur dolor modi voluptates nobis? At ex alias quos esse quaerat, distinctio dignissimos beatae doloribus minus, totam sit aliquam, recusandae exercitationem qui deleniti possimus expedita cupiditate ab deserunt consequatur minima nam illo sint. Nam, optio dolorum asperiores earum, sit quidem natus dolores aperiam voluptatem voluptas, itaque quis labore quas omnis!
                             </div>
+
+                            {/* <div className="key-highlights"> */}
+                                <div class="highlights-container">
+                                    <h2>Key Highlights</h2>
+                                    <div class="row">
+                                        <div class="highlight-item">
+                                            <span class="label">Design</span>
+                                            <span class="value">Graphic Print</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="label">Fit</span>
+                                            <span class="value">Oversized Fit</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="highlight-item">
+                                            <span class="label">Neck</span>
+                                            <span class="value">Round Neck</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="label">Occasion</span>
+                                            <span class="value">Casual Wear</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="highlight-item">
+                                            <span class="label">Sleeve Style</span>
+                                            <span class="value">Half Sleeve</span>
+                                        </div>
+                                        <div class="highlight-item">
+                                            <span class="label">Wash Care</span>
+                                            <span class="value">Gentle Machine Wash</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/* </div> */}
                         </div>
                     </div>
                 </div>

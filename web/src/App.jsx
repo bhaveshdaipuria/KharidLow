@@ -6,6 +6,7 @@ import axios from 'axios';
 import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Registration from './Components/Registration/Registration';
+import ProductScroll from './comman/ProductScroll/ProductScroll';
 
 function App() {
   // const [data, setData] = useState("");
@@ -27,6 +28,8 @@ function App() {
       </Header>
       
       <ProductDetails></ProductDetails>
+
+      <ProductScroll></ProductScroll>
       
       {/* <Home>
 
