@@ -19,7 +19,6 @@ function Home() {
 
             <ProductScroll></ProductScroll>
 
-            <Footer></Footer>
         </>
     )
 }

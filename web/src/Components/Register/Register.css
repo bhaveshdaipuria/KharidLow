@@ -1,0 +1,22 @@
+.registerpage-detail {
+    width: 100vw;
+    height: 100vh;
+}
+
+.inputs {
+    margin-top: 5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-filled-outer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    gap: 1.5rem;
+}
+
+.input-fields-address {
+    display: flex;
+}

@@ -5,8 +5,10 @@ import Category from './Components/Category/Category'
 import NewArrival from './Components/NewArrival/NewArrival'
 import Header from './comman/Header'
 import axios from 'axios';
-import Registration from './components/Registration/Registration';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Footer from './comman/Footer/Footer';
+import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Register from './Components/Register/Register';
 
 function App() {
   // const [data, setData] = useState("");
@@ -26,9 +28,14 @@ function App() {
     },
     {
       path: "/registration",
-      element: <Registration />,
+      element: <Register />,
     },
   ]);
+
+  // const getData = async () => {
+  //   const response = await axios.get("http://localhost:3000/getData");
+  //   setData(response.data);
+  // }
 
   // const getData = async () => {
   //   const response = await axios.get("http://localhost:3000/getData");
@@ -42,8 +49,17 @@ function App() {
   return (
     <>
       {/* Header Comman component for all routes */}
+      {/* <RouterProvider router={router} /> */}
       <Header></Header>
-      <RouterProvider router={router} />
+  
+      {/* <ProductDetails></ProductDetails> */}
+      
+      <Register></Register>
+      {/* <Home>
+
+      </Home> */}
+
+      <Footer></Footer>
     </>
   )
 }

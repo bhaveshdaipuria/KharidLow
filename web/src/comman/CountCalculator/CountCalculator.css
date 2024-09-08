@@ -1,0 +1,16 @@
+.couter-heading{
+    margin-top: 25px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.couter-heading span.min-count-note{
+    margin-left: 9px;
+    font-size: 8px !important;
+    font-weight: 400;
+}
+
+.couter-heading span.min-count-note sup{
+    color: red;
+}
