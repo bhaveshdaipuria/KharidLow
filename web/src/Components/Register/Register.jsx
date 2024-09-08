@@ -12,7 +12,9 @@ import {
     InputLeftElement,
     Divider,
     Box,
-    AbsoluteCenter
+    AbsoluteCenter,
+    Stack,
+    Select
 } from '@chakra-ui/react';
 import { PhoneIcon } from '@chakra-ui/icons'
 
@@ -22,15 +24,29 @@ const Register = () => {
     const handleClick = () => setShow(!show);
 
     const [formState, setFormState] = React.useState({
+        fullName: '',
         email: '',
         password: '',
-        name: '',
         contactNo: '',
+        fullAddress: '',
+        houseNo: '',
+        streetNo: '',
+        city: '',
+        landmark: '',
+        pincode: '',
+        state: '',
         touched: {
+            fullName: false,
             email: false,
             password: false,
-            name: false,
-            contactNo: false
+            contactNo: false,
+            fullAddress: false,
+            houseNo: false,
+            streetNo: false,
+            city: false,
+            landmark: false,
+            pincode: false,
+            state: false
         },
     });
 
@@ -55,14 +71,20 @@ const Register = () => {
     };
 
     // Error conditions
+    const isNameError = formState.fullName === '' && formState.touched.fullName;
     const isEmailError = formState.email === '' && formState.touched.email;
-    const isNameError = formState.name === '' && formState.touched.name;
     const isPasswordError = formState.password === '' && formState.touched.password;
     const isContactNoError = formState.contactNo === '' && formState.touched.contactNo;
+    const isFullAddressError = formState.fullAddress === '' && formState.touched.fullAddress;
+    const isHouseNoError = formState.houseNo === '' && formState.touched.houseNo;
+    const isStreetNoError = formState.streetNo === '' && formState.touched.streetNo;
+    const isCityError = formState.city === '' && formState.touched.city;
+    const isPincodeError = formState.pincode === '' && formState.touched.pincode;
+    const isStateError = formState.state === '' && formState.touched.state;
 
     return (
         <>
-            <form action="">
+            <form action="/register" method="post">
                 <div className="registerpage-detail">
                     <div className="inputs">
                         <div className="input-filled-outer">
@@ -71,8 +93,8 @@ const Register = () => {
                                     <FormLabel>Enter Your Full Name</FormLabel>
                                     <Input
                                         placeholder="Enter Name"
-                                        name="name"
-                                        value={formState.name}
+                                        name="fullName"
+                                        value={formState.fullName}
                                         onChange={handleInputChange}
                                         onBlur={handleBlur}
                                     />
@@ -80,7 +102,7 @@ const Register = () => {
                                         // <FormHelperText>Enter the email you'd like to receive updates.</FormHelperText>
                                         ""
                                     ) : (
-                                        <FormErrorMessage>Name is required.</FormErrorMessage>
+                                        <FormErrorMessage>Full Name is required.</FormErrorMessage>
                                     )}
                                 </FormControl>
                             </div>
@@ -163,17 +185,17 @@ const Register = () => {
                             </div>
                             <div className="input-fields">
                                 <div>
-                                    <FormControl isRequired isInvalid={isPasswordError}>
-                                        {/* <FormLabel>Enter Password</FormLabel> */}
+                                    <FormControl isRequired isInvalid={isFullAddressError}>
+                                        {/* <FormLabel>Enter Full Address</FormLabel> */}
                                         <Input
                                             type="text"
                                             name="fullAddress"
-                                            value={formState.email}
+                                            value={formState.fullAddress}
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
                                             placeholder='Enter Full Address'
                                         />
-                                        {!isPasswordError ? (
+                                        {!isFullAddressError ? (
                                             // <FormHelperText>Enter your password.</FormHelperText>
                                             ""
                                         ) : (
@@ -182,42 +204,143 @@ const Register = () => {
                                     </FormControl>
                                 </div>
                                 <div className="input-fields-address">
-                                    <FormControl isRequired isInvalid={isPasswordError}>
-                                        {/* <FormLabel>Enter Password</FormLabel> */}
+                                    <FormControl isRequired isInvalid={isHouseNoError}>
+                                        {/* <FormLabel>Flat, House No, Building, Apartment</FormLabel> */}
                                         <Input
                                             type="text"
-                                            name="email"
-                                            value={formState.email}
+                                            name="houseNo"
+                                            value={formState.houseNo}
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
-                                            placeholder='Enter City'
+                                            placeholder='Flat, House No, Building, Apartment'
                                         />
-                                        {!isPasswordError ? (
+                                        {!isHouseNoError ? (
                                             // <FormHelperText>Enter your password.</FormHelperText>
                                             ""
                                         ) : (
-                                            <FormErrorMessage>Password is required.</FormErrorMessage>
+                                            <FormErrorMessage>Flat, House No, Building, Apartment is required.</FormErrorMessage>
                                         )}
                                     </FormControl>
-                                    <FormControl isRequired isInvalid={isPasswordError}>
+                                    <FormControl isRequired isInvalid={isStreetNoError}>
                                         {/* <FormLabel>Enter Password</FormLabel> */}
                                         <Input
                                             type="text"
-                                            name="email"
-                                            value={formState.email}
+                                            name="streetNo"
+                                            value={formState.streetNo}
                                             onChange={handleInputChange}
                                             onBlur={handleBlur}
-                                            placeholder='Enter Police Station'
+                                            placeholder='Enter Street, Sector'
                                         />
-                                        {!isPasswordError ? (
+                                        {!isStreetNoError ? (
                                             // <FormHelperText>Enter your password.</FormHelperText>
                                             ""
                                         ) : (
-                                            <FormErrorMessage>Password is required.</FormErrorMessage>
+                                            <FormErrorMessage>Street, Sector is required.</FormErrorMessage>
+                                        )}
+                                    </FormControl>
+                                </div>
+                                <div className="input-fields-address">
+                                    <FormControl isRequired isInvalid={isCityError}>
+                                        {/* <FormLabel>Enter Password</FormLabel> */}
+                                        <Input
+                                            type="text"
+                                            name="city"
+                                            value={formState.city}
+                                            onChange={handleInputChange}
+                                            onBlur={handleBlur}
+                                            placeholder='Enter City, Village'
+                                        />
+                                        {!isCityError ? (
+                                            // <FormHelperText>Enter your password.</FormHelperText>
+                                            ""
+                                        ) : (
+                                            <FormErrorMessage>City, Village is required.</FormErrorMessage>
+                                        )}
+                                    </FormControl>
+                                    <FormControl>
+                                        {/* <FormLabel>Flat, House No, Building, Apartment</FormLabel> */}
+                                        <Input
+                                            type="text"
+                                            name="landmark"
+                                            value={formState.landmark}
+                                            onChange={handleInputChange}
+                                            onBlur={handleBlur}
+                                            placeholder='Enter Landmark'
+                                        />
+                                    </FormControl>
+                                </div>
+                                <div className="input-fields-address">
+                                    <FormControl isRequired isInvalid={isPincodeError}>
+                                        {/* <FormLabel>Enter Password</FormLabel> */}
+                                        <Input
+                                            type="number"
+                                            name="pincode"
+                                            value={formState.pincode}
+                                            onChange={handleInputChange}
+                                            onBlur={handleBlur}
+                                            placeholder='Enter Pincode'
+                                        />
+                                        {!isPincodeError ? (
+                                            // <FormHelperText>Enter your password.</FormHelperText>
+                                            ""
+                                        ) : (
+                                            <FormErrorMessage>Pincode is required.</FormErrorMessage>
+                                        )}
+                                    </FormControl>
+                                    <FormControl isRequired isInvalid={isStateError}>
+                                        <Stack spacing={3}>
+                                            <Select variant='outline' placeholder='Select State'
+                                                name="state"
+                                                value={formState.state}
+                                                onChange={handleInputChange}
+                                                onBlur={handleBlur}
+                                            >
+                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                                <option value="Assam">Assam</option>
+                                                <option value="Bihar">Bihar</option>
+                                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                                <option value="Goa">Goa</option>
+                                                <option value="Gujarat">Gujarat</option>
+                                                <option value="Haryana">Haryana</option>
+                                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                                <option value="Jharkhand">Jharkhand</option>
+                                                <option value="Karnataka">Karnataka</option>
+                                                <option value="Kerala">Kerala</option>
+                                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                                <option value="Maharashtra">Maharashtra</option>
+                                                <option value="Manipur">Manipur</option>
+                                                <option value="Meghalaya">Meghalaya</option>
+                                                <option value="Mizoram">Mizoram</option>
+                                                <option value="Nagaland">Nagaland</option>
+                                                <option value="Odisha">Odisha</option>
+                                                <option value="Punjab">Punjab</option>
+                                                <option value="Rajasthan">Rajasthan</option>
+                                                <option value="Sikkim">Sikkim</option>
+                                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                                <option value="Telangana">Telangana</option>
+                                                <option value="Tripura">Tripura</option>
+                                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                <option value="Uttarakhand">Uttarakhand</option>
+                                                <option value="West Bengal">West Bengal</option>
+                                            </Select>
+                                        </Stack>
+                                        {!isStateError ? (
+                                            // <FormHelperText>Enter your password.</FormHelperText>
+                                            ""
+                                        ) : (
+                                            <FormErrorMessage>State is required.</FormErrorMessage>
                                         )}
                                     </FormControl>
                                 </div>
                             </div>
+                            <Button
+                                mt={4}
+                                colorScheme='teal'
+                                type='submit'
+                            >
+                                Submit
+                            </Button>
                         </div>
                     </div>
                 </div>
