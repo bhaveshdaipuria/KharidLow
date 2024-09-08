@@ -8,7 +8,12 @@ import axios from 'axios';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
+<<<<<<< HEAD
 import Register from './Components/Register/Register';
+=======
+import Registration from './Components/Registration/Registration';
+import ProductScroll from './comman/ProductScroll/ProductScroll';
+>>>>>>> 1447601a1a8c15a99a9938613e99fc5b61bc0be5
 
 function App() {
   // const [data, setData] = useState("");

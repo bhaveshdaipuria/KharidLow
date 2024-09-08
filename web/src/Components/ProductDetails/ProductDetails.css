@@ -1,27 +1,31 @@
-
-
-.product-details{
+.product-details {
     width: 100vw;
 }
 
-.product-details-inner{
+.product-details-inner {
     display: flex;
     justify-content: center;
 }
 
-.product-view{
+@media (max-width: 996px) {
+    .product-details-inner {
+        flex-direction: column;
+    }
+}
+
+.product-view {
     width: 35%;
     min-height: 83vh;
     max-height: 83vh;
 }
 
-.product-view-inner{
+.product-view-inner {
     width: 100%;
     height: 100%;
     padding: 20px;
 }
 
-.product-main-image{
+.product-main-image {
     max-height: 100%;
     max-width: 100%;
     border-radius: 20px;
@@ -29,24 +33,34 @@
     /* background-color: blue; */
 }
 
-.product-main-image img{
+.product-main-image img {
     object-fit: contain;
     height: 450px;
-    
+
 }
 
-.product-other-image{
+.product-other-image {
     margin-top: 20px;
     display: flex;
     justify-content: flex-start;
     gap: 20px;
 }
 
-.product-other-image img{
+.product-other-image img {
     width: 50px;
 }
 
-.product-desciption{
+
+
+@media (max-width: 996px) {
+    .product-view {
+        width: 100%;
+        min-height: fit-content;
+        max-height: fit-content;
+    }
+}
+
+.product-desciption {
     width: 55%;
     padding: 20px;
     min-height: 83vh;
@@ -55,50 +69,58 @@
 }
 
 
+@media (max-width: 996px) {
+    .product-desciption {
+        width: 100%;
+        padding: 20px;
+        min-height: fit-content;
+        max-height: fit-content;
+        overflow: visible;
+    }
+}
 
 
 
 
-
-.head-n-wishlist{
+.head-n-wishlist {
     display: flex;
     justify-content: space-between;
 }
 
-.product-tagline{
+.product-tagline {
     font-size: small;
     font-weight: 400;
     color: gray;
 }
 
-.product-intro h3{
+.product-intro h3 {
     color: rgb(39, 39, 39);
     font-size: 24px;
 }
 
-.product-rating{
+.product-rating {
     display: flex;
     margin-top: 10px;
 }
 
-.product-intro .price-n-discount{
+.product-intro .price-n-discount {
     margin-top: 18px;
     font-weight: 500;
     font-size: 18px;
 }
 
-.product-intro .price{
+.product-intro .price {
     text-decoration: line-through;
     color: rgb(68, 67, 67);
 }
 
-.product-intro .discount{
+.product-intro .discount {
     /* font-size: 16px; */
     color: green;
     margin-left: 5px;
 }
 
-.product-intro .discounted-price{
+.product-intro .discounted-price {
     margin-left: 10px;
     font-weight: 600;
 }
@@ -110,25 +132,26 @@
 
 
 
-.product-variations{
+.product-variations {
     margin-top: 20px;
 }
 
-.product-variations .variation-heading{
+.product-variations .variation-heading {
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-.product-variations .variation-items{
+.product-variations .variation-items {
     display: flex;
     gap: 20px;
+    overflow-x: scroll;
 }
 
-.product-variations .variation-items .item{
+.product-variations .variation-items .item {
     border: 1px solid black;
-    height: 40px;
-    width: 40px;
+    min-height: 40px;
+    min-width: 40px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -136,14 +159,84 @@
 }
 
 
-.product-buttons{
+.product-buttons {
     margin-top: 25px;
 }
 
-.product-summary{
+.product-summary {
     font-size: 14px;
     color: rgb(54, 53, 53);
     margin-top: 25px;
     text-align: justify;
     width: 80%;
+}
+
+
+
+@media (max-width: 996px) {
+    .product-summary {
+        
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.highlights-container {
+    max-width: 600px;
+    margin: 25px 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #000;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.highlight-item {
+    width: 45%;
+}
+
+.label {
+    display: block;
+    font-size: 0.85em;
+    color: #757575;
+    margin-bottom: 5px;
+}
+
+.value {
+    font-size: 1em;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .highlight-item {
+        width: 100%;
+        margin-bottom: 15px;
+    }
 }
