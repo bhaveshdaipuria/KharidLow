@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { addProduct, showAllProduct } = require("../controllers/productController");
+const { getCategoryData } = require("../controllers/generalData");
 
 router.get("/", (req, res) => {
     res.send("This is Home Page");
@@ -22,9 +23,6 @@ router.post("/addproduct", addProduct);
 
 router.post("/allproduct", showAllProduct);
 
-// Testing API
-router.get("/getdata", (req, res) => {
-    res.send("Data from backend");
-});
+router.get("/getCategoryData", getCategoryData);
 
 module.exports = router;

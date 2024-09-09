@@ -1,7 +1,7 @@
 const productModel = require("../models/product");
 
 module.exports.addProduct = async (req, res) => {
-    let { productName, productSku, productImage, productTagline, variant, quantity, price, discount, productSummary, productDescription, productCode } = req.body;
+    let { productName, productSku, productImage, productTagline, variant, quantity, productMOQ, price, discount, productSummary, productDescription, productCode } = req.body;
 
     let existProduct = await productModel.findOne({ productSku: productSku });
 
@@ -16,6 +16,7 @@ module.exports.addProduct = async (req, res) => {
         productTagline,
         variant,
         quantity,
+        productMOQ,
         price,
         discount,
         productSummary,

@@ -19,8 +19,8 @@ app.use(cookieParser());
 connectToDb();  //Connecting to mongodb
 
 app.use("/user", userRouter);
-app.use("/", indexRouter);
+app.use("/kharidlow", indexRouter);
 
 app.listen(process.env.PORT || 8010, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+  console.log(`Server is running on port ${process.env.PORT || 8010}`);
 });

@@ -4,7 +4,7 @@ const userModel = require("../models/user");
 
 module.exports.userRegister = async (req, res) => {
 
-    let { name, password, email, address, contactNo } = req.body;
+    let { name, email, password, contactNo, address } = req.body;
 
     let user = await userModel.findOne({ email });
 
