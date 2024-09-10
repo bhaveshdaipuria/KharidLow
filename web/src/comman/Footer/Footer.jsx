@@ -8,7 +8,7 @@ const Footer = () => {
         <section className="contact-area" id="contact">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-6 offset-lg-3">
+                    <div className="col-lg-6 offset-lg-3 margin-auto">
                         <div className="contact-content text-center">
                             <div className='footer-logo'><img src="images/Logo/Black/Textual/PNG/transparent.png" alt="logo" /></div>
                             <p>Quality Products at Unbeatable Prices – Empowering Your Business</p>

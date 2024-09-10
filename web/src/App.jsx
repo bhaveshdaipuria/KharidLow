@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Register from './Components/Register/Register';
+import ProductNew from './Components/Admin/ProductNew/ProductNew';
 
 function App() {
   // const [data, setData] = useState("");
@@ -54,7 +55,9 @@ function App() {
   
       {/* <ProductDetails></ProductDetails> */}
       
-      <Register></Register>
+      {/* <Register></Register> */}
+
+      <ProductNew></ProductNew>
       {/* <Home>
 
       </Home> */}
