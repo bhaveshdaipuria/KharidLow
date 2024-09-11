@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import './App.css'
-import Home from './Components/Home/Home'
-import Category from './Components/Category/Category'
-import NewArrival from './Components/NewArrival/NewArrival'
-import Header from './comman/Header'
+import './App.css';
+import Home from './Components/Home/Home';
+import Category from './Components/Category/Category';
+import NewArrival from './Components/NewArrival/NewArrival';
+import Header from './comman/Header';
 import axios from 'axios';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Register from './Components/Register/Register';
+import Login from './Components/Login/Login';
 
 function App() {
   // const [data, setData] = useState("");
@@ -54,10 +54,9 @@ function App() {
   
       {/* <ProductDetails></ProductDetails> */}
       
-      <Register></Register>
-      {/* <Home>
-
-      </Home> */}
+      {/* <Register></Register> */}
+      {/* <Login></Login> */}
+      <Home></Home>
 
       <Footer></Footer>
     </>

@@ -8,6 +8,7 @@ const cors = require("cors");
 
 const userRouter = require("./routes/userRouter");
 const indexRouter = require("./routes/indexRouter");
+const adminRouter = require("./routes/adminRouter");
 
 app.set("view engine", "ejs");
 
@@ -20,6 +21,7 @@ connectToDb();  //Connecting to mongodb
 
 app.use("/user", userRouter);
 app.use("/kharidlow", indexRouter);
+app.use("/admin", adminRouter);
 
 app.listen(process.env.PORT || 8010, () => {
   console.log(`Server is running on port ${process.env.PORT || 8010}`);

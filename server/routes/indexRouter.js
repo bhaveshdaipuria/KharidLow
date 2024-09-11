@@ -9,17 +9,11 @@ router.get("/", (req, res) => {
 
 router.get("/register", (req, res) => {
     res.render("index");
-})
+});
 
 router.get("/login", (req, res) => {
     res.render("login");
-})
-
-router.get("/addproduct", (req, res) => {
-    res.render("addproduct");
 });
-
-router.post("/addproduct", addProduct);
 
 router.post("/allproduct", showAllProduct);
 

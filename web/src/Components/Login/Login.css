@@ -1,0 +1,36 @@
+.login-details {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(26, 26, 35);
+    padding: 1px;
+}
+
+.inputs {
+    margin-top: 5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-filled-outer {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 1.5rem;
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+@media screen and (max-width: 970px) {
+    .input-filled-outer {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .input-filled-outer {
+        width: 90%;
+    }
+}

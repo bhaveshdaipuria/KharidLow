@@ -1,5 +1,5 @@
 import React from 'react';
-import './Register.css'
+import './Register.css';
 import {
     FormControl,
     FormLabel,
@@ -88,9 +88,10 @@ const Register = () => {
                 <div className="registerpage-detail">
                     <div className="inputs">
                         <div className="input-filled-outer">
+                            <h3>Register Your Self</h3>
                             <div className="input-fields">
                                 <FormControl isRequired isInvalid={isNameError}>
-                                    <FormLabel>Enter Your Full Name</FormLabel>
+                                    <FormLabel className="label">Enter Your Full Name</FormLabel>
                                     <Input
                                         placeholder="Enter Name"
                                         name="fullName"
