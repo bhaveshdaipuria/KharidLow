@@ -17,6 +17,6 @@ router.get("/login", (req, res) => {
 
 router.post("/allproduct", showAllProduct);
 
-router.get("/getCategoryData", getCategoryData);
+router.get("/getcategorydata", getCategoryData);
 
 module.exports = router;

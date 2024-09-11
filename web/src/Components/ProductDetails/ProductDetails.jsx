@@ -103,36 +103,36 @@ function ProductDetails() {
                             </div>
 
                             {/* <div className="key-highlights"> */}
-                                <div class="highlights-container">
+                                <div className="highlights-container">
                                     <h2>Key Highlights</h2>
-                                    <div class="row">
-                                        <div class="highlight-item">
-                                            <span class="label">Design</span>
-                                            <span class="value">Graphic Print</span>
+                                    <div className="row">
+                                        <div className="highlight-item">
+                                            <span className="label">Design</span>
+                                            <span className="value">Graphic Print</span>
                                         </div>
-                                        <div class="highlight-item">
-                                            <span class="label">Fit</span>
-                                            <span class="value">Oversized Fit</span>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="highlight-item">
-                                            <span class="label">Neck</span>
-                                            <span class="value">Round Neck</span>
-                                        </div>
-                                        <div class="highlight-item">
-                                            <span class="label">Occasion</span>
-                                            <span class="value">Casual Wear</span>
+                                        <div className="highlight-item">
+                                            <span className="label">Fit</span>
+                                            <span className="value">Oversized Fit</span>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="highlight-item">
-                                            <span class="label">Sleeve Style</span>
-                                            <span class="value">Half Sleeve</span>
+                                    <div className="row">
+                                        <div className="highlight-item">
+                                            <span className="label">Neck</span>
+                                            <span className="value">Round Neck</span>
                                         </div>
-                                        <div class="highlight-item">
-                                            <span class="label">Wash Care</span>
-                                            <span class="value">Gentle Machine Wash</span>
+                                        <div className="highlight-item">
+                                            <span className="label">Occasion</span>
+                                            <span className="value">Casual Wear</span>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="highlight-item">
+                                            <span className="label">Sleeve Style</span>
+                                            <span className="value">Half Sleeve</span>
+                                        </div>
+                                        <div className="highlight-item">
+                                            <span className="label">Wash Care</span>
+                                            <span className="value">Gentle Machine Wash</span>
                                         </div>
                                     </div>
                                 </div>

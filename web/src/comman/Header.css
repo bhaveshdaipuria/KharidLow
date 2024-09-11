@@ -9,6 +9,7 @@
   /* Subtle shadow */
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 /* Flexbox for Header Content */

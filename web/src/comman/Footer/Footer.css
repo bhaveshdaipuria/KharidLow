@@ -103,3 +103,7 @@ footer img {
 .footer-logo img {
     max-width: 250px;
 }
+
+.margin-auto{
+    margin: auto;
+}

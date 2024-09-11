@@ -15,11 +15,11 @@ body {
     background-color: #15191f;
 }
 
-.container > iframe {
+.promotion-container > iframe {
     border: none;
 }
 
-.container {
+.promotion-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,25 +34,25 @@ body {
 }
 
 @media screen and (max-width:500px) {
-    .container {
+    .promotion-container {
         animation: none;
     }
-    .container > button {
+    .promotion-container > button {
         animation: none;
     }
 }
 
-.container > h1 {
+.promotion-container > h1 {
     margin-top: 2rem;
     font-size: 32px;
 }
 
-.container > p {
+.promotion-container > p {
     margin-top: 1rem;
     font-size: 16px;
 }
 
-.container > button {
+.promotion-container > button {
     font-family: 'Poppins', sans-serif;
     margin-top: 1.5rem;
     border: none;
@@ -66,7 +66,7 @@ body {
     animation: anim 1.5s;
 }
 
-.container > button:hover {
+.promotion-container > button:hover {
     background-color: #23b8a9;
     color: #f1f1f1;
 }
@@ -87,7 +87,7 @@ body {
     margin-top: 1rem;
 }
 
-.container2 {
+.promotion-container2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -98,7 +98,7 @@ body {
     display: none;
 }
 
-.container2 > iframe {
+.promotion-container2 > iframe {
     border: none;
 }
 
