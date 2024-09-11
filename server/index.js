@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+//This is just a sample comment
 
 const connectToDb = require("./config/db");
 const cookieParser = require("cookie-parser");
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-connectToDb();  //Connecting to mongodb
+connectToDb(); //Connecting to mongodb
 
 app.use("/user", userRouter);
 app.use("/kharidlow", indexRouter);
