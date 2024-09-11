@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 //This is just a sample comment
 //This is feature 1
+//This is another attempt for feature 1
 
 const connectToDb = require("./config/db");
 const cookieParser = require("cookie-parser");
