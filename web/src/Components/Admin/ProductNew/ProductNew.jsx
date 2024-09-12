@@ -26,6 +26,7 @@ function ProductNew() {
     //var for getting array of product images src
     const [productImagesSrc, setProductImagesSrc] = useState([]);
     const [maxImageIndex, setMaxImageIndex] = useState(0);
+    const [maxColorVarIndex, setMaxColorVarIndex] = useState(0);
     const [mainPreviewImage, setMainPreviewImage] = useState('');
 
     const [productNewForm, setProductNewForm] = useState({
@@ -34,6 +35,7 @@ function ProductNew() {
         item: '',
         productName: '',
         subHead: '',
+        sku: '',
         summary: '',
         keyHighlights: [
             {
@@ -73,6 +75,7 @@ function ProductNew() {
     });
 
     let addImageInputRef = useRef(null);
+    let addColorVariationsRef = useRef(null);
 
     //intiallizing toast hook from chakra ui
     const toast = useToast();
@@ -95,7 +98,7 @@ function ProductNew() {
     };
 
     const handleKeyHighlightsChange = (e, index) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         const keyHighLights = productNewForm.keyHighlights;
         keyHighLights[index][name] = value;
@@ -105,9 +108,41 @@ function ProductNew() {
         }));
     }
 
+    const handleQtySlabChange = (e, name, index) => {
+        const value = e;
+
+        const qtyPriceSlabs = productNewForm.qtyPriceSlabs;
+        qtyPriceSlabs[index][name] = value;
+        setProductNewForm((prev) => ({
+            ...prev,
+            qtyPriceSlabs: qtyPriceSlabs
+        }));
+    }
+
+    const handleSizeVariationsChange = (e, name, index) => {
+        const value = e;
+
+        const sizeVariations = productNewForm.sizeVariations;
+        sizeVariations[index][name] = value;
+        setProductNewForm((prev) => ({
+            ...prev,
+            sizeVariations: sizeVariations
+        }));
+    }
+
+    const handleColorVariationsChange = (e, index) => {
+        const { name, value } = e.target;
+
+        const colorVariations = productNewForm.colorVariations;
+        colorVariations[index][name] = value;
+        setProductNewForm((prev) => ({
+            ...prev,
+            colorVariations: colorVariations
+        }));
+    }
+
     const handleIsDiscountedChange = (e) => {
 
-        console.log(e);
         setProductNewForm({
             ...productNewForm,
             isDiscounted: e
@@ -116,7 +151,6 @@ function ProductNew() {
 
     const handleIsQtyBasedSlab = (e) => {
 
-        console.log(e);
         setProductNewForm({
             ...productNewForm,
             isQtyBasedPricing: e
@@ -294,6 +328,8 @@ function ProductNew() {
             image: ''
         });
 
+        setMaxColorVarIndex(maxColorVarIndex + 1);
+
         setProductNewForm({
             ...productNewForm,
             colorVariations: colorVariations
@@ -305,6 +341,8 @@ function ProductNew() {
         const colorVariations = productNewForm.colorVariations;
         colorVariations.splice(index, 1);
 
+        setMaxColorVarIndex(maxColorVarIndex - 1);
+
         setProductNewForm({
             ...productNewForm,
             colorVariations: colorVariations
@@ -312,8 +350,13 @@ function ProductNew() {
     }
 
     //methord for setting color
-    const setColor = (index) => {
+    const selectColor = (index) => {
+        addColorVariationsRef.current.children[(maxColorVarIndex) * 2].click()
+    }
 
+    //methord for setting image
+    const addColorImage = (index) => {
+        addColorVariationsRef.current.children[(maxColorVarIndex) * 2 + 1].click()
     }
 
     //methord for adding image 
@@ -466,6 +509,41 @@ function ProductNew() {
 
     }
 
+    //methord for setting color
+    const onColorChange = (e, index) => {
+        if (e.target.value) {
+            const colorVariations = productNewForm.colorVariations;
+            colorVariations[index].hex_code = e.target.value;
+
+            setProductNewForm({
+                ...productNewForm,
+                colorVariations: colorVariations
+            })
+        }
+
+    }
+
+    const onColorImageChange = (e, index) => {
+        const image = e.target.files[0];
+        if (image) {
+            const colorVariations = productNewForm.colorVariations;
+
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                colorVariations[index].image = reader.result;
+            }
+
+            reader.readAsDataURL(image);
+
+            setProductNewForm({
+                ...productNewForm,
+                colorVariations: colorVariations
+            })
+        }
+
+    }
+
 
     //methord fotr handling submit
     const onSubmit = (event) => {
@@ -521,25 +599,29 @@ function ProductNew() {
 
                 <div className="product-category-sec">
                     <h3 className="product-add-sub-head">Product Details</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
 
                         <FormControl isRequired size='sm'>
                             <FormLabel className='form-label-sm'>Product name</FormLabel>
                             <Input placeholder='Product name' name='productName' size='sm' value={productNewForm.productName} onChange={handleInputChange} />
                         </FormControl>
 
-                        <FormControl>
-                            <FormControl isRequired>
-                                <FormLabel className='form-label-sm'>Product label</FormLabel>
-                                <Input placeholder='Product label' size='sm' name='subHead' value={productNewForm.subHead} onChange={handleInputChange}/>
-                            </FormControl>
+
+                        <FormControl isRequired>
+                            <FormLabel className='form-label-sm'>Product label</FormLabel>
+                            <Input placeholder='Product label' size='sm' name='subHead' value={productNewForm.subHead} onChange={handleInputChange} />
                         </FormControl>
-                        <FormControl className='col-span-1 md:col-span-2'>
-                            <FormControl isRequired>
-                                <FormLabel className='form-label-sm'>Product summary</FormLabel>
-                                <Textarea placeholder='Here is a sample placeholder' name='summary' value={productNewForm.summary} onChange={handleInputChange} rows={8} size='sm' />
-                            </FormControl>
+
+                        <FormControl isRequired>
+                            <FormLabel className='form-label-sm'>Product SKU</FormLabel>
+                            <Input placeholder='Product SKU' size='sm' name='sku' value={productNewForm.sku} onChange={handleInputChange} />
                         </FormControl>
+
+                        <FormControl isRequired className='col-span-1 md:col-span-4'>
+                            <FormLabel className='form-label-sm'>Product summary</FormLabel>
+                            <Textarea placeholder='Here is a sample placeholder' name='summary' value={productNewForm.summary} onChange={handleInputChange} rows={8} size='sm' />
+                        </FormControl>
+
 
                     </div>
                 </div>
@@ -558,7 +640,7 @@ function ProductNew() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <FormControl key={`${index}key`} isRequired size='sm'>
                                             <FormLabel className='form-label-sm'>Name</FormLabel>
-                                            <Input placeholder='Name' size='sm' value={productNewForm.keyHighlights[index].key} name='key' index={index} onChange={(e) => {handleKeyHighlightsChange(e, index)}}/>
+                                            <Input placeholder='Name' size='sm' value={productNewForm.keyHighlights[index].key} name='key' onChange={(e) => { handleKeyHighlightsChange(e, index) }} />
                                         </FormControl>
 
 
@@ -568,7 +650,7 @@ function ProductNew() {
                                                     (productNewForm.keyHighlights.length > 1) ? (<RiDeleteBin5Fill title='Delete Item' className='btn text-lg text-red-600' onClick={() => removeKeyHighlight(index)} />) : ''
                                                 }
                                             </FormLabel>
-                                            <Input placeholder='Value' size='sm' value={productNewForm.keyHighlights[index].value} name='value' index={index} onChange={(e) => {handleKeyHighlightsChange(e, index)}} />
+                                            <Input placeholder='Value' size='sm' value={productNewForm.keyHighlights[index].value} name='value' onChange={(e) => { handleKeyHighlightsChange(e, index) }} />
                                         </FormControl>
                                     </div>
                                 )
@@ -653,7 +735,7 @@ function ProductNew() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                         <FormControl size='sm' isRequired>
                             <FormLabel className='form-label-sm'>Base price</FormLabel>
-                            <NumberInput max={50} min={10} size='sm' value={productNewForm.basePrice} onChange={(e) => {handleNumberInputChange(e, 'basePrice')}}>
+                            <NumberInput max={50} min={10} size='sm' value={productNewForm.basePrice} onChange={(e) => { handleNumberInputChange(e, 'basePrice') }}>
                                 <NumberInputField placeholder='Base price' />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -663,7 +745,7 @@ function ProductNew() {
                         </FormControl>
                         <FormControl size='sm' isRequired>
                             <FormLabel className='form-label-sm'>MOQ</FormLabel>
-                            <NumberInput max={50} min={10} size='sm' value={productNewForm.moq} onChange={(e) => {handleNumberInputChange(e, 'moq')}}>
+                            <NumberInput max={50} min={10} size='sm' value={productNewForm.moq} onChange={(e) => { handleNumberInputChange(e, 'moq') }}>
                                 <NumberInputField placeholder='MOQ' />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -684,7 +766,7 @@ function ProductNew() {
                             // in case of discounted
                             productNewForm.isDiscounted === 'true' ? <FormControl size='sm' isRequired>
                                 <FormLabel className='form-label-sm'>Base discount (%)</FormLabel>
-                                <NumberInput max={50} min={10} size='sm' value={productNewForm.baseDiscount} onChange={(e) => {handleNumberInputChange(e, 'baseDiscount')}}>
+                                <NumberInput max={50} min={10} size='sm' value={productNewForm.baseDiscount} onChange={(e) => { handleNumberInputChange(e, 'baseDiscount') }}>
                                     <NumberInputField placeholder='Base discount' />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper />
@@ -720,7 +802,7 @@ function ProductNew() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <FormControl size='sm' isRequired>
                                                 <FormLabel className='form-label-sm'>MOQ</FormLabel>
-                                                <NumberInput max={50} min={10} size='sm'>
+                                                <NumberInput max={50} min={10} size='sm' value={productNewForm.qtyPriceSlabs[index].moq} onChange={(e) => { handleQtySlabChange(e, 'moq', index) }}>
                                                     <NumberInputField placeholder='MOQ' />
                                                     <NumberInputStepper>
                                                         <NumberIncrementStepper />
@@ -734,7 +816,7 @@ function ProductNew() {
                                                         ((productNewForm.qtyPriceSlabs.length > 1) && (productNewForm.qtyPriceSlabs.length - 1 == index)) ? (<RiDeleteBin5Fill title='Delete Item' className='btn text-lg text-red-600' onClick={() => removeQtyPriceSlab(index)} />) : ''
                                                     }
                                                 </FormLabel>
-                                                <NumberInput max={50} min={10} size='sm'>
+                                                <NumberInput max={50} min={10} size='sm' value={productNewForm.qtyPriceSlabs[index].discount} onChange={(e) => { handleQtySlabChange(e, 'discount', index) }}>
                                                     <NumberInputField placeholder='Base discount' />
                                                     <NumberInputStepper>
                                                         <NumberIncrementStepper />
@@ -777,7 +859,9 @@ function ProductNew() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <FormControl size='sm' isRequired>
                                                 <FormLabel className='form-label-sm'>Add Size</FormLabel>
-                                                <NumberInput max={50} min={10} size='sm'>
+                                                <NumberInput max={50} min={10} size='sm' value={productNewForm.sizeVariations[index].size} onChange={(e) => {
+                                                    handleSizeVariationsChange(e, 'size', index)
+                                                }}>
                                                     <NumberInputField placeholder='Add Size' />
                                                     <NumberInputStepper>
                                                         <NumberIncrementStepper />
@@ -792,7 +876,9 @@ function ProductNew() {
                                                         (productNewForm.sizeVariations.length > 1) ? (<RiDeleteBin5Fill title='Delete Item' className='btn text-lg text-red-600' onClick={() => removeSizeVariation(index)} />) : ''
                                                     }
                                                 </FormLabel>
-                                                <NumberInput max={50} min={10} size='sm'>
+                                                <NumberInput max={50} min={10} size='sm' value={productNewForm.sizeVariations[index].price} onChange={(e) => {
+                                                    handleSizeVariationsChange(e, 'price', index)
+                                                }} >
                                                     <NumberInputField placeholder='Price' />
                                                     <NumberInputStepper>
                                                         <NumberIncrementStepper />
@@ -830,6 +916,18 @@ function ProductNew() {
                         <h3 className="product-add-sub-head">Set Color Variations</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
+                            <div className="colo-variations-input hidden-element" ref={addColorVariationsRef}>
+                                {
+                                    productNewForm.colorVariations.map((item, index) => {
+                                        return (
+                                            <>
+                                                <Input placeholder='Color' size='sm' type='color' key={`${index}color`} onChange={(e) => onColorChange(e, index)} />
+                                                <Input placeholder='Color Image' size='sm' type='file' key={`${index}file`} onChange={(e) => onColorImageChange(e, index)} />
+                                            </>
+                                        )
+                                    })
+                                }
+                            </div>
                             {
                                 productNewForm.colorVariations.map((item, index) => {
                                     return (
@@ -842,13 +940,16 @@ function ProductNew() {
                                                 </h4>
                                                 <div className="color-pick-add ">
 
-                                                    <Input placeholder='Color name' size='sm' type='color' />
                                                     <div className="grid grid-cols-2">
-                                                        <div className="product-color-picker">
-                                                            <IoEyedropOutline className='text-4xl' onClick={() => { setColor(index) }} />
+                                                        <div className="product-color-picker" style={{
+                                                            backgroundColor: productNewForm.colorVariations[index].hex_code.toString(),
+                                                            color: (productNewForm.colorVariations[index].hex_code || productNewForm.colorVariations[index].hex_code.toString() == '#fffff') ? 'white' : 'black',
+                                                            borderColor: (productNewForm.colorVariations[index].hex_code || productNewForm.colorVariations[index].hex_code.toString() == '#fffff') ? 'white' : 'black'
+                                                        }}>
+                                                            <IoEyedropOutline className='text-4xl' onClick={() => { selectColor(index) }} />
                                                         </div>
                                                         <div className="add-color-photo ">
-                                                            <Button colorScheme='red' mt={4} size='lg'>Add Image</Button>
+                                                            <Button colorScheme='red' mt={4} size='lg' onClick={() => addColorImage(index)}>Add Image</Button>
                                                         </div>
                                                     </div>
 
@@ -857,8 +958,12 @@ function ProductNew() {
                                                         <Input placeholder='Color name' size='sm' />
                                                     </FormControl>
                                                 </div>
-                                                <div className="add-product-image-preview">
-
+                                                <div className="add-product-image-preview" style={{
+                                                    backgroundImage: `url(${productNewForm.colorVariations[index].image})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                    backgroundRepeat: 'no-repeat',
+                                                }}>
                                                 </div>
                                             </div>
 
@@ -903,7 +1008,7 @@ function ProductNew() {
                         //     mainImage: mainImageSrc
                         // });
                         console.log('end', productNewForm);
-                        await addNewProduct({...productNewForm, mainImage: mainImageSrc}).then((res) => {
+                        await addNewProduct({ ...productNewForm, mainImage: mainImageSrc,  productImages: productImagesSrcc }).then((res) => {
                             console.log(res);
                         }).then(err => {
                             console.log(err)
