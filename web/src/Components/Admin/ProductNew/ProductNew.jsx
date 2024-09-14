@@ -245,7 +245,7 @@ function ProductNew() {
 
     return (
         <>
-            <form className="container mx-auto px-4 product-new-outer py-5" onSubmit={onSubmit} encType='multipart/form-data'>
+            <form className="container mx-auto px-4 product-new-outer py-5" encType="multipart/form-data" onSubmit={onSubmit}>
                 <h2 className="add-product-main-heading">
                     Add Product
                 </h2>
