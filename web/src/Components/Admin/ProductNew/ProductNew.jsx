@@ -5,11 +5,13 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaEye } from 'react-icons/fa6';
 import { addNewProduct, getCategoryDataService } from '../../../Services/getDataService'
 import { RiDeleteBin5Fill } from 'react-icons/ri';
+import { IoEyedropOutline } from 'react-icons/io5';
 
 
 //variables
 let categoryData = {}; //this var will contain category related data 
 let subCategoryData = {};
+let taxPercentages = [5, 10, 18, 25]
 
 
 function ProductNew() {
@@ -22,6 +24,8 @@ function ProductNew() {
     //variable for getting main image src
     const [mainImageSrc, setMainImageSrc] = useState('');
     //var for getting array of product images src
+
+    let colorInputRef = useRef(null);
 
     const [productNewForm, setProductNewForm] = useState({
         category: '',
@@ -42,7 +46,11 @@ function ProductNew() {
         moq: 0,
         isDiscounted: false,
         baseDiscount: 0,
-        taxType: ''
+        size: '',
+        colorName: '',
+        hexCode: '',
+        taxType: '',
+        taxPercentage: ''
     });
 
     let addImageInputRef = useRef(null);
@@ -94,7 +102,20 @@ function ProductNew() {
         });
     };
 
-    //------------------------------------------------------------------------methords for handing input change ends-----------------------------------------------------------------
+    const onColorSelect = (e) => {
+        const color = e.target.value;
+
+        console.log(color);
+
+        setProductNewForm({
+            ...productNewForm,
+            hexCode: color
+        })
+
+    }
+
+
+    //-----------------------------------------methords for handing input changeends-------------------------------------------------------
 
     //methord for getting category related data
     const getCategoryData = async () => {
@@ -153,6 +174,13 @@ function ProductNew() {
         })
     }
 
+    const onTaxPercentageChange = (event) => {
+        setProductNewForm({
+            ...productNewForm,
+            taxPercentage: event.target.value
+        })
+    }
+
     //methord for adding new key highlight
     const addNewKeyHighlight = () => {
         const keyHighlights = productNewForm.keyHighlights;
@@ -185,6 +213,10 @@ function ProductNew() {
         } else {
             console.warn('Element not mounted yet')
         }
+    }
+
+    const addColor = () => {
+        colorInputRef.current.click();
     }
 
     //methord for adding main image
@@ -304,6 +336,36 @@ function ProductNew() {
                             <Input placeholder='Product SKU' size='sm' name='sku' value={productNewForm.sku} onChange={handleInputChange} />
                         </FormControl>
 
+                        <FormControl size='sm' isRequired>
+                            <FormLabel className='form-label-sm'>Size</FormLabel>
+                            <NumberInput size='sm' value={productNewForm.size} onChange={(e) => { handleNumberInputChange(e, 'size') }}>
+                                <NumberInputField placeholder='Size' />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+                        </FormControl>
+
+                        <FormControl isRequired>
+
+                            <FormLabel className='form-label-sm'>Color</FormLabel>
+                            <div className="product-color-picker" onClick={addColor} style={{
+                                backgroundColor: productNewForm.hexCode.toString(),
+                                color: (productNewForm.hexCode || productNewForm.hexCode.toString() == '#fffff') ? 'white' : 'black',
+                                borderColor: (productNewForm.hexCode || productNewForm.hexCode.toString() == '#fffff') ? 'white' : 'black'
+                            }}>
+                                <IoEyedropOutline className='text-4xl' />
+                            </div>
+
+                            <Input className='hidden-element' placeholder='Color' size='sm' type='color' name='hexCode' onChange={onColorSelect} ref={colorInputRef} />
+                        </FormControl>
+
+                        <FormControl isRequired>
+                            <FormLabel className='form-label-sm'>Color Name</FormLabel>
+                            <Input placeholder='Product label' size='sm' name='colorName' value={productNewForm.colorName} onChange={handleInputChange} />
+                        </FormControl>
+
                         <FormControl isRequired className='col-span-1 md:col-span-4'>
                             <FormLabel className='form-label-sm'>Product summary</FormLabel>
                             <Textarea placeholder='Here is a sample placeholder' name='summary' value={productNewForm.summary} onChange={handleInputChange} rows={8} size='sm' />
@@ -393,7 +455,7 @@ function ProductNew() {
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
                         <FormControl size='sm' isRequired>
                             <FormLabel className='form-label-sm'>Base price</FormLabel>
-                            <NumberInput max={50} min={10} size='sm' value={productNewForm.basePrice} onChange={(e) => { handleNumberInputChange(e, 'basePrice') }}>
+                            <NumberInput size='sm' value={productNewForm.basePrice} onChange={(e) => { handleNumberInputChange(e, 'basePrice') }}>
                                 <NumberInputField placeholder='Base price' />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -403,7 +465,7 @@ function ProductNew() {
                         </FormControl>
                         <FormControl size='sm' isRequired>
                             <FormLabel className='form-label-sm'>MOQ</FormLabel>
-                            <NumberInput max={50} min={10} size='sm' value={productNewForm.moq} onChange={(e) => { handleNumberInputChange(e, 'moq') }}>
+                            <NumberInput size='sm' value={productNewForm.moq} onChange={(e) => { handleNumberInputChange(e, 'moq') }}>
                                 <NumberInputField placeholder='MOQ' />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -424,7 +486,7 @@ function ProductNew() {
                             // in case of discounted
                             productNewForm.isDiscounted === 'true' ? <FormControl size='sm' isRequired>
                                 <FormLabel className='form-label-sm'>Base discount (%)</FormLabel>
-                                <NumberInput max={50} min={10} size='sm' value={productNewForm.baseDiscount} onChange={(e) => { handleNumberInputChange(e, 'baseDiscount') }}>
+                                <NumberInput size='sm' value={productNewForm.baseDiscount} onChange={(e) => { handleNumberInputChange(e, 'baseDiscount') }}>
                                     <NumberInputField placeholder='Base discount' />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper />
@@ -434,21 +496,38 @@ function ProductNew() {
                             </FormControl> : ''
                         }
 
+                        <FormControl as='fieldset' isRequired>
+                            <FormLabel className='form-label-sm' as='legend'>Tax type</FormLabel>
+                            <RadioGroup size='sm' onChange={handletaxTypeChange} value={productNewForm.taxType}>
+                                <HStack spacing='24px'>
+                                    <Radio value='inclusive'>Inclusive</Radio>
+                                    <Radio value='exclusive'>Exclusive</Radio>
+                                </HStack>
+                            </RadioGroup>
+                            {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
+                        </FormControl>
+
+                        <FormControl isRequired>
+                            <FormLabel className='form-label-sm'>Tax percentage</FormLabel>
+                            <Select placeholder='Select Tax Percentage' size='sm'
+                                onChange={onTaxPercentageChange}>
+                                {
+                                    taxPercentages.map((item, index) => <option key={item} className='category-options' value={item}>{`${item}%`}</option>)
+                                }
+                            </Select>
+                        </FormControl>
+
+                        {/* <FormControl isReadOnly size='sm'>
+                            <FormLabel className='form-label-sm'>Total amount(with tax)</FormLabel>
+                            <Input placeholder='Total amount' size='sm' value={
+                               productNewForm.taxType === 'inclusive'?productNewForm.basePrice:(Number(productNewForm.basePrice) + (productNewForm.basePrice * (productNewForm.basePrice/100)))
+                            } onChange={handleInputChange} />
+                        </FormControl> */}
+
 
                     </div>
                 </div>
 
-
-                <FormControl as='fieldset' mt={8} isRequired>
-                    <FormLabel className='form-label-sm' fontWeight={600} as='legend'>Tax Type</FormLabel>
-                    <RadioGroup size='sm' onChange={handletaxTypeChange} value={productNewForm.taxType}>
-                        <HStack spacing='24px'>
-                            <Radio value='inclusive'>Inclusive</Radio>
-                            <Radio value='exclusive'>Exclusive</Radio>
-                        </HStack>
-                    </RadioGroup>
-                    {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
-                </FormControl>
 
                 <hr className='line-beaker' />
 
@@ -478,6 +557,9 @@ function ProductNew() {
                         formData.append('baseDiscount', productNewForm.baseDiscount);
                         formData.append('taxType', productNewForm.taxType);
                         formData.append('mainImage', productNewForm.mainImage);
+                        formData.append('size', productNewForm.size);
+                        formData.append('coloName', productNewForm.colorName);
+                        formData.append('hexCode', productNewForm.hexCode);
                         await addNewProduct(formData).then((res) => {
                             console.log(res);
                         }).then(err => {
