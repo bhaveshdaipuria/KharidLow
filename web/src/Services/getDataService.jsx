@@ -10,8 +10,6 @@ const API_URL = BACKEND.API_URL;
 const getCategoryDataService = async () => {
     const url = `${API_URL}/getcategorydata`;
 
-    //getting data from url
-    // await new Promise(resject)
     return new Promise(async (resolve, reject) => {
         await axios({
             method: 'get',
@@ -26,8 +24,6 @@ const getCategoryDataService = async () => {
             reject(err)
         });
     });
-
-
 }
 
 //service for adding new product
@@ -36,8 +32,6 @@ const addNewProduct = async (data) => {
 
     console.log('daata', data)
 
-    //getting data from url
-    // await new Promise(resject)
     return new Promise(async (resolve, reject) => {
         await axios({
             method: 'post',
@@ -49,8 +43,6 @@ const addNewProduct = async (data) => {
             reject(err)
         });
     });
-
-
 }
 
 export { getCategoryDataService, addNewProduct }

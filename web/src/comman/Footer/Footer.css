@@ -4,7 +4,7 @@ img {
 }
 
 section {
-    padding: 60px 0;
+    padding: 30px 0;
     /* min-height: 100vh;*/
 }
 
@@ -20,7 +20,7 @@ ul {
 
 .contact-content p {
     font-size: 15px;
-    margin: 30px 0 60px;
+    margin: 20px 0 60px;
     position: relative;
 }
 
@@ -48,7 +48,7 @@ ul {
 }
 
 .contact-social {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .contact-social>ul {
@@ -59,9 +59,9 @@ ul {
     /* border: 1px solid #8b9199; */
     color: #8b9199;
     display: inline-block;
-    height: 40px;
+    height: 16px;
     margin: 0 10px;
-    padding-top: 7px;
+    padding-top: 9px;
     transition: all 0.4s ease 0s;
     width: 40px;
 }
@@ -72,7 +72,6 @@ ul {
 }
 
 .social-icons {
-
     font-size: 35px;
 }
 
@@ -104,6 +103,6 @@ footer img {
     max-width: 250px;
 }
 
-.margin-auto{
+.margin-auto {
     margin: auto;
 }
