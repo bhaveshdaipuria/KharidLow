@@ -42,10 +42,6 @@ const addNewProduct = async (data) => {
         await axios({
             method: 'post',
             url: url,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: {},
             data: data
         }).then(res => {
             resolve(res.data)

@@ -50,7 +50,7 @@ function ProductNew() {
     //intiallizing toast hook from chakra ui
     const toast = useToast();
 
-    //------------------------------------------------------------------------methords for handing input change starts-----------------------------------------------------------------
+    //--------------------------------------------------------------------methords for handing input change starts-----------------------------------------------------------------
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProductNewForm((prev) => ({
@@ -245,7 +245,7 @@ function ProductNew() {
 
     return (
         <>
-            <form className="container mx-auto px-4 product-new-outer py-5" onSubmit={onSubmit}>
+            <form className="container mx-auto px-4 product-new-outer py-5" onSubmit={onSubmit} encType='multipart/form-data'>
                 <h2 className="add-product-main-heading">
                     Add Product
                 </h2>
@@ -477,6 +477,7 @@ function ProductNew() {
                         formData.append('isDiscounted', productNewForm.isDiscounted);
                         formData.append('baseDiscount', productNewForm.baseDiscount);
                         formData.append('taxType', productNewForm.taxType);
+                        formData.append('mainImage', productNewForm.mainImage);
                         await addNewProduct(formData).then((res) => {
                             console.log(res);
                         }).then(err => {
