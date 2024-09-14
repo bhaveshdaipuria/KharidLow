@@ -1,0 +1,139 @@
+.product-table-container {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .product-table-main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: #f8fafc;
+  }
+  
+  .product-table-wrapper {
+    width: 100%;
+    max-width: 1450px;
+    padding: 24px;
+  }
+  
+  .product-table-card {
+    width: 100%;
+    /* max-width: 700px; */
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-table-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .product-table-header h2 {
+    font-weight: 600;
+    color: #1e293b;
+  }
+  
+  .product-table-content {
+    padding: 16px;
+  }
+  
+  .product-table-table-container {
+    overflow-x: auto;
+  }
+  
+  .product-table-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .product-table-table th,
+  .product-table-table td {
+    padding: 8px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .product-table-table th {
+    background-color: #f1f5f9;
+    font-weight: 500;
+    font-size: 14px;
+    color: #64748b;
+  }
+  
+  .product-table-table td {
+    font-size: 14px;
+    color: #1e293b;
+  }
+  
+  .coin-name {
+    display: flex;
+    align-items: center;
+  }
+  
+  .coin-icon {
+    margin-right: 8px;
+  }
+  
+  .text-emerald {
+    color: #10b981;
+  }
+  
+  .text-red {
+    color: #ef4444;
+  }
+  
+  .product-table-action-button {
+    background-color: transparent;
+    border: 1px solid #e2e8f0;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6366f1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .product-table-action-button:hover {
+    background-color: #6366f1;
+    color: white;
+    border-color: transparent;
+  }
+  
+  .form-label-xs{
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+/* .product-table-container .category-filters, .product-table-container .search-filters,.product-table-container .table-operations{
+   display: flex;
+   justify-content: space-between;
+   gap: 10px; 
+} */
+
+.product-table-container .search-filter-input{
+    position: relative;
+}
+
+.product-table-container .search-filter-input .search-icon{
+    position: absolute;
+    top: 14px;
+    right: 8px;
+}
+
+.product-table-container .action-btns{
+  display: inline;
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.product-image{
+  width: 75px;
+  height: 75px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  

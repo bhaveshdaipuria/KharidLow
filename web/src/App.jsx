@@ -9,6 +9,8 @@ import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
+import ProductNew from './Components/Admin/ProductNew/ProductNew';
+import ProductTable from './Components/Admin/ProductTable/ProductTable';
 
 function App() {
   // const [data, setData] = useState("");
@@ -56,7 +58,9 @@ function App() {
       
       {/* <Register></Register> */}
       {/* <Login></Login> */}
-      <Home></Home>
+      {/* <Home></Home> */}
+      <ProductNew></ProductNew>
+      {/* <ProductTable></ProductTable> */}
 
       <Footer></Footer>
     </>
