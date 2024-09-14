@@ -9,7 +9,6 @@ const cors = require("cors");
 const userRouter = require("./routes/userRouter");
 const indexRouter = require("./routes/indexRouter");
 // const adminRouter = require("./routes/adminRouter");
-// console.log(process.env.NODE_ENV);
 
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
