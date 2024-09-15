@@ -1,11 +1,12 @@
 import React, { Children, useEffect, useRef, useState } from 'react';
 import './ProductNew.css'
-import { FormControl, FormLabel, Select, Input, Textarea, Text, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button, Checkbox, RadioGroup, HStack, FormHelperText, Radio, WrapItem, textDecoration, useToast } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select, Input, Textarea, Text, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button, Checkbox, RadioGroup, HStack, FormHelperText, Radio, WrapItem, textDecoration, useToast, FormErrorMessage } from '@chakra-ui/react';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaEye } from 'react-icons/fa6';
 import { addNewProduct, getCategoryDataService } from '../../../Services/getDataService'
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { IoEyedropOutline } from 'react-icons/io5';
+import Loader from '../../../comman/Loader/Loader';
 
 
 //variables
@@ -20,6 +21,8 @@ function ProductNew() {
     const [subCategories, setSubCategories] = useState([]);
     const [categories, setCategories] = useState([]);
     const [itemList, setItemList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     //variable for getting main image src
     const [mainImageSrc, setMainImageSrc] = useState('');
@@ -46,9 +49,6 @@ function ProductNew() {
         moq: 0,
         isDiscounted: false,
         baseDiscount: 0,
-        size: '',
-        colorName: '',
-        hexCode: '',
         taxType: '',
         taxPercentage: ''
     });
@@ -265,9 +265,34 @@ function ProductNew() {
     }
 
     //methord fotr handling submit
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
-        console.log(productNewForm)
+       setLoading(true);
+       console.log('end', productNewForm);
+       const formData = new FormData();
+       formData.append('productName', productNewForm.productName);
+       formData.append('category', productNewForm.category);
+       formData.append('subCategory', productNewForm.subCategory);
+       formData.append('item', productNewForm.item);
+       formData.append('subHead', productNewForm.subHead);
+       formData.append('sku', productNewForm.sku);
+       formData.append('summary', productNewForm.summary);
+       formData.append('keyHighlights', JSON.stringify(productNewForm.keyHighlights));
+       formData.append('basePrice', productNewForm.basePrice);
+       formData.append('moq', productNewForm.moq);
+       formData.append('isDiscounted', productNewForm.isDiscounted);
+       formData.append('baseDiscount', productNewForm.baseDiscount);
+       formData.append('taxType', productNewForm.taxType);
+       formData.append('mainImage', productNewForm.mainImage);
+       await addNewProduct(formData).then((res) => {
+           console.log(res);
+           setSubmitted(false);
+           setLoading(false)
+       }).then(err => {
+           console.log(err)
+           setSubmitted(false);
+           setLoading(false)
+       });
     }
 
 
@@ -285,7 +310,7 @@ function ProductNew() {
                 <div className="product-category-sec">
                     <h3 className="product-add-sub-head">Category Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-                        <FormControl isRequired>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.category}>
                             <FormLabel className='form-label-sm'>Category</FormLabel>
                             <Select placeholder='Select category' size='sm'
                                 onChange={onCategoryChange}>
@@ -293,23 +318,26 @@ function ProductNew() {
                                     categories.map((category, index) => <option key={category} className='category-options' value={category}>{category}</option>)
                                 }
                             </Select>
+                            <FormErrorMessage>Category is Required.</FormErrorMessage>
                         </FormControl>
-                        <FormControl isRequired>
-                            <FormLabel className='form-label-sm'>Subcategory</FormLabel>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.subCategory}>
+                            <FormLabel className='form-label-sm'>Sub Category</FormLabel>
                             <Select placeholder='Select subcategory' size='sm'
                                 onChange={onSubCategoryChange}>
                                 {
                                     subCategories.map((subCat) => <option key={subCat} className='category-options' value={subCat}>{subCat}</option>)
                                 }
                             </Select>
+                            <FormErrorMessage>Sub Category is Required.</FormErrorMessage>
                         </FormControl>
-                        <FormControl isRequired>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.item}>
                             <FormLabel className='form-label-sm'>Item</FormLabel>
                             <Select placeholder='Select item' size='sm' onChange={onItemChange}>
                                 {
                                     itemList.map((item) => <option key={item.categoryCode} className='category-options' value={item.categoryCode}>{item.name}</option>)
                                 }
                             </Select>
+                            <FormErrorMessage>Item is Required.</FormErrorMessage>
                         </FormControl>
                     </div>
                 </div>
@@ -320,55 +348,29 @@ function ProductNew() {
                     <h3 className="product-add-sub-head">Product Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
 
-                        <FormControl isRequired size='sm'>
-                            <FormLabel className='form-label-sm'>Product name</FormLabel>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.productName}>
+                            <FormLabel className='form-label-sm'>Product Name</FormLabel>
                             <Input placeholder='Product name' name='productName' size='sm' value={productNewForm.productName} onChange={handleInputChange} />
+                            <FormErrorMessage>Product Name is Required.</FormErrorMessage>
                         </FormControl>
 
 
-                        <FormControl isRequired>
-                            <FormLabel className='form-label-sm'>Product label</FormLabel>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.subHead}>
+                            <FormLabel className='form-label-sm'>Product Label</FormLabel>
                             <Input placeholder='Product label' size='sm' name='subHead' value={productNewForm.subHead} onChange={handleInputChange} />
+                            <FormErrorMessage>Product Label is Required.</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl isRequired>
-                            <FormLabel className='form-label-sm'>Product SKU</FormLabel>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.sku}>
+                            <FormLabel className='form-label-sm' >Product SKU</FormLabel>
                             <Input placeholder='Product SKU' size='sm' name='sku' value={productNewForm.sku} onChange={handleInputChange} />
+                            <FormErrorMessage>Product SKU is Required.</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl size='sm' isRequired>
-                            <FormLabel className='form-label-sm'>Size</FormLabel>
-                            <NumberInput size='sm' value={productNewForm.size} onChange={(e) => { handleNumberInputChange(e, 'size') }}>
-                                <NumberInputField placeholder='Size' />
-                                <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                </NumberInputStepper>
-                            </NumberInput>
-                        </FormControl>
-
-                        <FormControl isRequired>
-
-                            <FormLabel className='form-label-sm'>Color</FormLabel>
-                            <div className="product-color-picker" onClick={addColor} style={{
-                                backgroundColor: productNewForm.hexCode.toString(),
-                                color: (productNewForm.hexCode || productNewForm.hexCode.toString() == '#fffff') ? 'white' : 'black',
-                                borderColor: (productNewForm.hexCode || productNewForm.hexCode.toString() == '#fffff') ? 'white' : 'black'
-                            }}>
-                                <IoEyedropOutline className='text-4xl' />
-                            </div>
-
-                            <Input className='hidden-element' placeholder='Color' size='sm' type='color' name='hexCode' onChange={onColorSelect} ref={colorInputRef} />
-                        </FormControl>
-
-                        <FormControl isRequired>
-                            <FormLabel className='form-label-sm'>Color Name</FormLabel>
-                            <Input placeholder='Product label' size='sm' name='colorName' value={productNewForm.colorName} onChange={handleInputChange} />
-                        </FormControl>
-
-                        <FormControl isRequired className='col-span-1 md:col-span-4'>
+                        <FormControl isRequired className='col-span-1 md:col-span-4' isInvalid={submitted && !productNewForm.summary}>
                             <FormLabel className='form-label-sm'>Product summary</FormLabel>
-                            <Textarea placeholder='Here is a sample placeholder' name='summary' value={productNewForm.summary} onChange={handleInputChange} rows={8} size='sm' />
+                            <Textarea placeholder='Product Summary' name='summary' value={productNewForm.summary} onChange={handleInputChange} rows={8} size='sm' />
+                            <FormErrorMessage>Summary is Required.</FormErrorMessage>
                         </FormControl>
 
 
@@ -387,19 +389,21 @@ function ProductNew() {
                                 return (
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5" key={index}>
-                                        <FormControl key={`${index}key`} isRequired size='sm'>
+                                        <FormControl isRequired isInvalid={submitted && !productNewForm.keyHighlights[index].key}>
                                             <FormLabel className='form-label-sm'>Name</FormLabel>
                                             <Input placeholder='Name' size='sm' value={productNewForm.keyHighlights[index].key} name='key' onChange={(e) => { handleKeyHighlightsChange(e, index) }} />
+                                            <FormErrorMessage>Key is Required.</FormErrorMessage>
                                         </FormControl>
 
 
-                                        <FormControl key={`${index}value`} isRequired>
+                                        <FormControl isRequired isInvalid={submitted && !productNewForm.keyHighlights[index].value}>
                                             <FormLabel className='form-label-sm form-label-with-btns'><span>Value</span>
                                                 {
                                                     (productNewForm.keyHighlights.length > 1) ? (<RiDeleteBin5Fill title='Delete Item' className='btn text-lg text-red-600' onClick={() => removeKeyHighlight(index)} />) : ''
                                                 }
                                             </FormLabel>
                                             <Input placeholder='Value' size='sm' value={productNewForm.keyHighlights[index].value} name='value' onChange={(e) => { handleKeyHighlightsChange(e, index) }} />
+                                            <FormErrorMessage>Value is Required.</FormErrorMessage>
                                         </FormControl>
                                     </div>
                                 )
@@ -425,7 +429,7 @@ function ProductNew() {
 
                     <h4 className="product-add-sub-head">Add Product Images</h4>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5 add-product-image-container">
-                        <FormControl className="col-span-3 add-product-image" size='lg'>
+                        <FormControl className="col-span-3 add-product-image" size='lg' isRequired>
                             <div className="add-image-main">
                                 <WrapItem className='add-more-image-btn'>
                                     <Button colorScheme='red' onClick={() => { addImage() }} size='lg'>Add Image  <CiCirclePlus className="text-3xl add-more-icon" /></Button>
@@ -453,17 +457,18 @@ function ProductNew() {
                 <div className="product-category-sec">
                     <h3 className="product-add-sub-head">Set Pricing</h3>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-                        <FormControl size='sm' isRequired>
-                            <FormLabel className='form-label-sm'>Base price</FormLabel>
+                        <FormControl size='sm' isRequired isInvalid={submitted && !productNewForm.basePrice}>
+                            <FormLabel className='form-label-sm'>Base Price</FormLabel>
                             <NumberInput size='sm' value={productNewForm.basePrice} onChange={(e) => { handleNumberInputChange(e, 'basePrice') }}>
-                                <NumberInputField placeholder='Base price' />
+                                <NumberInputField placeholder='Base Price' />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />
                                 </NumberInputStepper>
                             </NumberInput>
+                            <FormErrorMessage>Base Price is Required.</FormErrorMessage>      
                         </FormControl>
-                        <FormControl size='sm' isRequired>
+                        <FormControl size='sm' isRequired isInvalid={submitted && !productNewForm.moq}>
                             <FormLabel className='form-label-sm'>MOQ</FormLabel>
                             <NumberInput size='sm' value={productNewForm.moq} onChange={(e) => { handleNumberInputChange(e, 'moq') }}>
                                 <NumberInputField placeholder='MOQ' />
@@ -472,49 +477,56 @@ function ProductNew() {
                                     <NumberDecrementStepper />
                                 </NumberInputStepper>
                             </NumberInput>
+                            <FormErrorMessage>MOQ is Required.</FormErrorMessage>
                         </FormControl>
-                        <FormControl as='fieldset' isRequired>
-                            <FormLabel className='form-label-sm' as='legend'>Is discounted?</FormLabel>
+                        <FormControl as='fieldset' isRequired isInvalid={submitted && !productNewForm.isDiscounted}>
+                            <FormLabel className='form-label-sm' as='legend'>Is Discounted?</FormLabel>
                             <RadioGroup defaultValue='false' size='sm' value={productNewForm.isDiscounted} onChange={handleIsDiscountedChange}>
                                 <HStack spacing='15%'>
                                     <Radio value='true'>Discounted</Radio>
                                     <Radio value='false'>Not Discounted</Radio>
                                 </HStack>
                             </RadioGroup>
+                            <FormErrorMessage>Is Discounted is Required.</FormErrorMessage>
                         </FormControl>
                         {
                             // in case of discounted
-                            productNewForm.isDiscounted === 'true' ? <FormControl size='sm' isRequired>
-                                <FormLabel className='form-label-sm'>Base discount (%)</FormLabel>
+                            productNewForm.isDiscounted === 'true' ? <FormControl isRequired isInvalid={submitted && !productNewForm.baseDiscount}>
+                                <FormLabel className='form-label-sm'>Base Discount (%)</FormLabel>
                                 <NumberInput size='sm' value={productNewForm.baseDiscount} onChange={(e) => { handleNumberInputChange(e, 'baseDiscount') }}>
-                                    <NumberInputField placeholder='Base discount' />
+                                    <NumberInputField placeholder='Base Discount' />
                                     <NumberInputStepper>
                                         <NumberIncrementStepper />
                                         <NumberDecrementStepper />
                                     </NumberInputStepper>
                                 </NumberInput>
+                                <FormErrorMessage>Base Discount is Required.</FormErrorMessage>
                             </FormControl> : ''
                         }
 
-                        <FormControl as='fieldset' isRequired>
-                            <FormLabel className='form-label-sm' as='legend'>Tax type</FormLabel>
+                        <FormControl as='fieldset' isRequired  isInvalid={submitted && !productNewForm.taxType}>
+
+                            <FormLabel className='form-label-sm' as='legend'>Tax Type</FormLabel>
                             <RadioGroup size='sm' onChange={handletaxTypeChange} value={productNewForm.taxType}>
                                 <HStack spacing='24px'>
                                     <Radio value='inclusive'>Inclusive</Radio>
                                     <Radio value='exclusive'>Exclusive</Radio>
                                 </HStack>
                             </RadioGroup>
+                            <FormErrorMessage>Tax Type is Required.</FormErrorMessage>
                             {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
                         </FormControl>
 
-                        <FormControl isRequired>
-                            <FormLabel className='form-label-sm'>Tax percentage</FormLabel>
+                        <FormControl isRequired  isInvalid={submitted && !productNewForm.taxPercentage}>
+
+                            <FormLabel className='form-label-sm'>Tax Percentage</FormLabel>
                             <Select placeholder='Select Tax Percentage' size='sm'
                                 onChange={onTaxPercentageChange}>
                                 {
                                     taxPercentages.map((item, index) => <option key={item} className='category-options' value={item}>{`${item}%`}</option>)
                                 }
                             </Select>
+                            <FormErrorMessage>Tax Percentage is Required.</FormErrorMessage>
                         </FormControl>
 
                         {/* <FormControl isReadOnly size='sm'>
@@ -532,7 +544,7 @@ function ProductNew() {
                 <hr className='line-beaker' />
 
                 <p className="product-review-text text-md">Preview  <FaEye className='product-preview-btn text-lg' /></p>
-                <Checkbox className="product-submit-checkbox" mt={3}>Want to add new product</Checkbox>
+                {/* <Checkbox className="product-submit-checkbox" mt={3}>Want to add new product</Checkbox> */}
                 <br></br>
 
                 <Button className='add-product-submit-btn'
@@ -540,37 +552,23 @@ function ProductNew() {
                     colorScheme='teal'
                     size='md'
                     type='submit'
-                    onClick={async () => {
-                        console.log('end', productNewForm);
-                        const formData = new FormData();
-                        formData.append('productName', productNewForm.productName);
-                        formData.append('category', productNewForm.category);
-                        formData.append('subCategory', productNewForm.subCategory);
-                        formData.append('item', productNewForm.item);
-                        formData.append('subHead', productNewForm.subHead);
-                        formData.append('sku', productNewForm.sku);
-                        formData.append('summary', productNewForm.summary);
-                        formData.append('keyHighlights', JSON.stringify(productNewForm.keyHighlights));
-                        formData.append('basePrice', productNewForm.basePrice);
-                        formData.append('moq', productNewForm.moq);
-                        formData.append('isDiscounted', productNewForm.isDiscounted);
-                        formData.append('baseDiscount', productNewForm.baseDiscount);
-                        formData.append('taxType', productNewForm.taxType);
-                        formData.append('mainImage', productNewForm.mainImage);
-                        formData.append('size', productNewForm.size);
-                        formData.append('coloName', productNewForm.colorName);
-                        formData.append('hexCode', productNewForm.hexCode);
-                        await addNewProduct(formData).then((res) => {
-                            console.log(res);
-                        }).then(err => {
-                            console.log(err)
-                        });
+                    onClick={ () => {
+                        setSubmitted(true);
+                        if(!productNewForm.mainImage){
+                            toast({
+                                title: 'Add Image before submitting the form',
+                                status: 'error',
+                                isClosable: true
+                            });
+                        }
                     }}
                 >
                     Submit
                 </Button>
 
             </form >
+
+        <Loader show={loading}></Loader>
         </>
     );
 }
