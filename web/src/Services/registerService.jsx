@@ -28,7 +28,30 @@ const addNewColor = async (id, data) => {
         });
     });
 
+}
+
+ //methord for addig new price slab
+ const addNewPriceSlab = async (id, data) => {
+    const url = `${API_URL}/addnewpriceslab/${id}`;
+
+    console.log('id', id);
+    console.log('daata', data);
+
+    //getting data from url
+    // await new Promise(resject)
+    return new Promise(async (resolve, reject) => {
+        await axios({
+            method: 'put',
+            url: url,
+            data: data
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
 
 }
 
-export {addNewColor}
+
+export {addNewColor, addNewPriceSlab}

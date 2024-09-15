@@ -11,7 +11,7 @@ import { IoEyedropOutline } from 'react-icons/io5';
 //variables
 let categoryData = {}; //this var will contain category related data 
 let subCategoryData = {};
-let taxPercentages = [5, 10, 18, 25]
+let taxPercentages = [2.5, 5, 12, 18]
 
 
 function ProductNew() {

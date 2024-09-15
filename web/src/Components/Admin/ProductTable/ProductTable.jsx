@@ -7,6 +7,7 @@ import { CiEdit } from 'react-icons/ci';
 import ProductImagesModal from '../Modals/ProductImagesModal/ProductImagesModal';
 import ProductSizesModal from '../Modals/ProductSizes/ProductSizesModal';
 import ProductColorsModal from '../Modals/ProductColorsModal/ProductColorsModal';
+import PriceSlabModal from '../Modals/PriceSlabModal/PriceSlabModal';
 
 const ProductTable = () => {
     const coins = [
@@ -102,8 +103,6 @@ const ProductTable = () => {
                                                 <th>Item Type</th>
                                                 <th>Price</th>
                                                 <th>Discount</th>
-                                                <th className='text-center'>Size</th>
-                                                <th className='text-center'>Color</th>
                                                 <th className='text-center'>Price Slabs</th>
                                                 <th>Stock Quantity</th>
                                                 <th>Action</th>
@@ -124,8 +123,6 @@ const ProductTable = () => {
                                                     <td className="text-emerald">{coin.basePrice}</td>
                                                     <td className="text-emerald">{coin.baseDiscount}</td>
                                                     <td className="text-red text-center" ><FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' /></td>
-                                                    <td className="text-emerald text-center"><FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' /></td>
-                                                    <td className="text-red text-center"><FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' /></td>
                                                     <td className="text-red">{coin.stock}</td>
                                                     <td className=''>
                                                         <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' />
@@ -145,6 +142,7 @@ const ProductTable = () => {
             {/* <ProductImagesModal></ProductImagesModal> */}
             {/* <ProductSizesModal></ProductSizesModal> */}
             {/* <ProductColorsModal></ProductColorsModal> */}
+            <PriceSlabModal></PriceSlabModal>
         </>
     );
 };
