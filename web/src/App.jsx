@@ -9,7 +9,9 @@ import Footer from './comman/Footer/Footer';
 import ProductDetails from './Components/ProductDetails/ProductDetails';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
-import ProductNew from './components/Admin/ProductNew/ProductNew';
+import ProductNew from './Components/Admin/ProductNew/ProductNew';
+import ProductTable from './Components/Admin/ProductTable/ProductTable';
+// import ProductNew from './components/Admin/ProductNew/ProductNew';
 
 function App() {
   // const [data, setData] = useState("");
@@ -59,6 +61,7 @@ function App() {
       {/* <Login></Login> */}
       {/* <Home></Home> */}
       <ProductNew></ProductNew>
+      {/* <ProductTable></ProductTable> */}
 
       <Footer></Footer>
     </>
