@@ -9,6 +9,7 @@
   /* Subtle shadow */
   display: flex;
   justify-content: center;
+    position: relative;
   width: 100%;
 }
 
@@ -138,6 +139,13 @@
     max-width: 35%;
     /* Slightly wider on larger screens */
   }
+
+
+
+  .profile-side-menu {
+    width: 30% !important;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -149,7 +157,7 @@
   .search-bar {
     margin-left: 40px;
     font-size: 14px;
-    max-width: 55%;
+    max-width: 100%;
     /* Slightly wider on larger screens */
   }
 
@@ -161,4 +169,61 @@
     height: 35px !important;
     font-size: 12px !important;
   }
+
+  .icons-section {
+    margin-left: 6px;
+  }
+}
+
+
+.profile-side-menu {
+  display: flex;
+  flex-flow: column;
+  width: 60%;
+}
+
+
+.profile-side-menu .profile-menu-item {
+  padding: 2%;
+  border: 1px solid grey;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  margin: 2%;
+}
+
+
+.profile-menu-item:hover {
+  text-decoration: none !important;
+  transform: scale(1.1);
+}
+
+
+.slide_menu_head {
+  /* margin: 2%; */
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closeIcon {
+  cursor: pointer;
+  margin-right: 5%;
+}
+
+
+.Slidebackdrop {
+  position: fixed;
+  /* Cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* Semi-transparent background */
+  backdrop-filter: blur(5px);
+  /* Apply blur effect */
+  z-index: 15;
 }

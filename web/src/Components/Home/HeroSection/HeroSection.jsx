@@ -1,15 +1,14 @@
-import React from 'react';
 import Slider from 'react-slick';
 import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import './HeroSection.css';
-import logo from '../../../assets/kllogo.png';
+// import logo from '../../../assets/kllogo.png';
 // import image1 from '../../../../public/images/image1.png'
 
 const HeroSection = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -22,24 +21,24 @@ const HeroSection = () => {
   return (
     <Flex className="hero-container" flexDirection={isMobile ? 'column' : 'row'} background="#D1C4E9">
       {/* Carousel */}
-      <Box className="carousel-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'}>
+      <Box className="carousel-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '10%'}>
         <Slider {...settings}>
-        <Box
+          <Box
             display="flex"
             justifyContent="center"
             alignItems="center"
             height="400px"
             background="#D1C4E9"
           >
-            <img 
+            <img
               src='images/image1.png'
               alt="Slide 1"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
+              style={{
+                width: '100%',
+                height: '100%',
                 objectFit: 'contain',
                 borderRadius: '10px'
-              }} 
+              }}
             />
             {/* Uncomment the following if you want to overlay text */}
             {/* <Text 
@@ -54,8 +53,8 @@ const HeroSection = () => {
             </Text> */}
           </Box>
           {/* <div className=""></div> */}
-          
-          
+
+
           <Box
             display="flex"
             justifyContent="center"
@@ -63,15 +62,15 @@ const HeroSection = () => {
             height="400px"
             background="#D1C4E9"
           >
-            <img 
+            <img
               src='images/image2.png'
               alt="Slide 1"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
+              style={{
+                width: '100%',
+                height: '100%',
                 objectFit: 'contain',
                 borderRadius: '10px'
-              }} 
+              }}
             />
             {/* Uncomment the following if you want to overlay text */}
             {/* <Text 
@@ -92,15 +91,15 @@ const HeroSection = () => {
             height="400px"
             background="#D1C4E9"
           >
-            <img 
+            <img
               src='images/image3.png'
               alt="Slide 1"
-              style={{ 
-                width: '100%', 
-                height: '100%', 
+              style={{
+                width: '100%',
+                height: '100%',
                 objectFit: 'contain',
                 borderRadius: '10px'
-              }} 
+              }}
             />
             {/* Uncomment the following if you want to overlay text */}
             {/* <Text 
@@ -118,8 +117,8 @@ const HeroSection = () => {
       </Box>
 
       {/* Text Content */}
-      <Box className="text-container" flex={isMobile ? 'none' : '1'} width={isMobile ? '100%' : '50%'} padding="16px" background="#D1C4E9">
-        <Text fontSize="2xl" fontWeight="bold" color="black">
+      <Box className="text-container" flex={isMobile ? 'none' : '1'} width={'100%'} padding={isMobile ? "2rem" : "3rem"} background="#D1C4E9">
+        <Text className='heroHeading' fontWeight="bold" color="black">
           Hero Section Title
         </Text>
         <Text mt={4} color="black">

@@ -1,10 +1,11 @@
-
-import { Card, CardBody, Button, CardFooter, ButtonGroup, Heading, Image, Stack, Text, useBreakpointValue } from '@chakra-ui/react';
-import './ProductScroll.css'
+import { Card, CardBody, ButtonGroup, Button, CardFooter, Heading, Image, Stack, Text, useBreakpointValue } from '@chakra-ui/react';
+// import './FeatureProducts.css'
 import { HomeProductData } from '../../Data/HomeProductData';
 import Carousel from 'react-multi-carousel';
 
+
 const ProductScroll = () => {
+
 
     const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -30,11 +31,10 @@ const ProductScroll = () => {
     };
 
 
-
     return (
         <>
             <div className="product-scroll-category-list">
-                <h4 className="product-scroll-category-head">New Arrival Products</h4>
+                <h4 className="product-scroll-category-head">Featured Products</h4>
                 <div className="product-scroll-container">
                     {
                         isMobile ?
@@ -46,7 +46,7 @@ const ProductScroll = () => {
                                             src={data.image}
                                             borderRadius='lg'
                                         />
-                                        <Stack className='homeProductDetails' spacing='3'>
+                                        <Stack mt='6' className='homeProductDetails' spacing='3'>
                                             <Heading size='xs' className='product-scroll-item-head'>{data.name}</Heading>
                                             <Text color='blue.600' fontSize='md'>
                                                 ${data.price}
@@ -73,7 +73,7 @@ const ProductScroll = () => {
                                 responsive={responsive}
                                 ssr={true} // means to render carousel on server-side.
                                 infinite={true}
-                                autoPlay={false}
+                                autoPlay={true}
                                 autoPlaySpeed={4000}
                                 keyBoardControl={true}
                                 customTransition="all 1s"
@@ -92,7 +92,7 @@ const ProductScroll = () => {
                                                     src={data.image}
                                                     borderRadius='lg'
                                                 />
-                                                <Stack mt='4' className='homeProductDetails' spacing='3'>
+                                                <Stack mt='6' className='homeProductDetails' spacing='3'>
                                                     <Heading size='xs' className='product-scroll-item-head'>{data.name}</Heading>
                                                     <Text color='blue.600' fontSize='md'>
                                                         ${data.price}

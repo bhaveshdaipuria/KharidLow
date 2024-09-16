@@ -1,5 +1,5 @@
 import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
-import './productImagesModal.css'
+import './ProductImagesModal.css'
 import { CiCirclePlus } from "react-icons/ci";
 import { useRef, useState } from "react";
 const ProductImagesModal = () => {
