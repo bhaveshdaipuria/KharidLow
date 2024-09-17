@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Box, Flex, Input } from '@chakra-ui/react';
 import './CountCalculator.css'
 

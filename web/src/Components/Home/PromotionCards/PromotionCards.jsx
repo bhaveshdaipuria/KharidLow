@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './PromotionCards.css';
 
 const PromotionCards = () => {
@@ -21,7 +21,7 @@ const PromotionCards = () => {
   return (
     <div>
       {showFirstContainer ? (
-        <div className="promotion-container">
+        <div className="promotionCardHome">
           <iframe src="https://lottie.host/?file=d9b9ba6a-d8d0-4cf1-abe6-5e7ecef2f5ef/ie6Q7Om0Vd.json"></iframe>
           <h1>Ready to start?</h1>
           <p>Start learning React and Swift with zero coding experience.</p>
@@ -33,7 +33,7 @@ const PromotionCards = () => {
           </div>
         </div>
       ) : (
-        <div className="promotion-container2">
+        <div className="container2">
           <h1>Sorry but I have nothing to sell..</h1>
           <iframe src="https://lottie.host/?file=1d134e7f-600a-4635-9a63-3bbc9f9e1e46/Ct4r6aIvKv.json"></iframe>
         </div>

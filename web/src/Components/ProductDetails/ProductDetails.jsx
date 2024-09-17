@@ -98,48 +98,53 @@ function ProductDetails() {
                                 </Button>
                             </ButtonGroup>
 
-                            <div className="product-summary">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam et sunt, aut magnam nostrum qui numquam eligendi voluptas consequuntur quod veritatis iusto amet deleniti aspernatur animi inventore nemo earum possimus consectetur dolor modi voluptates nobis? At ex alias quos esse quaerat, distinctio dignissimos beatae doloribus minus, totam sit aliquam, recusandae exercitationem qui deleniti possimus expedita cupiditate ab deserunt consequatur minima nam illo sint. Nam, optio dolorum asperiores earum, sit quidem natus dolores aperiam voluptatem voluptas, itaque quis labore quas omnis!
-                            </div>
 
-                            {/* <div className="key-highlights"> */}
-                                <div className="highlights-container">
-                                    <h2>Key Highlights</h2>
-                                    <div className="row">
-                                        <div className="highlight-item">
-                                            <span className="label">Design</span>
-                                            <span className="value">Graphic Print</span>
-                                        </div>
-                                        <div className="highlight-item">
-                                            <span className="label">Fit</span>
-                                            <span className="value">Oversized Fit</span>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="highlight-item">
-                                            <span className="label">Neck</span>
-                                            <span className="value">Round Neck</span>
-                                        </div>
-                                        <div className="highlight-item">
-                                            <span className="label">Occasion</span>
-                                            <span className="value">Casual Wear</span>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="highlight-item">
-                                            <span className="label">Sleeve Style</span>
-                                            <span className="value">Half Sleeve</span>
-                                        </div>
-                                        <div className="highlight-item">
-                                            <span className="label">Wash Care</span>
-                                            <span className="value">Gentle Machine Wash</span>
-                                        </div>
-                                    </div>
-                                </div>
                             {/* </div> */}
                         </div>
                     </div>
                 </div>
+                <div className='product-key-summary'>
+                    <div className="product-summary">
+                        <h2 className='py-3' >Description</h2>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam et sunt, aut magnam nostrum qui numquam eligendi voluptas consequuntur quod veritatis iusto amet deleniti aspernatur animi inventore nemo earum possimus consectetur dolor modi voluptates nobis? At ex alias quos esse quaerat, distinctio dignissimos beatae doloribus minus, totam sit aliquam, recusandae exercitationem qui deleniti possimus expedita cupiditate ab deserunt consequatur minima nam illo sint. Nam, optio dolorum asperiores earum, sit quidem natus dolores aperiam voluptatem voluptas, itaque quis labore quas omnis!
+                    </div>
+
+                    {/* <div className="key-highlights"> */}
+                    <div className="highlights-container">
+                        <h2 className='py-3' >Key Highlights</h2>
+                        <div className="row">
+                            <div className="highlight-item">
+                                <span className="label">Design</span>
+                                <span className="value">Graphic Print</span>
+                            </div>
+                            <div className="highlight-item">
+                                <span className="label">Fit</span>
+                                <span className="value">Oversized Fit</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="highlight-item">
+                                <span className="label">Neck</span>
+                                <span className="value">Round Neck</span>
+                            </div>
+                            <div className="highlight-item">
+                                <span className="label">Occasion</span>
+                                <span className="value">Casual Wear</span>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="highlight-item">
+                                <span className="label">Sleeve Style</span>
+                                <span className="value">Half Sleeve</span>
+                            </div>
+                            <div className="highlight-item">
+                                <span className="label">Wash Care</span>
+                                <span className="value">Gentle Machine Wash</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </>
     )
