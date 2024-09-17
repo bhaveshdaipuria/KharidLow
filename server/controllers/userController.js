@@ -4,7 +4,7 @@ const userModel = require("../models/user");
 
 module.exports.userRegister = async (req, res) => {
 
-    let { name, email, password, contactNo, address } = req.body;
+    let { fullName, email, password, contactNo, address } = req.body;
 
     let user = await userModel.findOne({ email });
 
@@ -14,7 +14,7 @@ module.exports.userRegister = async (req, res) => {
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(password, salt, async (err, hash) => {
                 let createdUser = await userModel.create({
-                    name,
+                    fullName,
                     password: hash,
                     email,
                     address,

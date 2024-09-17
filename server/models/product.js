@@ -54,14 +54,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     productImages: [{
-        type: String,
-        // required: true,
-        // validate: {
-        //     validator: function (value) {
-        //         return value.length <= 5;
-        //     },
-        //     message: '{VALUE} is too long'
-        // }
+        type: String
     }],
     basePrice: {
         type: Number,
@@ -126,54 +119,15 @@ const productSchema = new mongoose.Schema({
     //         message: 'Quantity price slabs are required when quantity-based pricing is enabled'
     //     }
     // },
-    sizeVariations: {
-        type: [{
-            size: {
-                type: Number,
-                // required: true
-            },
-            price: {
-                type: Number,
-                // required: true
-            }
-        }]
-    },
-    isColorVariable: {
-        type: Boolean,
-        // required: true
-    },
-    colorVariations: {
-        type: [{
-            name: {
-                type: String,
-                // required: true
-            },
-            hexCode: {
-                type: String,
-                // required: true
-            },
-            image: {
-                type: String,
-                // required: true
-            }
-        }],
-        validate: {
-            validator: function (value) {
-                // Validate colorVariations only if isColorVariable is true
-                if (this.isColorVariable) {
-                    return value.length > 0;
-                }
-                return true; // No validation if isColorVariable is false
-            },
-            message: 'Color variations are required when color variability is enabled'
-        }
-    },
     taxType: {
         type: String,
         required: true
+    },
+    taxRate: {
+        type: Number,
+        required: true
     }
 }, { timestamps: true });
-
 
 module.exports = productSchema;
 
