@@ -26,6 +26,26 @@ const getCategoryDataService = async () => {
     });
 }
 
+//service for getting all product data
+const getAllProduct = async () => {
+    const url = `${API_URL}/allproduct`;
+
+    return new Promise(async (resolve, reject) => {
+        await axios({
+            method: 'get',
+            url: url,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: {}
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
+}
+
 //service for adding new product
 const addNewProduct = async (data) => {
     const url = `${API_URL}/addnewproduct`;
@@ -45,4 +65,4 @@ const addNewProduct = async (data) => {
     });
 }
 
-export { getCategoryDataService, addNewProduct }
+export { getCategoryDataService, addNewProduct, getAllProduct }

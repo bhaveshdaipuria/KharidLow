@@ -11,6 +11,7 @@ import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import ProductNew from './Components/Admin/ProductNew/ProductNew';
 import ProductTable from './Components/Admin/ProductTable/ProductTable';
+import Cart from './Components/Cart/Cart';
 // import ProductNew from './components/Admin/ProductNew/ProductNew';
 
 function App() {
@@ -60,7 +61,8 @@ function App() {
       {/* <Register></Register> */}
       {/* <Login></Login> */}
       {/* <Home></Home> */}
-      <ProductNew></ProductNew>
+      {/* <ProductNew></ProductNew> */}
+      <Cart></Cart>
       {/* <ProductTable></ProductTable> */}
 
       <Footer></Footer>

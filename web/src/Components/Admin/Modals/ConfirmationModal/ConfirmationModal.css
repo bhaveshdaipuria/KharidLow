@@ -1,0 +1,10 @@
+.confirmation-modal-content .modal-subhead{
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(44, 43, 43);
+}
+
+.confirmation-modal-content .confirmation-text, .confirmation-modal-content .confirmation-pass{
+    font-size: 17px;
+    font-weight: 500;
+}

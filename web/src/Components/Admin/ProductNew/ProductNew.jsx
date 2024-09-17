@@ -5,8 +5,8 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaEye } from 'react-icons/fa6';
 import { addNewProduct, getCategoryDataService } from '../../../Services/getDataService'
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import { IoEyedropOutline } from 'react-icons/io5';
 import Loader from '../../../comman/Loader/Loader';
+import ProductPreviewModal from '../Modals/ProductPreviewModal/ProductPreviewModal';
 
 
 //variables
@@ -23,6 +23,7 @@ function ProductNew() {
     const [itemList, setItemList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
     //variable for getting main image src
     const [mainImageSrc, setMainImageSrc] = useState('');
@@ -267,32 +268,32 @@ function ProductNew() {
     //methord fotr handling submit
     const onSubmit = async (event) => {
         event.preventDefault();
-       setLoading(true);
-       console.log('end', productNewForm);
-       const formData = new FormData();
-       formData.append('productName', productNewForm.productName);
-       formData.append('category', productNewForm.category);
-       formData.append('subCategory', productNewForm.subCategory);
-       formData.append('item', productNewForm.item);
-       formData.append('subHead', productNewForm.subHead);
-       formData.append('sku', productNewForm.sku);
-       formData.append('summary', productNewForm.summary);
-       formData.append('keyHighlights', JSON.stringify(productNewForm.keyHighlights));
-       formData.append('basePrice', productNewForm.basePrice);
-       formData.append('moq', productNewForm.moq);
-       formData.append('isDiscounted', productNewForm.isDiscounted);
-       formData.append('baseDiscount', productNewForm.baseDiscount);
-       formData.append('taxType', productNewForm.taxType);
-       formData.append('mainImage', productNewForm.mainImage);
-       await addNewProduct(formData).then((res) => {
-           console.log(res);
-           setSubmitted(false);
-           setLoading(false)
-       }).then(err => {
-           console.log(err)
-           setSubmitted(false);
-           setLoading(false)
-       });
+        setLoading(true);
+        console.log('end', productNewForm);
+        const formData = new FormData();
+        formData.append('productName', productNewForm.productName);
+        formData.append('category', productNewForm.category);
+        formData.append('subCategory', productNewForm.subCategory);
+        formData.append('item', productNewForm.item);
+        formData.append('subHead', productNewForm.subHead);
+        formData.append('sku', productNewForm.sku);
+        formData.append('summary', productNewForm.summary);
+        formData.append('keyHighlights', JSON.stringify(productNewForm.keyHighlights));
+        formData.append('basePrice', productNewForm.basePrice);
+        formData.append('moq', productNewForm.moq);
+        formData.append('isDiscounted', productNewForm.isDiscounted);
+        formData.append('baseDiscount', productNewForm.baseDiscount);
+        formData.append('taxType', productNewForm.taxType);
+        formData.append('mainImage', productNewForm.mainImage);
+        await addNewProduct(formData).then((res) => {
+            console.log(res);
+            setSubmitted(false);
+            setLoading(false)
+        }).then(err => {
+            console.log(err)
+            setSubmitted(false);
+            setLoading(false)
+        });
     }
 
 
@@ -466,7 +467,7 @@ function ProductNew() {
                                     <NumberDecrementStepper />
                                 </NumberInputStepper>
                             </NumberInput>
-                            <FormErrorMessage>Base Price is Required.</FormErrorMessage>      
+                            <FormErrorMessage>Base Price is Required.</FormErrorMessage>
                         </FormControl>
                         <FormControl size='sm' isRequired isInvalid={submitted && !productNewForm.moq}>
                             <FormLabel className='form-label-sm'>MOQ</FormLabel>
@@ -504,7 +505,7 @@ function ProductNew() {
                             </FormControl> : ''
                         }
 
-                        <FormControl as='fieldset' isRequired  isInvalid={submitted && !productNewForm.taxType}>
+                        <FormControl as='fieldset' isRequired isInvalid={submitted && !productNewForm.taxType}>
 
                             <FormLabel className='form-label-sm' as='legend'>Tax Type</FormLabel>
                             <RadioGroup size='sm' onChange={handletaxTypeChange} value={productNewForm.taxType}>
@@ -517,7 +518,7 @@ function ProductNew() {
                             {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
                         </FormControl>
 
-                        <FormControl isRequired  isInvalid={submitted && !productNewForm.taxPercentage}>
+                        <FormControl isRequired isInvalid={submitted && !productNewForm.taxPercentage}>
 
                             <FormLabel className='form-label-sm'>Tax Percentage</FormLabel>
                             <Select placeholder='Select Tax Percentage' size='sm'
@@ -543,7 +544,11 @@ function ProductNew() {
 
                 <hr className='line-beaker' />
 
-                <p className="product-review-text text-md">Preview  <FaEye className='product-preview-btn text-lg' /></p>
+                <p className="product-review-text text-md">Preview  <FaEye className='product-preview-btn text-lg'
+                onClick={() => {
+                    setIsPreviewOpen(true);
+                }}
+                 /></p>
                 {/* <Checkbox className="product-submit-checkbox" mt={3}>Want to add new product</Checkbox> */}
                 <br></br>
 
@@ -552,9 +557,9 @@ function ProductNew() {
                     colorScheme='teal'
                     size='md'
                     type='submit'
-                    onClick={ () => {
+                    onClick={() => {
                         setSubmitted(true);
-                        if(!productNewForm.mainImage){
+                        if (!productNewForm.mainImage) {
                             toast({
                                 title: 'Add Image before submitting the form',
                                 status: 'error',
@@ -568,7 +573,11 @@ function ProductNew() {
 
             </form >
 
-        <Loader show={loading}></Loader>
+            {/* Loader */}
+            <Loader show={loading}></Loader>
+
+            {/* Modal */}
+            <ProductPreviewModal isOpen={isPreviewOpen} setIsOpen={setIsPreviewOpen}></ProductPreviewModal>
         </>
     );
 }

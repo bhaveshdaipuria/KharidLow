@@ -8,10 +8,10 @@ import 'slick-carousel/slick/slick-theme.css';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <>
     {/*  Wrapping chankra App in chakra provider so we can use it in our project*/}
     <ChakraProvider>
       <App />
     </ChakraProvider>
-  </StrictMode>,
+  </>,
 )

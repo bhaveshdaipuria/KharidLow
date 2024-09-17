@@ -2,7 +2,7 @@ import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalF
 import './productImagesModal.css'
 import { CiCirclePlus } from "react-icons/ci";
 import { useRef, useState } from "react";
-const ProductImagesModal = () => {
+const ProductImagesModal = (props) => {
 
     const [mainImage, setMainImage] = useState('');
     const [productImagesArr, setProductImagesArr] = useState([]);
@@ -38,10 +38,10 @@ const ProductImagesModal = () => {
     }
 
     return (
-        <Modal size='xl' isOpen={true}>
+        <Modal size='xl' isOpen={props.isOpen}>
             <ModalOverlay />
             <ModalContent className="add-images-modal-content">
-                <ModalHeader className="product-modal-header">Product Images  <ModalCloseButton /></ModalHeader>
+                <ModalHeader className="product-modal-header">Product Images<ModalCloseButton onClick={() => props.setIsOpen(false)} /></ModalHeader>
                 <ModalBody >
                     <h4 className="modal-subhead">Main Image</h4>
                     <div className="modal-main-image-container">
