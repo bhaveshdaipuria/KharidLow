@@ -1,60 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ProductTable.css'; // Import external CSS file
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react';
+import { Input, Select } from '@chakra-ui/react';
 import { FaEye, FaMagnifyingGlass, FaPen } from 'react-icons/fa6';
-import { CiEdit } from 'react-icons/ci';
 import ProductImagesModal from '../Modals/ProductImagesModal/ProductImagesModal';
-import ProductSizesModal from '../Modals/ProductSizes/ProductSizesModal';
-import ProductColorsModal from '../Modals/ProductColorsModal/ProductColorsModal';
 import PriceSlabModal from '../Modals/PriceSlabModal/PriceSlabModal';
+import { getAllProduct } from '../../../Services/getDataService';
+import Loader from '../../../comman/Loader/Loader';
+import ProductPreviewModal from '../Modals/ProductPreviewModal/ProductPreviewModal';
+import ConfirmationModal from '../Modals/ConfirmationModal/ConfirmationModal';
 
 const ProductTable = () => {
-    const coins = [
-        {
-            id: 1,
-            mainImage: '',
-            productName: 'Red T-shirt',
-            category: 'RTC',
-            subCategory: '$67,177.77',
-            item: 'shirts',
-            sku: 'PJK/UI/009',
-            basePrice: '100',
-            baseDiscount: '10%',
-            color: '#FFA037',
-            taxType: "",
-            productCode: "",
-            keyHighlights: "",
-            baseSize: "",
-            baseColor: "",
-            stock: 11
-        },
-        {
-            id: 2,
-            name: 'Solana',
-            symbol: 'SOL',
-            price: '$187.50',
-            supply: '444,812,093',
-            hourlyChange: '0.24%',
-            dailyChange: '1.77%',
-            weeklyChange: '-7.16%',
-            color: '#1E293B',
-            iconPath:
-                'M12.488 21.159a.5.5 0 0 1 .354-.146h12.22a.25.25 0 0 1 .176.427l-2.413 2.414...',
-        },
-        {
-            id: 3,
-            name: 'Polygon',
-            symbol: 'MATIC',
-            price: '$1.50',
-            supply: '6,872,692,303',
-            hourlyChange: '0.5%',
-            dailyChange: '2.3%',
-            weeklyChange: '-4.5%',
-            color: '#E84191',
-            iconPath: 'M21.21 10.888c0 1.042-1.454 1.888-3.247 1.888...',
-        },
-    ];
+
+    //var for sytorng all products data
+    const [allProductsData, setAllProductsData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+    //this methord will keep track of selected object id object which have to be delete or update or preview
+    const [selectedProduct, setSelectedProduct] = useState('');
+
+    useEffect(() => {
+        setLoading(true);
+        getAllProduct().then((res) => {
+            setLoading(false);
+            setAllProductsData(res);
+        }).catch(err => {
+            setLoading(false)
+            console.log(err);
+        })
+    }, []);
+
+    const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
+    const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
+
+    const makeStockEditable = (e, index) => {
+        console.log(index);
+    }
+
+    //methord for deleting a product
+    const deleteProduct = async (id) => {
+        await deleteProduct(id).then((res) => {
+            setAllProductsData((prev) =>
+                prev.filter(item => item._id !== id)
+            );
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 
     return (
         <>
@@ -96,38 +90,66 @@ const ProductTable = () => {
                                     <table className="product-table-table">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Image</th>
-                                                <th>Name</th>
-                                                <th>SKU</th>
-                                                <th>Item Type</th>
-                                                <th>Price</th>
-                                                <th>Discount</th>
-                                                <th className='text-center'>Price Slabs</th>
-                                                <th>Stock Quantity</th>
+                                                <th><div className="text-center">#</div></th>
+                                                <th><div className="text-center">Image</div></th>
+                                                <th><div className="text-center">Name</div></th>
+                                                <th><div className="text-center">SKU</div></th>
+                                                <th><div className="text-center">Item Type</div></th>
+                                                <th><div className="text-center">Price</div></th>
+                                                <th><div className="text-center">Discount</div></th>
+                                                <th><div className="text-center">Price Slabs</div></th>
+                                                <th><div className="text-center">Stock Quantity</div></th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {coins.map((coin) => (
-                                                <tr key={coin.id}>
-                                                    <td>{coin.id}</td>
+                                            {allProductsData.map((product, index) => (
+                                                <tr key={index}>
+                                                    <td><div className="text-center">{index + 1}</div></td>
                                                     <td>
-                                                        <div className="product-image">
-                                                            {/* <img src="" alt="" className="image-view"/> */}
+                                                        <div className="text-center flex justify-center">
+                                                            <div className="product-image">
+                                                                <img src={`http://localhost:3000/${product.mainImage}`} alt="Product Main Image" className="image-view" />
+                                                            </div>
                                                         </div>
                                                     </td>
-                                                    <td>{coin.productName}</td>
-                                                    <td>{coin.sku}</td>
-                                                    <td>{coin.item}</td>
-                                                    <td className="text-emerald">{coin.basePrice}</td>
-                                                    <td className="text-emerald">{coin.baseDiscount}</td>
-                                                    <td className="text-red text-center" ><FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' /></td>
-                                                    <td className="text-red">{coin.stock}</td>
+                                                    <td><div className="text-center text-capitalize">{product.productName}</div></td>
+                                                    <td><div className="text-center">{product.sku}</div></td>
+                                                    <td><div className="text-center text-capitalize">{product.item}</div></td>
+                                                    <td className="text-emerald"><div className="text-center">{product.basePrice}</div></td>
+                                                    <td className="text-emerald"><div className="text-center">{product.baseDiscount}%</div></td>
+                                                    <td className="text-red text-center" >
+                                                        <div className="text-center">
+                                                            <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' onClick={() => { 
+                                                                setSelectedProduct(product);
+                                                                setIsPriceSlabModalOpen(true) 
+                                                                }} />
+                                                        </div>
+                                                    </td>
+                                                    <td className="text-red">
+                                                        <div className="text-center" style={{ fontWeight: 500 }}>
+                                                            {/* {product.stock}  */}
+                                                            11
+                                                            <FaPen title='Edit Stock' className='mx-2 btn text-sm text-blue-600 action-btns' onClick={(e) => { 
+                                                                setSelectedProduct(product);
+                                                                makeStockEditable(e, index)
+                                                                 }} />
+                                                        </div>
+                                                    </td>
                                                     <td className=''>
                                                         <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' />
-                                                        <FaEye title='Preview' className='btn text-md text-blue-600 action-btns' />
-                                                        <RiDeleteBin5Fill title='Delete Item' className='btn text-md text-red-600 action-btns'></RiDeleteBin5Fill>
+                                                        <FaEye title='Preview' className='btn text-md text-blue-600 action-btns'
+                                                            onClick={() => { 
+                                                                setSelectedProduct(product);
+                                                                setIsPreviewOpen(true)
+                                                             }}
+                                                        />
+                                                        <RiDeleteBin5Fill
+                                                            onClick={() => { 
+                                                                setSelectedProduct(product);
+                                                                setIsConfirmationModalOpen(true) }
+                                                            }
+                                                            title='Delete Item' className='btn text-md text-red-600 action-btns'></RiDeleteBin5Fill>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -139,10 +161,17 @@ const ProductTable = () => {
                     </div>
                 </main>
             </div>
-            {/* <ProductImagesModal></ProductImagesModal> */}
-            {/* <ProductSizesModal></ProductSizesModal> */}
-            {/* <ProductColorsModal></ProductColorsModal> */}
-            <PriceSlabModal></PriceSlabModal>
+
+            {/* modals */}
+            <ProductImagesModal isOpen={isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
+            <PriceSlabModal isOpen={isPriceSlabModalOpen} setIsOpen={setIsPriceSlabModalOpen}></PriceSlabModal>
+            <ProductPreviewModal isOpen={isPreviewOpen} setIsOpen={setIsPreviewOpen} productDetails={selectedProduct}></ProductPreviewModal>
+            <ConfirmationModal isOpen={isConfirmationModalOpen} setIsOpen={setIsConfirmationModalOpen}
+                confirmationPass={'Confirm'} action={'Do you really want to delete this item?'}
+                onConfirmation={() => {deleteProduct(selectedProduct._id)}}></ConfirmationModal>
+
+            {/* Loader */}
+            <Loader show={loading}></Loader>
         </>
     );
 };

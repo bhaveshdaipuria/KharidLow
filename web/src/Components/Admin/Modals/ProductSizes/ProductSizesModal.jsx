@@ -14,9 +14,9 @@ const ProductSizesModal = () => {
 
                     <form className="grid grid-cols-1 gap-3 md:grid-cols-3">
                         <FormControl size='sm' isRequired>
-                            <FormLabel className='form-label-xs'>Product size</FormLabel>
+                            <FormLabel className='form-label-xs'>Product Size</FormLabel>
                             <NumberInput size='xs'>
-                                <NumberInputField placeholder='Product size' />
+                                <NumberInputField placeholder='Product Size' />
                                 <NumberInputStepper size='xs'>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />
@@ -25,9 +25,9 @@ const ProductSizesModal = () => {
                         </FormControl>
 
                         <FormControl size='sm' isRequired>
-                            <FormLabel className='form-label-xs'>Product price</FormLabel>
+                            <FormLabel className='form-label-xs'>Product Price</FormLabel>
                             <NumberInput size='xs'>
-                                <NumberInputField placeholder='Product price' />
+                                <NumberInputField placeholder='Product Price' />
                                 <NumberInputStepper size='xs'>
                                     <NumberIncrementStepper />
                                     <NumberDecrementStepper />

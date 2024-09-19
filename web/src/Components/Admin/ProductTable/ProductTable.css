@@ -129,11 +129,16 @@
   cursor: pointer;
 }
 
-.product-image{
+.product-table-container .product-image{
   width: 75px;
   height: 75px;
   border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
+  overflow: hidden;
+}
+
+.product-table-container .product-image img{
+  object-fit: cover;
 }
   

@@ -3,33 +3,31 @@ import { FaRegHeart, FaRegStar, FaStar } from 'react-icons/fa6'
 import './ProductDetails.css'
 import CountCalculator from '../../comman/CountCalculator/CountCalculator'
 import { Button, ButtonGroup } from '@chakra-ui/react'
+import { useState } from 'react'
 
-function ProductDetails() {
+function ProductDetails({ productDetails }) {
+
+    //var for deciding active image src of the imges
+    const [activeImageSrc, setActiveImageSrc] = useState('');
     return (
         <>
+        {console.log(productDetails)}
             <div className="product-details">
                 <div className="product-details-inner">
                     <div className="product-view">
                         <div className="product-view-inner">
                             <div className="product-main-image">
-                                <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
+                                <img src="https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
                             </div>
                             <div className="product-other-image">
-                                <div className="other-img">
-                                    <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
-                                </div>
-                                <div className="other-img">
-                                    <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
-                                </div>
-                                <div className="other-img">
-                                    <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
-                                </div>
-                                <div className="other-img">
-                                    <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
-                                </div>
-                                <div className="other-img">
-                                    <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
-                                </div>
+                                {
+                                    productDetails && productDetails.productImages && productDetails.productImages.map((img) => (<div className="other-img">
+                                        <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg"
+                                            onClick={() => { setActiveImageSrc(img) }}
+                                            alt="" />
+                                    </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
@@ -38,10 +36,10 @@ function ProductDetails() {
                             <div className="head-n-wishlist">
                                 <div className="headings">
                                     <h3>
-                                        <b>Product Name</b>
+                                        <b>{productDetails && productDetails.productName}</b>
                                     </h3>
                                     <div className="product-tagline">
-                                        Tag Line about the product
+                                    {productDetails && productDetails.subHead}
                                     </div>
                                     <div className="product-rating">
                                         <FaStar />
@@ -51,8 +49,8 @@ function ProductDetails() {
                                         <FaRegStar />
                                     </div>
                                     <div className="price-n-discount">
-                                        <span className="price">999</span>
-                                        <sup className="discount">20% OFF</sup>
+                                        <span className="price">{productDetails && productDetails.basePrice}</span>
+                                        <sup className="discount">{productDetails && productDetails.baseDiscount}% OFF</sup>
                                         <span className="discounted-price">799</span>
                                     </div>
                                 </div>
@@ -65,7 +63,7 @@ function ProductDetails() {
 
                             <CountCalculator></CountCalculator>
 
-                            <div className="product-variations">
+                            {/* <div className="product-variations">
                                 <div className="variation-heading">Sizes</div>
                                 <div className="variation-items">
                                     <div className="item">28</div>
@@ -75,8 +73,8 @@ function ProductDetails() {
                                     <div className="item">36</div>
                                     <div className="item">38</div>
                                 </div>
-                            </div>
-                            <div className="product-variations">
+                            </div> */}
+                            {/* <div className="product-variations">
                                 <div className="variation-heading">Colors</div>
                                 <div className="variation-items">
                                     <div className="item"></div>
@@ -88,7 +86,7 @@ function ProductDetails() {
                                     <div className="item"></div>
                                     <div className="item"></div>
                                 </div>
-                            </div>
+                            </div> */}
                             <ButtonGroup spacing='2' className='product-buttons'>
                                 <Button variant='solid' colorScheme='blue' fontSize='medium'>
                                     Buy now
@@ -98,7 +96,44 @@ function ProductDetails() {
                                 </Button>
                             </ButtonGroup>
 
+                            <div className="product-summary">
+                            {productDetails && productDetails.summary}
+                            </div>
 
+                            {/* <div className="key-highlights"> */}
+                            <div className="highlights-container">
+                                <h2>Key Highlights</h2>
+                                <div className="row">
+                                    <div className="highlight-item">
+                                        <span className="label">Design</span>
+                                        <span className="value">Graphic Print</span>
+                                    </div>
+                                    <div className="highlight-item">
+                                        <span className="label">Fit</span>
+                                        <span className="value">Oversized Fit</span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="highlight-item">
+                                        <span className="label">Neck</span>
+                                        <span className="value">Round Neck</span>
+                                    </div>
+                                    <div className="highlight-item">
+                                        <span className="label">Occasion</span>
+                                        <span className="value">Casual Wear</span>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="highlight-item">
+                                        <span className="label">Sleeve Style</span>
+                                        <span className="value">Half Sleeve</span>
+                                    </div>
+                                    <div className="highlight-item">
+                                        <span className="label">Wash Care</span>
+                                        <span className="value">Gentle Machine Wash</span>
+                                    </div>
+                                </div>
+                            </div>
                             {/* </div> */}
                         </div>
                     </div>
