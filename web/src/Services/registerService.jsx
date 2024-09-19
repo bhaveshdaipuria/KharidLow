@@ -7,6 +7,26 @@ const API_URL = BACKEND.API_URL;
 // ---------------------------------------------------------This file containsall the register api of the application---------------------------------------------------------
 
 
+//service for adding new product
+const addNewProduct = async (data) => {
+    const url = `${API_URL}/addnewproduct`;
+
+    console.log('daata', data);
+
+    return new Promise(async (resolve, reject) => {
+        await axios({
+            method: 'post',
+            url: url,
+            data: data
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
+}
+
+
 //service for adding new color to product
 const addNewColor = async (id, data) => {
     const url = `${API_URL}/addnewcolor/${id}`;
@@ -54,4 +74,24 @@ const addNewColor = async (id, data) => {
 }
 
 
-export {addNewColor, addNewPriceSlab}
+//service for adding new user
+const register = async (data) => {
+    const url = `${API_URL}/register`;
+
+    console.log('daata', data);
+
+    return new Promise(async (resolve, reject) => {
+        await axios({
+            method: 'post',
+            url: url,
+            data: data
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
+}
+
+
+export {addNewColor, addNewPriceSlab, addNewProduct, register}

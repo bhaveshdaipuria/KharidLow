@@ -9,7 +9,9 @@ import {
     Input,
     InputRightElement,
     Button,
+    useToast,
 } from '@chakra-ui/react';
+import { login } from '../../Services/getDataService';
 
 const Login = () => {
 
@@ -24,6 +26,8 @@ const Login = () => {
             password: false,
         },
     });
+
+    const toast = useToast();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -49,9 +53,23 @@ const Login = () => {
     const isEmailError = formState.email === '' && formState.touched.email;
     const isPasswordError = formState.password === '' && formState.touched.password;
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await login(formState).then((res) => {
+            toast({
+                title: 'Login Successfully',
+                status: 'success',
+                isClosable: true
+            });
+        }).catch((err) => {
+            console.log(err);
+        });
+
+    }
+
     return (
         <>
-            <form action="/login" method="post">
+            <form onSubmit={onSubmit}>
                 <div className="login-details">
                     <div className="inputs">
                         <div className="input-filled-outer">

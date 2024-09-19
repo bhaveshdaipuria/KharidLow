@@ -46,11 +46,10 @@ const getAllProduct = async () => {
     });
 }
 
-//service for adding new product
-const addNewProduct = async (data) => {
-    const url = `${API_URL}/addnewproduct`;
 
-    console.log('daata', data)
+//service for getting all product data
+const login = async (data) => {
+    const url = `${API_URL}/login`;
 
     return new Promise(async (resolve, reject) => {
         await axios({
@@ -65,4 +64,4 @@ const addNewProduct = async (data) => {
     });
 }
 
-export { getCategoryDataService, addNewProduct, getAllProduct }
+export { getCategoryDataService, getAllProduct, login }

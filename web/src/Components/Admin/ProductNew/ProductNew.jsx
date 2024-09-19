@@ -3,7 +3,6 @@ import './ProductNew.css'
 import { FormControl, FormLabel, Select, Input, Textarea, Text, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button, Checkbox, RadioGroup, HStack, FormHelperText, Radio, WrapItem, textDecoration, useToast, FormErrorMessage } from '@chakra-ui/react';
 import { CiCirclePlus } from "react-icons/ci";
 import { FaEye } from 'react-icons/fa6';
-import { addNewProduct, getCategoryDataService } from '../../../Services/getDataService'
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import Loader from '../../../comman/Loader/Loader';
 import ProductPreviewModal from '../Modals/ProductPreviewModal/ProductPreviewModal';
@@ -86,7 +85,7 @@ function ProductNew() {
                             <FormLabel className='form-label-sm'>Sub Category</FormLabel>
                             <Select placeholder='Select subcategory' size='sm'
                                 onChange={(e) => { onSubCategoryChange(e, setItemList, setProductNewForm) }}>
-                                    <option value="" disabled hidden>Select Sub Category</option>
+                                <option value="" disabled hidden>Select Sub Category</option>
                                 {
                                     subCategories.map((subCat) => <option key={subCat} className='category-options' value={subCat}>{subCat}</option>)
                                 }
@@ -303,7 +302,7 @@ function ProductNew() {
                             <FormLabel className='form-label-sm'>Tax Percentage</FormLabel>
                             <Select placeholder='Select Tax Percentage' size='sm'
                                 onChange={(e) => { ontaxPercentageChange(e, setProductNewForm) }}>
-                                    <option value="" disabled hidden>Select Tax Percentage</option>
+                                <option value="" disabled hidden>Select Tax Percentage</option>
                                 {
                                     taxPercentages.map((item, index) => <option key={item} className='category-options' value={item}>{`${item}%`}</option>)
                                 }
@@ -358,7 +357,7 @@ function ProductNew() {
             <Loader show={loading}></Loader>
 
             {/* Modal */}
-            <ProductPreviewModal isOpen={isPreviewOpen} setIsOpen={setIsPreviewOpen}></ProductPreviewModal>
+            {isPreviewOpen ? <ProductPreviewModal isOpen={isPreviewOpen} productDetails={{...productNewForm, mainImage:mainImageSrc}} setIsOpen={setIsPreviewOpen}></ProductPreviewModal> : ''}
         </>
     );
 }

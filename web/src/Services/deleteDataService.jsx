@@ -7,11 +7,9 @@ const API_URL = BACKEND.API_URL;
 
 // api sor deletng the object
 
-//service for adding new product
+//service for delete new product
 const deleteProduct = async (id) => {
     const url = `${API_URL}/addnewproduct/${id}`;
-
-    console.log('daata', data)
 
     return new Promise(async (resolve, reject) => {
         await axios({
