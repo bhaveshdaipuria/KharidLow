@@ -8,7 +8,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri';
 import Loader from '../../../comman/Loader/Loader';
 import ProductPreviewModal from '../Modals/ProductPreviewModal/ProductPreviewModal';
 import { useLocation } from 'react-router-dom';
-import { handleInputChange, handleNumberInputChange, handleKeyHighlightsChange, handleIsDiscountedChange, handletaxTypeChange, getCategoryData, onCategoryChange, onSubCategoryChange, onItemChange, addNewKeyHighlight, addImage, onMainImageChange, onTaxPercentageChange, onSubmit } from './methords'
+import { handleInputChange, handleNumberInputChange, handleKeyHighlightsChange, handleIsDiscountedChange, handletaxTypeChange, getCategoryData, onCategoryChange, onSubCategoryChange, onItemChange, addNewKeyHighlight, addImage, onMainImageChange, ontaxPercentageChange, onSubmit } from './methords'
 
 let taxPercentages = [2.5, 5, 12, 18];
 
@@ -299,7 +299,7 @@ function ProductNew() {
 
                             <FormLabel className='form-label-sm'>Tax Percentage</FormLabel>
                             <Select placeholder='Select Tax Percentage' size='sm'
-                                onChange={(e) => {onTaxPercentageChange(e, setProductNewForm)}}>
+                                onChange={(e) => {ontaxPercentageChange(e, setProductNewForm)}}>
                                 {
                                     taxPercentages.map((item, index) => <option key={item} className='category-options' value={item}>{`${item}%`}</option>)
                                 }

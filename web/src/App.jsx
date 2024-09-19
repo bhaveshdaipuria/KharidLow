@@ -23,14 +23,14 @@ function App() {
     <>
       {/* Header Comman component for all routes */}
       {/* <RouterProvider router={router} /> */}
-      <Header></Header>
-  
+      {/* <Header></Header> */}
+
       {/* <ProductDetails></ProductDetails> */}
-      
+
       {/* <Register></Register> */}
       {/* <Login></Login> */}
       {/* <Home></Home> */}
-      <ProductNew></ProductNew>
+      {/* <ProductNew></ProductNew> */}
       {/* <Cart></Cart> */}
       {/* <ProductTable></ProductTable> */}
 
@@ -39,8 +39,9 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="product" element={<ProductDetails />} />
           <Route path="register" element={<Register />} />
-	  <Route path="category" element={<Category />} />
-	  <Route path="new-arrival" element={<NewArrival />} />
+          <Route path="category" element={<Category />} />
+          <Route path="new-arrival" element={<NewArrival />} />
+          <Route path="add-product" element={<ProductNew />} />
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>
