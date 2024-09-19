@@ -14,8 +14,11 @@ import {
 import { PhoneIcon } from '@chakra-ui/icons'
 import { Col } from 'react-bootstrap';
 import { register } from '../../Services/registerService';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+    const navigate = useNavigate();
 
     const [show, setShow] = React.useState(false);
     const handleClick = () => setShow(!show);
@@ -97,6 +100,7 @@ const Register = () => {
             isPasswordError = false;
             isConfirmPasswordError = false;
             isContactNoError = false;
+            navigate('/');
         }).catch((err) => {
             console.log(err)
         });

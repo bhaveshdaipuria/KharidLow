@@ -12,8 +12,11 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import { login } from '../../Services/getDataService';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+    const navigate = useNavigate();
 
     const [show, setShow] = React.useState(false);
     const handleClick = () => setShow(!show);
@@ -61,6 +64,7 @@ const Login = () => {
                 status: 'success',
                 isClosable: true
             });
+            navigate('/')
         }).catch((err) => {
             console.log(err);
         });
