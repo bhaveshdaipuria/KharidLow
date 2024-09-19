@@ -61,8 +61,8 @@ function App() {
       {/* <Register></Register> */}
       {/* <Login></Login> */}
       {/* <Home></Home> */}
-      {/* <ProductNew></ProductNew> */}
-      <Cart></Cart>
+      <ProductNew></ProductNew>
+      {/* <Cart></Cart> */}
       {/* <ProductTable></ProductTable> */}
 
       <Footer></Footer>

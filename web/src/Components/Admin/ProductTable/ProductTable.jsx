@@ -19,7 +19,7 @@ const ProductTable = () => {
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
     //this methord will keep track of selected object id object which have to be delete or update or preview
-    const [selectedProductId, setSelectedProductId] = useState('');
+    const [selectedProduct, setSelectedProduct] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -121,7 +121,7 @@ const ProductTable = () => {
                                                     <td className="text-red text-center" >
                                                         <div className="text-center">
                                                             <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' onClick={() => { 
-                                                                setSelectedProductId(product._id);
+                                                                setSelectedProduct(product);
                                                                 setIsPriceSlabModalOpen(true) 
                                                                 }} />
                                                         </div>
@@ -131,7 +131,7 @@ const ProductTable = () => {
                                                             {/* {product.stock}  */}
                                                             11
                                                             <FaPen title='Edit Stock' className='mx-2 btn text-sm text-blue-600 action-btns' onClick={(e) => { 
-                                                                setSelectedProductId(product._id);
+                                                                setSelectedProduct(product);
                                                                 makeStockEditable(e, index)
                                                                  }} />
                                                         </div>
@@ -140,13 +140,13 @@ const ProductTable = () => {
                                                         <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' />
                                                         <FaEye title='Preview' className='btn text-md text-blue-600 action-btns'
                                                             onClick={() => { 
-                                                                setSelectedProductId(product._id);
+                                                                setSelectedProduct(product);
                                                                 setIsPreviewOpen(true)
                                                              }}
                                                         />
                                                         <RiDeleteBin5Fill
                                                             onClick={() => { 
-                                                                setSelectedProductId(product._id);
+                                                                setSelectedProduct(product);
                                                                 setIsConfirmationModalOpen(true) }
                                                             }
                                                             title='Delete Item' className='btn text-md text-red-600 action-btns'></RiDeleteBin5Fill>
@@ -165,10 +165,10 @@ const ProductTable = () => {
             {/* modals */}
             <ProductImagesModal isOpen={isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
             <PriceSlabModal isOpen={isPriceSlabModalOpen} setIsOpen={setIsPriceSlabModalOpen}></PriceSlabModal>
-            <ProductPreviewModal isOpen={isPreviewOpen} setIsOpen={setIsPreviewOpen}></ProductPreviewModal>
+            <ProductPreviewModal isOpen={isPreviewOpen} setIsOpen={setIsPreviewOpen} productDetails={selectedProduct}></ProductPreviewModal>
             <ConfirmationModal isOpen={isConfirmationModalOpen} setIsOpen={setIsConfirmationModalOpen}
                 confirmationPass={'Confirm'} action={'Do you really want to delete this item?'}
-                onConfirmation={() => {deleteProduct(selectedProductId)}}></ConfirmationModal>
+                onConfirmation={() => {deleteProduct(selectedProduct._id)}}></ConfirmationModal>
 
             {/* Loader */}
             <Loader show={loading}></Loader>
