@@ -1,6 +1,7 @@
 // -------------------------------------- This files contains all then methords used in product new components-------------
 
-import { addNewProduct, getCategoryDataService } from "../../../Services/getDataService";
+import { addNewProduct } from "../../../Services/registerService";
+import { getCategoryDataService } from "../../../Services/getDataService";
 
 //variables
 let categoryData = {}; //this var will contain category related data 
