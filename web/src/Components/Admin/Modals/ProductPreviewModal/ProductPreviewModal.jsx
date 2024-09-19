@@ -10,7 +10,6 @@ const ProductPreviewModal = (props) => {
     return (
         <Modal size='full' isOpen={props.isOpen}>
             <ModalOverlay />
-            {console.log(props)}
             <ModalContent className="product-preview-modal-content">
             <ModalCloseButton onClick={closeModal} />
                 <ModalBody >

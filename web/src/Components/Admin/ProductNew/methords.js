@@ -129,7 +129,7 @@ const onItemChange = (event, setProductNewForm) => {
     );
 }
 
-const onTaxPercentageChange = (event, setProductNewForm) => {
+const ontaxPercentageChange = (event, setProductNewForm) => {
     setProductNewForm(prev => ({
         ...prev,
         taxPercentage: event.target.value
@@ -211,7 +211,7 @@ const onMainImageChange = (event, toast, setMainImageSrc, setProductNewForm) => 
                     ...prev,
                     mainImage: imageSrc
                 }
-               
+
             });
 
         }
@@ -228,8 +228,8 @@ const onMainImageChange = (event, toast, setMainImageSrc, setProductNewForm) => 
 }
 
 
- //methord fotr handling submit
- const onSubmit = async (event, productNewForm, setLoading, setSubmitted) => {
+//methord fotr handling submit
+const onSubmit = async (event, productNewForm, setLoading, setSubmitted, setProductNewForm, toast, setMainImageSrc) => {
     event.preventDefault();
     setLoading(true);
     const formData = new FormData();
@@ -248,15 +248,51 @@ const onMainImageChange = (event, toast, setMainImageSrc, setProductNewForm) => 
     formData.append('baseDiscount', productNewForm.baseDiscount);
     formData.append('taxType', productNewForm.taxType);
     formData.append('mainImage', productNewForm.mainImage);
+    formData.append('taxPercentage', productNewForm.taxPercentage);
     await addNewProduct(formData).then((res) => {
-        console.log(res);
         setSubmitted(false);
-        setLoading(false)
-    }).then(err => {
-        console.log(err)
+        setLoading(false);
+        reset(setProductNewForm, setMainImageSrc);
+        
+    }).catch(err => {
+        console.log('error', err)
         setSubmitted(false);
-        setLoading(false)
+        setLoading(false);
+        toast({
+            title: err.response.data.message,
+            status: 'error',
+            isClosable: true,
+            // variant: 'top-accent'
+        });
+        response
     });
+}
+
+//methiord for reseting form
+const reset = (setProductNewForm, setMainImageSrc) => {
+    setProductNewForm({
+        category: '',
+        subCategory: '',
+        item: '',
+        productName: '',
+        subHead: '',
+        sku: '',
+        summary: '',
+        keyHighlights: [
+            {
+                key: '',
+                value: ''
+            }
+        ],
+        mainImage: '',
+        basePrice: 0,
+        moq: 0,
+        isDiscounted: false,
+        baseDiscount: 0,
+        taxType: '',
+        taxPercentage: ''
+    });
+    setMainImageSrc('');
 }
 
 
@@ -267,6 +303,6 @@ const onMainImageChange = (event, toast, setMainImageSrc, setProductNewForm) => 
 //exports
 export {
     handleInputChange, handleNumberInputChange, handleKeyHighlightsChange, handleIsDiscountedChange, handletaxTypeChange,
-    getCategoryData, onCategoryChange, onSubCategoryChange, onItemChange, onTaxPercentageChange, addNewKeyHighlight,
+    getCategoryData, onCategoryChange, onSubCategoryChange, onItemChange, ontaxPercentageChange, addNewKeyHighlight,
     removeKeyHighlight, addImage, onMainImageChange, onSubmit
 }

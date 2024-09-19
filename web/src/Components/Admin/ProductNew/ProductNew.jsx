@@ -63,7 +63,7 @@ function ProductNew() {
 
     return (
         <>
-            <form className="container mx-auto px-4 product-new-outer py-5" encType="multipart/form-data" onSubmit={(e) => {onSubmit(e, productNewForm, setLoading, setSubmitted)}}>
+            <form className="container mx-auto px-4 product-new-outer py-5" encType="multipart/form-data" onSubmit={(e) => { onSubmit(e, productNewForm, setLoading, setSubmitted, setProductNewForm, toast, setMainImageSrc) }}>
                 <h2 className="add-product-main-heading">
                     Add Product
                 </h2>
@@ -75,6 +75,7 @@ function ProductNew() {
                             <FormLabel className='form-label-sm'>Category</FormLabel>
                             <Select placeholder='Select category' size='sm'
                                 onChange={(e) => { onCategoryChange(e, setSubCategories, setItemList, setProductNewForm) }}>
+                                <option value="" disabled hidden>Select category</option>
                                 {
                                     categories.map((category, index) => <option key={category} className='category-options' value={category}>{category}</option>)
                                 }
@@ -84,7 +85,8 @@ function ProductNew() {
                         <FormControl isRequired isInvalid={submitted && !productNewForm.subCategory}>
                             <FormLabel className='form-label-sm'>Sub Category</FormLabel>
                             <Select placeholder='Select subcategory' size='sm'
-                                onChange={(e) => {onSubCategoryChange(e, setItemList, setProductNewForm)}}>
+                                onChange={(e) => { onSubCategoryChange(e, setItemList, setProductNewForm) }}>
+                                    <option value="" disabled hidden>Select Sub Category</option>
                                 {
                                     subCategories.map((subCat) => <option key={subCat} className='category-options' value={subCat}>{subCat}</option>)
                                 }
@@ -93,7 +95,8 @@ function ProductNew() {
                         </FormControl>
                         <FormControl isRequired isInvalid={submitted && !productNewForm.item}>
                             <FormLabel className='form-label-sm'>Item</FormLabel>
-                            <Select placeholder='Select item' size='sm' onChange={(e) => {onItemChange(e, setProductNewForm)}}>
+                            <option value="" disabled hidden>Select Item</option>
+                            <Select placeholder='Select item' size='sm' onChange={(e) => { onItemChange(e, setProductNewForm) }}>
                                 {
                                     itemList.map((item) => <option key={item.categoryCode} className='category-options' value={item.categoryCode}>{item.name}</option>)
                                 }
@@ -186,7 +189,7 @@ function ProductNew() {
 
 
                         <div className="add-more-btn">
-                            <CiCirclePlus className="text-3xl add-more-icon" onClick={() => {addNewKeyHighlight(setProductNewForm)}} title='Add More' />
+                            <CiCirclePlus className="text-3xl add-more-icon" onClick={() => { addNewKeyHighlight(setProductNewForm) }} title='Add More' />
                         </div>
                     </div>
 
@@ -197,7 +200,7 @@ function ProductNew() {
 
 
                     <div className="hidden-element">
-                        <Input placeholder='Main Image' size='sm' onChange={(e) => {onMainImageChange(e, toast, setMainImageSrc, setProductNewForm)}} type='file' ref={addImageInputRef} />
+                        <Input placeholder='Main Image' size='sm' onChange={(e) => { onMainImageChange(e, toast, setMainImageSrc, setProductNewForm) }} type='file' ref={addImageInputRef} />
                     </div>
 
                     <h4 className="product-add-sub-head">Add Product Images</h4>
@@ -299,7 +302,8 @@ function ProductNew() {
 
                             <FormLabel className='form-label-sm'>Tax Percentage</FormLabel>
                             <Select placeholder='Select Tax Percentage' size='sm'
-                                onChange={(e) => {ontaxPercentageChange(e, setProductNewForm)}}>
+                                onChange={(e) => { ontaxPercentageChange(e, setProductNewForm) }}>
+                                    <option value="" disabled hidden>Select Tax Percentage</option>
                                 {
                                     taxPercentages.map((item, index) => <option key={item} className='category-options' value={item}>{`${item}%`}</option>)
                                 }
