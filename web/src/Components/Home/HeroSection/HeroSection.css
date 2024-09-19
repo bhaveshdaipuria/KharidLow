@@ -52,7 +52,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  padding: 3rem;
   width: 100%; /* Ensure it takes the full width of its container */
 }
 
@@ -67,7 +67,7 @@ body {
 
   .text-container {
     order: 2; /* Move text below carousel */
-    padding: 10px; /* Adjust padding for smaller screens */
+    padding: 3rem; /* Adjust padding for smaller screens */
   }
 
   .carousel-text {
@@ -75,4 +75,8 @@ body {
     left: 10px;
     font-size: 1rem; /* Adjust for smaller screens */
   }
+}
+
+.heroHeading{
+  font-size: 2.5rem;
 }
