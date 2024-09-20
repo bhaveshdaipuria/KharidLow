@@ -12,6 +12,7 @@ import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import ProductNew from './Components/Admin/ProductNew/ProductNew';
 import ProductTable from './Components/Admin/ProductTable/ProductTable';
+import Cart from './Components/Cart/Cart';
 // import ProductNew from './components/Admin/ProductNew/ProductNew';
 import { Toaster } from 'react-hot-toast';
 
@@ -21,6 +22,17 @@ function App() {
   return (
     <>
       {/* Header Comman component for all routes */}
+      {/* <RouterProvider router={router} /> */}
+      {/* <Header></Header> */}
+
+      {/* <ProductDetails></ProductDetails> */}
+
+      {/* <Register></Register> */}
+      {/* <Login></Login> */}
+      {/* <Home></Home> */}
+      {/* <ProductNew></ProductNew> */}
+      {/* <Cart></Cart> */}
+      {/* <ProductTable></ProductTable> */}
 
       <Routes>
         <Route path='/' element={<Layout />} >
@@ -29,6 +41,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="category" element={<Category />} />
           <Route path="new-arrival" element={<NewArrival />} />
+          <Route path="add-product" element={<ProductNew />} />
           <Route path="login" element={<Login />} />
         </Route>
       </Routes>

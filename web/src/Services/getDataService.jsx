@@ -26,11 +26,30 @@ const getCategoryDataService = async () => {
     });
 }
 
-//service for adding new product
-const addNewProduct = async (data) => {
-    const url = `${API_URL}/addnewproduct`;
+//service for getting all product data
+const getAllProduct = async () => {
+    const url = `${API_URL}/allproduct`;
 
-    console.log('daata', data)
+    return new Promise(async (resolve, reject) => {
+        await axios({
+            method: 'get',
+            url: url,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: {}
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
+}
+
+
+//service for getting all product data
+const login = async (data) => {
+    const url = `${API_URL}/login`;
 
     return new Promise(async (resolve, reject) => {
         await axios({
@@ -45,4 +64,4 @@ const addNewProduct = async (data) => {
     });
 }
 
-export { getCategoryDataService, addNewProduct }
+export { getCategoryDataService, getAllProduct, login }

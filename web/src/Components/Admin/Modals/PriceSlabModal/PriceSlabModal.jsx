@@ -3,7 +3,7 @@ import './PriceSlabModal.css'
 import { useRef, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { addNewPriceSlab } from "../../../../Services/registerService";
-const PriceSlabModal = () => {
+const PriceSlabModal = (props) => {
 
     const [priceSlabForm, setPriceSlabForm] = useState({
         moq: 0,
@@ -30,11 +30,15 @@ const PriceSlabModal = () => {
         });
     }
 
+    const closeModal = () => {
+        props.setIsOpen(false)
+    }
+
     return (
-        <Modal size='xl' isOpen={true}>
+        <Modal size='xl' isOpen={props.isOpen}>
             <ModalOverlay />
             <ModalContent className="price-slab-modal-content">
-                <ModalHeader className="product-modal-header">Product Price Slabs<ModalCloseButton /></ModalHeader>
+                <ModalHeader className="product-modal-header">Product Price Slabs<ModalCloseButton onClick={closeModal} /></ModalHeader>
                 <ModalBody >
                     <h4 className="modal-subhead">Add Price Slab</h4>
 
@@ -77,8 +81,8 @@ const PriceSlabModal = () => {
                             <div className="product-table-wrapper">
                                 <div className="product-table-card">
                                     <header className="product-table-header">
-                                        <h2>Product Size List</h2>
-                                        <div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <h2 className="price-slab-table-head">Product Size List</h2>
+                                        <div className="table-operations">
                                             
                                             <div className="search-filters grid gap-2 grid-cols-2 ">
                                                 <div className="search-filter-input">
