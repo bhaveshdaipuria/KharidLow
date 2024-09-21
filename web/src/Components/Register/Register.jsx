@@ -9,12 +9,13 @@ import {
 	InputRightElement,
 	Button,
 	InputLeftElement,
-	useToast,
-} from "@chakra-ui/react";
-import { PhoneIcon } from "@chakra-ui/icons";
-import { Col } from "react-bootstrap";
-import { addUser } from "../../Services/userServices/userService";
-import { useNavigate } from "react-router-dom";
+	useToast
+} from '@chakra-ui/react';
+import { PhoneIcon } from '@chakra-ui/icons'
+import { Col } from 'react-bootstrap';
+import { addUser } from '../../Services/userServices/userService';
+import { useNavigate } from 'react-router-dom';
+import { FaGoogle } from 'react-icons/fa6';
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -264,16 +265,24 @@ const Register = () => {
 									</div>
 								</Col>
 							</div>
-
-							<Button colorScheme="teal" type="submit">
+							<Button
+								colorScheme='teal'
+								type='submit'
+							>
 								Submit
 							</Button>
+
+							<hr className='line-beaker' />
+							<div className="signup-with-google">
+								<h4 className='signup-with-google-head'>OR</h4>
+								<Button className='signup-with-google-btn'><FaGoogle className='text-4xl' /> &nbsp;&nbsp; Sign Up with google</Button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</>
-	);
+	)
 };
 
 export default Register;

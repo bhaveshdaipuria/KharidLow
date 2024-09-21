@@ -23,6 +23,33 @@
     border-radius: 30px;
 }
 
+.login-in-form .line-breaker{
+    margin-bottom: 0;
+    
+}
+
+.login-with-google{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login-with-google-head{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-top: 0;
+}
+
+.login-with-google-btn{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 @media screen and (max-width: 970px) {
     .input-filled-outer {
         width: 60%;
