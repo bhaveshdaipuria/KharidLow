@@ -8,10 +8,11 @@ import ProductDetails from "../Components/ProductDetails/ProductDetails";
 import Register from "../Components/Register/Register";
 import UserAccount from "../Components/UserAccount/UserAccount";
 import Layout from "../Layout/Layout";
-import { createBrowserRouter } from "react-router-dom";
 import RoleAuthRoute from "../utils/auth/RoleAuth";
 import ProductNew from "../Components/Admin/ProductNew/ProductNew";
 import ProductTable from "../Components/Admin/ProductTable/ProductTable";
+import NotFound from "../Components/NotFound/NotFound";
+import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
     {
@@ -71,5 +72,9 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: '*',
+        element: <NotFound/>
+    }
 
 ]);
