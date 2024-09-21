@@ -1,19 +1,19 @@
 import React from "react";
 import "./Register.css";
 import {
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    InputGroup,
-    Input,
-    InputRightElement,
-    Button,
-    InputLeftElement,
-    useToast
+	FormControl,
+	FormLabel,
+	FormErrorMessage,
+	InputGroup,
+	Input,
+	InputRightElement,
+	Button,
+	InputLeftElement,
+	useToast
 } from '@chakra-ui/react';
 import { PhoneIcon } from '@chakra-ui/icons'
 import { Col } from 'react-bootstrap';
-import { register } from '../../Services/registerService';
+import { addUser } from '../../Services/userServices/userService';
 import { useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa6';
 
@@ -265,24 +265,24 @@ const Register = () => {
 									</div>
 								</Col>
 							</div>
-                            <Button
-                                colorScheme='teal'
-                                type='submit'
-                            >
-                                Submit
-                            </Button>
+							<Button
+								colorScheme='teal'
+								type='submit'
+							>
+								Submit
+							</Button>
 
-                            <hr className='line-beaker' />
-                            <div className="signup-with-google">
-                                <h4 className='signup-with-google-head'>OR</h4>
-                                <Button className='signup-with-google-btn'><FaGoogle className='text-4xl' /> &nbsp;&nbsp; Sign Up with google</Button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </>
-    )
+							<hr className='line-beaker' />
+							<div className="signup-with-google">
+								<h4 className='signup-with-google-head'>OR</h4>
+								<Button className='signup-with-google-btn'><FaGoogle className='text-4xl' /> &nbsp;&nbsp; Sign Up with google</Button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</>
+	)
 };
 
 export default Register;

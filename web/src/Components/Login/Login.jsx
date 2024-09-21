@@ -11,7 +11,7 @@ import {
     Button,
     useToast,
 } from '@chakra-ui/react';
-import { login } from '../../Services/getDataService';
+import { userLogin } from '../../Services/userServices/authService';
 import { useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa6';
 
