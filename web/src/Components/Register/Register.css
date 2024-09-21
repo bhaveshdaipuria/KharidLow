@@ -46,3 +46,30 @@
         width: 90% !important;
     }
 }
+
+.signup-form .line-breaker{
+    margin-bottom: 0;
+    
+}
+
+.signup-with-google{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.signup-with-google-head{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-top: 0;
+}
+
+.signup-with-google-btn{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

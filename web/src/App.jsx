@@ -1,36 +1,24 @@
-import "./App.css";
-import Home from "./Components/Home/Home";
-import Layout from "./Layout/Layout";
-import Category from "./Components/Category/Category";
-import NewArrival from "./Components/NewArrival/NewArrival";
-import Header from "./comman/Header";
-import axios from "axios";
+import './App.css';
+import Home from './Components/Home/Home';
+import Layout from './Layout/Layout';
+import Category from './Components/Category/Category';
+import NewArrival from './Components/NewArrival/NewArrival';
 import { Routes, Route } from "react-router-dom";
-import Footer from "./comman/Footer/Footer";
-import ProductDetails from "./Components/ProductDetails/ProductDetails";
-import Register from "./Components/Register/Register";
-import Login from "./Components/Login/Login";
-import ProductNew from "./Components/Admin/ProductNew/ProductNew";
-import ProductTable from "./Components/Admin/ProductTable/ProductTable";
-import Cart from "./Components/Cart/Cart";
-// import ProductNew from './components/Admin/ProductNew/ProductNew';
-import { Toaster } from "react-hot-toast";
+import ProductDetails from './Components/ProductDetails/ProductDetails';
+import Register from './Components/Register/Register';
+import Login from './Components/Login/Login';
+import ProductNew from './Components/Admin/ProductNew/ProductNew';
+import ProductTable from './Components/Admin/ProductTable/ProductTable';
+import Cart from './Components/Cart/Cart';
+import { Toaster } from 'react-hot-toast';
+import Checkout from './Components/Checkout/Checkout';
+import UserAuthRoute from './utils/auth/UserAuth';
+import RoleAuthRoute from './utils/auth/RoleAuth';
+
 
 function App() {
   return (
     <>
-      {/* Header Comman component for all routes */}
-      {/* <RouterProvider router={router} /> */}
-      {/* <Header></Header> */}
-
-      {/* <ProductDetails></ProductDetails> */}
-
-      {/* <Register></Register> */}
-      {/* <Login></Login> */}
-      {/* <Home></Home> */}
-      {/* <ProductNew></ProductNew> */}
-      {/* <Cart></Cart> */}
-      {/* <ProductTable></ProductTable> */}
 
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -39,8 +27,19 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="category" element={<Category />} />
           <Route path="new-arrival" element={<NewArrival />} />
-          <Route path="add-product" element={<ProductNew />} />
           <Route path="login" element={<Login />} />
+
+          {/* Only logged In user can access these routes */}
+          <Route element={<UserAuthRoute />}>
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="my-cart" element={<Cart />} />
+
+            {/* Only admin can access these routes */}
+            <Route path='admin/' element={<RoleAuthRoute role='admin' />}>
+              <Route path="add-product" element={<ProductNew />} />
+              <Route path="product-table" element={<ProductTable />} />
+            </Route>
+          </Route>
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />
