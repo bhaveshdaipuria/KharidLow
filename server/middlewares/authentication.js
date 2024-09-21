@@ -1,18 +1,25 @@
 const jwt = require("jsonwebtoken");
+const userModel = require("../models/user");
 
-async function authentication(req, res, next) {
-    const token = req.cookies.token;
-    if (!token) {
-        res.status(401).send({ error: "Please authenticate using a valid token" });
-    } else {
-        try {
-            const data = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = data;
-            next();
-        } catch (error) {
-            return res.status(401).json({ error: "Some error" });
+function adminAuth(req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const userRole = (await userModel.findOne({ email: decoded.email }))
+          .role;
+        if (userRole === "admin") {
+          next();
+        } else {
+          res.status(401).json({ err: "Only admin allowed" });
         }
-    }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-module.exports = authentication;
+module.exports = { adminAuth };
