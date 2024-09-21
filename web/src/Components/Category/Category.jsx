@@ -4,14 +4,23 @@ import { BsFillBagHeartFill } from "react-icons/bs";
 import "./Category.css"
 import Recommended from "../../comman/RecommendedCategory/Recommend";
 import Sidebar from "../../comman/SidebarCategory/Sidebar";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 // import categoryData  from "../../Data/CategoryData";
 
 function Registration() {
+
+    const isMobile = useBreakpointValue({ base: true, md: false });
+
+
     return (
         <>
-            <Sidebar />
-            <Recommended />
+            {
+                !isMobile && <>
+                    <Sidebar />
+                    <Recommended />
+                </>
+            }
             <div className="card-container" >
                 <div className="card">
                     <img src="https://m.media-amazon.com/images/I/6125yAfsJKL._AC_UX575_.jpg" className="card-img" />
