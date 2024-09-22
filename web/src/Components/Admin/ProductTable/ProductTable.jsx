@@ -94,8 +94,9 @@ const ProductTable = () => {
                                                 <th><div className="text-center">Name</div></th>
                                                 <th><div className="text-center">SKU</div></th>
                                                 <th><div className="text-center">Item Type</div></th>
-                                                <th><div className="text-center">Price</div></th>
-                                                <th><div className="text-center">Discount</div></th>
+                                                <th><div className="text-center">Price <smal className="text-2xs">(each unit)</smal> </div></th>
+                                                <th><div className="text-center">Discount<smal className="text-2xs">(each unit)</smal></div></th>
+                                                <th><div className="text-center">Net Price<smal className="text-2xs">(each unit)</smal></div></th>
                                                 <th><div className="text-center">Price Slabs</div></th>
                                                 <th><div className="text-center">Stock Quantity</div></th>
                                                 <th>Action</th>
@@ -110,6 +111,7 @@ const ProductTable = () => {
                                                             setIsPriceSlabModalOpen={setIsPriceSlabModalOpen}
                                                             setIsPreviewOpen={setIsPreviewOpen}
                                                             setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+                                                            setAllProductsData={setAllProductsData}
                                                         />
                                                     ))}
                                                 </tbody> : ''
