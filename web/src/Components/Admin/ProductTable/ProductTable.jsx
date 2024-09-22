@@ -10,63 +10,64 @@ import Loader from "../../../comman/Loader/Loader";
 import ProductPreviewModal from "../Modals/ProductPreviewModal/ProductPreviewModal";
 import ConfirmationModal from "../Modals/ConfirmationModal/ConfirmationModal";
 import { deleteProduct } from "../../../Services/adminServices/productsService";
+import ProductTableRow from "./ProductTableRow/ProductTableRow";
 
 const ProductTable = () => {
-	const [allProductsData, setAllProductsData] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-	const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [allProductsData, setAllProductsData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-	const [selectedProduct, setSelectedProduct] = useState("");
+    const [selectedProduct, setSelectedProduct] = useState("");
 
-	useEffect(() => {
-		setLoading(true);
-		getAllProducts()
-			.then((res) => {
-				setLoading(false);
-				setAllProductsData(res);
-			})
-			.catch((err) => {
-				setLoading(false);
-				console.log(err);
-			});
-	}, []);
+    useEffect(() => {
+        setLoading(true);
 
-	const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
-	const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
+        async function fetchProducts() {
+            try {
+                const res = await getAllProducts();
+                setLoading(false);
+                setAllProductsData(res);
+            } catch (err) {
+                console.log(err);
+                setLoading(false);
+            }
+        }
 
-	const makeStockEditable = (_e, index) => {
-		console.log(index);
-	};
+        fetchProducts();
+    }, []);
 
-	const delProduct = async (id) => {
-		await deleteProduct(id)
-			.then((res) => {
-				setAllProductsData((prev) => prev.filter((item) => item._id !== id));
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
+    const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
+    const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
 
-	return (
-		<>
-			<div className="product-table-container">
-				<main className="product-table-main">
-					<div className="product-table-wrapper">
-						<div className="product-table-card">
-							<header className="product-table-header">
-								<h2>Product List</h2>
-								<div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
-									<div className="category-filters grid gap-2 grid-cols-2 ">
-										<Select placeholder="Select Category" size="xs">
-											<option>United Arab Emirates</option>
-											<option>Nigeria</option>
-										</Select>
-										<Select placeholder="Select Category" size="xs">
-											<option>United Arab Emirates</option>
-											<option>Nigeria</option>
-										</Select>
+    const delProduct = async (id) => {
+        await deleteProduct(id)
+            .then((res) => {
+                setAllProductsData((prev) => prev.filter((item) => item._id !== id));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    return (
+        <>
+            <div className="product-table-container">
+                <main className="product-table-main">
+                    <div className="product-table-wrapper">
+                        <div className="product-table-card">
+                            <header className="product-table-header">
+                                <h2>Product List</h2>
+                                <div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    <div className="category-filters grid gap-2 grid-cols-2 ">
+                                        <Select placeholder="Select Category" size="xs">
+                                            <option>United Arab Emirates</option>
+                                            <option>Nigeria</option>
+                                        </Select>
+                                        <Select placeholder="Select Category" size="xs">
+                                            <option>United Arab Emirates</option>
+                                            <option>Nigeria</option>
+                                        </Select>
 
                                     </div>
                                     <div className="search-filters grid gap-2 grid-cols-2 ">
@@ -100,60 +101,23 @@ const ProductTable = () => {
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            {allProductsData.map((product, index) => (
-                                                <tr key={index}>
-                                                    <td><div className="text-center">{index + 1}</div></td>
-                                                    <td>
-                                                        <div className="text-center flex justify-center">
-                                                            <div className="product-image">
-                                                                <img src={`http://localhost:3000/${product.mainImage}`} alt="Product Main Image" className="image-view" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><div className="text-center text-capitalize">{product.productName}</div></td>
-                                                    <td><div className="text-center">{product.sku}</div></td>
-                                                    <td><div className="text-center text-capitalize">{product.item}</div></td>
-                                                    <td className="text-emerald"><div className="text-center">{product.basePrice}</div></td>
-                                                    <td className="text-emerald"><div className="text-center">{product.baseDiscount}%</div></td>
-                                                    <td className="text-red text-center" >
-                                                        <div className="text-center">
-                                                            <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' onClick={() => {
-                                                                setSelectedProduct(product);
-                                                                setIsPriceSlabModalOpen(true)
-                                                            }} />
-                                                        </div>
-                                                    </td>
-                                                    <td className="text-red">
-                                                        <div className="text-center" style={{ fontWeight: 500 }}>
-                                                            {/* {product.stock}  */}
-                                                            11
-                                                            <FaPen title='Edit Stock' className='mx-2 btn text-sm text-blue-600 action-btns' onClick={(e) => {
-                                                                setSelectedProduct(product);
-                                                                makeStockEditable(e, index)
-                                                            }} />
-                                                        </div>
-                                                    </td>
-                                                    <td className=''>
-                                                        <FaPen title='Edit Product' className='btn text-md text-blue-600 action-btns' />
-                                                        <FaEye title='Preview' className='btn text-md text-blue-600 action-btns'
-                                                            onClick={() => {
-                                                                setSelectedProduct(product);
-                                                                setIsPreviewOpen(true)
-                                                            }}
+                                        {
+                                            (allProductsData && allProductsData.length) ?
+                                                <tbody>
+                                                    {allProductsData.map((product, index) => (
+                                                        <ProductTableRow key={index} product={product} index={index}
+                                                            setSelectedProduct={setSelectedProduct}
+                                                            setIsPriceSlabModalOpen={setIsPriceSlabModalOpen}
+                                                            setIsPreviewOpen={setIsPreviewOpen}
+                                                            setIsConfirmationModalOpen={setIsConfirmationModalOpen}
                                                         />
-                                                        <RiDeleteBin5Fill
-                                                            onClick={() => {
-                                                                setSelectedProduct(product);
-                                                                setIsConfirmationModalOpen(true)
-                                                            }
-                                                            }
-                                                            title='Delete Item' className='btn text-md text-red-600 action-btns'></RiDeleteBin5Fill>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
+                                                    ))}
+                                                </tbody> : ''
+                                        } 
                                     </table>
+                                    {
+                                        (!allProductsData || !allProductsData.length) && <div className="w-full text-center no-data-found text-gray-700"> -----No Data Found-----</div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -177,7 +141,7 @@ const ProductTable = () => {
                     confirmationPass={'Confirm'} action={'Do you really want to delete this item?'}
                     onConfirmation={() => { deleteProduct(selectedProduct._id) }}></ConfirmationModal>
             }
-            
+
 
             {/* Loader */}
             <Loader show={loading}></Loader>

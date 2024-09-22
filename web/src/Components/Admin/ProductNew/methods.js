@@ -1,4 +1,4 @@
-import { addProduct } from "../../../Services/adminServices/productsService";
+import { addProduct, updateProducts } from "../../../Services/adminServices/productsService";
 import { getCategoryData } from "../../../Services/adminServices/productsService";
 
 let categoryData = {};
@@ -52,8 +52,8 @@ const handletaxTypeChange = (e, setProductNewForm) => {
 const getCatData = async (setCategories) => {
 	await getCategoryData()
 		.then((res) => {
-			if (Object.keys(res).length) {
-				categoryData = res;
+			if (res.data && Object.keys(res.data).length) {
+				categoryData = res.data;
 				setCategories(Object.keys(categoryData));
 			}
 		})
@@ -107,10 +107,10 @@ const onItemChange = (event, setProductNewForm) => {
 	}));
 };
 
-const ontaxPercentageChange = (event, setProductNewForm) => {
+const ontaxRateChange = (event, setProductNewForm) => {
 	setProductNewForm((prev) => ({
 		...prev,
-		taxPercentage: event.target.value,
+		taxRate: event.target.value,
 	}));
 };
 
@@ -213,36 +213,44 @@ const onSubmit = async (
 	setProductNewForm,
 	toast,
 	setMainImageSrc,
+	isEditMode
 ) => {
 	event.preventDefault();
 	setLoading(true);
+	let keysToAppend;
 	const formData = new FormData();
-	console.log(productNewForm);
-	formData.append("productName", productNewForm.productName);
-	formData.append("category", productNewForm.category);
-	formData.append("subCategory", productNewForm.subCategory);
-	formData.append("item", productNewForm.item);
-	formData.append("subHead", productNewForm.subHead);
-	formData.append("sku", productNewForm.sku);
-	formData.append("summary", productNewForm.summary);
-	formData.append(
-		"keyHighlights",
-		JSON.stringify(productNewForm.keyHighlights),
-	);
-	formData.append("basePrice", productNewForm.basePrice);
-	formData.append("moq", productNewForm.moq);
-	formData.append("isDiscounted", productNewForm.isDiscounted);
-	formData.append("baseDiscount", productNewForm.baseDiscount);
-	formData.append("taxType", productNewForm.taxType);
-	formData.append("mainImage", productNewForm.mainImage);
-	formData.append("taxPercentage", productNewForm.taxPercentage);
-	await addProduct(formData)
-		.then((res) => {
-			setSubmitted(false);
-			setLoading(false);
-			reset(setProductNewForm, setMainImageSrc);
-		})
-		.catch((err) => {
+	if (isEditMode) {
+		const oldProduct = location.state.productDetails;
+		const keys = Object.keys(oldProduct);
+		const updatedKeys = keys.filter((key) => productNewForm[key] !== oldProduct[key]);
+		keysToAppend = updatedKeys;
+	} else {
+		keysToAppend = Object.keys(productNewForm);
+	}
+
+	keysToAppend.forEach((key) => {
+		if (key === 'keyHighlights') {
+			formData.append(key, JSON.stringify(productNewForm[key]));
+		} else {
+			formData.append(key, productNewForm[key]);
+		}
+	})
+
+	if (isEditMode) {
+		try {
+			const res = await updateProducts(formData);
+			if (res) {
+				setSubmitted(false);
+				setLoading(false);
+				reset(setProductNewForm, setMainImageSrc);
+				toast({
+					title: "Product Updated Sucessfully",
+					status: "success",
+					isClosable: true,
+					// variant: 'top-accent'
+				});
+			}
+		} catch (err) {
 			console.log("error", err);
 			setSubmitted(false);
 			setLoading(false);
@@ -252,8 +260,35 @@ const onSubmit = async (
 				isClosable: true,
 				// variant: 'top-accent'
 			});
-			response;
-		});
+			setIsEditMode(false);
+		}
+
+	} else {
+		await addProduct(formData)
+			.then((res) => {
+				setSubmitted(false);
+				setLoading(false);
+				reset(setProductNewForm, setMainImageSrc);
+				toast({
+					title: 'Product Added Successfully',
+
+					status: "success",
+					isClosable: true,
+					// variant: 'top-accent'
+				});
+			})
+			.catch((err) => {
+				console.log("error", err);
+				setSubmitted(false);
+				setLoading(false);
+				toast({
+					title: err.response.data.message,
+					status: "error",
+					isClosable: true,
+					// variant: 'top-accent'
+				});
+			});
+	}
 };
 
 //method for reseting form
@@ -278,7 +313,7 @@ const reset = (setProductNewForm, setMainImageSrc) => {
 		isDiscounted: false,
 		baseDiscount: 0,
 		taxType: "",
-		taxPercentage: "",
+		taxRate: "",
 	});
 	setMainImageSrc("");
 };
@@ -294,7 +329,7 @@ export {
 	onCategoryChange,
 	onSubCategoryChange,
 	onItemChange,
-	ontaxPercentageChange,
+	ontaxRateChange,
 	addNewKeyHighlight,
 	removeKeyHighlight,
 	addImage,

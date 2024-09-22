@@ -72,4 +72,14 @@ const addProduct = async (data) => {
 		});
 };
 
-export { deleteProduct, getCategoryData, getAllProducts, addProduct };
+const updateProducts = async (data) => {
+	const url = `/updateprodut`;
+
+	const response = await productInstance.patch(url, data, {
+		"Content-Type": "application/json",
+	})
+
+	return response;
+}
+
+export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts };
