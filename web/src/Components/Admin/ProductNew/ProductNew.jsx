@@ -42,15 +42,23 @@ import {
 	addNewKeyHighlight,
 	addImage,
 	onMainImageChange,
-	ontaxPercentageChange,
+	ontaxRateChange,
 	onSubmit,
 } from "./methods.js";
+import { BACKEND } from "../../../lib/config";
 
-let taxPercentages = [2.5, 5, 12, 18];
+let taxRates = [2.5, 5, 12, 18];
 
 function ProductNew() {
 	useEffect(() => {
 		getCatData(setCategories);
+
+		if(location && location.state && location.state.isEditMode){
+			setProductNewForm(location.state.productDetails);
+			setIsEditMode(true);
+			const apiURL = BACKEND.API_URL;
+			setMainImageSrc(`${apiURL}/${location.state.productDetails.mainImage}`);
+		}
 	}, []);
 
 	const [subCategories, setSubCategories] = useState([]);
@@ -59,6 +67,7 @@ function ProductNew() {
 	const [loading, setLoading] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 	const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+	const [isEditMode, setIsEditMode] = useState(false);
 
 	const [mainImageSrc, setMainImageSrc] = useState("");
 
@@ -82,12 +91,14 @@ function ProductNew() {
 		isDiscounted: false,
 		baseDiscount: 0,
 		taxType: "",
-		taxPercentage: "",
+		taxRate: "",
 	});
 
 	let addImageInputRef = useRef(null);
 
 	const toast = useToast();
+
+    const location = useLocation();
 
 	return (
 		<>
@@ -103,6 +114,8 @@ function ProductNew() {
 						setProductNewForm,
 						toast,
 						setMainImageSrc,
+						isEditMode,
+						setIsEditMode
 					);
 				}}
 			>
@@ -283,7 +296,7 @@ function ProductNew() {
 				<div className="product-category-sec">
 					<h4 className="product-add-sub-head">Add Key Highlights</h4>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-						{productNewForm.keyHighlights.map((item, index) => {
+						{productNewForm.keyHighlights && productNewForm.keyHighlights.map((item, index) => {
 							return (
 								<div
 									className="grid grid-cols-1 md:grid-cols-2 gap-5"
@@ -541,20 +554,20 @@ function ProductNew() {
 
 						<FormControl
 							isRequired
-							isInvalid={submitted && !productNewForm.taxPercentage}
+							isInvalid={submitted && !productNewForm.taxRate}
 						>
 							<FormLabel className="form-label-sm">Tax Percentage</FormLabel>
 							<Select
 								placeholder="Select Tax Percentage"
 								size="sm"
 								onChange={(e) => {
-									ontaxPercentageChange(e, setProductNewForm);
+									ontaxRateChange(e, setProductNewForm);
 								}}
 							>
 								<option value="" disabled hidden>
 									Select Tax Percentage
 								</option>
-								{taxPercentages.map((item, index) => (
+								{taxRates.map((item, index) => (
 									<option
 										key={item}
 										className="category-options"
@@ -605,7 +618,7 @@ function ProductNew() {
 						}
 					}}
 				>
-					Submit
+					{isEditMode?'Update':'Submit'}
 				</Button>
 			</form>
 

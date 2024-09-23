@@ -142,3 +142,7 @@
   object-fit: cover;
 }
   
+.no-data-found {
+  margin-top: 10px;
+  font-size: medium;
+}
