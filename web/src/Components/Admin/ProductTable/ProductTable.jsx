@@ -5,18 +5,28 @@ import { Input, Select } from "@chakra-ui/react";
 import { FaEye, FaMagnifyingGlass, FaPen } from "react-icons/fa6";
 import ProductImagesModal from "../Modals/ProductImagesModal/ProductImagesModal";
 import PriceSlabModal from "../Modals/PriceSlabModal/PriceSlabModal";
-import { getAllProducts } from "../../../Services/adminServices/productsService";
+import { getAllProducts, getCategoryData } from "../../../Services/adminServices/productsService";
 import Loader from "../../../comman/Loader/Loader";
 import ProductPreviewModal from "../Modals/ProductPreviewModal/ProductPreviewModal";
 import ConfirmationModal from "../Modals/ConfirmationModal/ConfirmationModal";
 import { deleteProduct } from "../../../Services/adminServices/productsService";
 import ProductTableRow from "./ProductTableRow/ProductTableRow";
 
+let categoryData = {};
+
 const ProductTable = () => {
     const [allProductsData, setAllProductsData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState([]);
+    const [subCatData, setSubCatData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedSubCategory, setSelectedSubCaegory] = useState('');
 
     const [selectedProduct, setSelectedProduct] = useState("");
 
@@ -34,8 +44,68 @@ const ProductTable = () => {
             }
         }
 
+        async function getCatData() {
+            try {
+                const res = await getCategoryData();
+                if (res && typeof res === 'object' && Object.keys(res).length) {
+                    categoryData = res;
+                    setCategories(prev => Object.keys(categoryData));
+                    setSelectedCategory(prev => categories[0]);
+                    setSubCategories(prev => Object.keys(categoryData[categories[0]]));
+                    setSelectedCategory(prev => subCategories[0]);
+                    subCatFilter();
+                }
+                setLoading(false);
+                setAllProductsData(res);
+            } catch (err) {
+                console.log(err);
+                setLoading(false);
+            }
+        }
+
         fetchProducts();
-    }, []);
+        getCatData();
+    });
+
+    //debouncing
+    useEffect(() => {
+        const timeOut = setTimeout(() => {
+            filter();
+        }, 2000);
+
+        return () => clearTimeout(timeOut);
+    }, [searchQuery, selectedSubCategory]);
+
+    const onCategoryChange = (e) => {
+        const cat = e.target.value;
+
+        setSelectedCategory(() => cat);
+        setSubCategories(() => Object.key(categoryData[cat]));
+        setSelectedSubCaegory(() => subCategories[0]);
+        subCatFilter();
+    }
+
+    const onSubCatChange = (e) => {
+        const subCat = e.target.value;
+        setSelectedSubCaegory(() => subCat);
+        subCatFilter();
+    }
+
+    const filter = () => {
+        if (!searchQuery) {
+            setFilteredData(subCatData)
+        } else {
+            setFilteredData(subCatData.filter((product) =>
+                (product.productName && product.productName.toLowerCase().includes(searchQuery.toLowerCase()))
+                || (product.sku && product.sku.toLowerCase().includes(searchQuery.toLowerCase()))
+                || (product.item && product.item.toLowerCase().includes(searchQuery.toLowerCase()))
+            ));
+        }
+    }
+
+    const subCatFilter = () => {
+        setSubCatData(() => allProductsData.filter(obj => obj.subCategory === selectedSubCategory));
+    }
 
     const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
     const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
@@ -50,6 +120,11 @@ const ProductTable = () => {
             });
     };
 
+    const onSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(() => query);
+    }
+
     return (
         <>
             <div className="product-table-container">
@@ -60,26 +135,24 @@ const ProductTable = () => {
                                 <h2>Product List</h2>
                                 <div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
                                     <div className="category-filters grid gap-2 grid-cols-2 ">
-                                        <Select placeholder="Select Category" size="xs">
-                                            <option>United Arab Emirates</option>
-                                            <option>Nigeria</option>
+                                        <Select placeholder="Select Category" size="xs" value={selectedCategory} onChange={onCategoryChange}>
+                                            {
+                                                categories && categories.map((cat) => <option value={cat} key={cat}>{cat}</option>)
+                                            }
                                         </Select>
-                                        <Select placeholder="Select Category" size="xs">
-                                            <option>United Arab Emirates</option>
-                                            <option>Nigeria</option>
+                                        <Select placeholder="Select Sub Category" size="xs" value={selectedSubCategory}
+                                            onChange={onSubCatChange}>
+                                            {
+                                                subCategories && subCategories.map((subCat) => <option value={subCat} key={subCat}>{subCat}</option>)
+                                            }
                                         </Select>
 
                                     </div>
-                                    <div className="search-filters grid gap-2 grid-cols-2 ">
+                                    <div className="search-filters grid gap-2 grid-cols-1 ">
                                         <div className="search-filter-input">
-                                            <FaMagnifyingGlass className='text-sm search-icon' />
-                                            <Input placeholder='Search' size='xs' />
+                                            {searchQuery && <FaMagnifyingGlass className='text-sm search-icon' />}
+                                            <Input placeholder='Search' size='xs' value={searchQuery} onChange={onSearch} />
                                         </div>
-
-                                        <Select placeholder='Filter' size='xs'>
-                                            <option>United Arab Emirates</option>
-                                            <option>Nigeria</option>
-                                        </Select>
 
                                     </div>
                                 </div>
@@ -115,7 +188,7 @@ const ProductTable = () => {
                                                         />
                                                     ))}
                                                 </tbody> : ''
-                                        } 
+                                        }
                                     </table>
                                     {
                                         (!allProductsData || !allProductsData.length) && <div className="w-full text-center no-data-found text-gray-700"> -----No Data Found-----</div>
