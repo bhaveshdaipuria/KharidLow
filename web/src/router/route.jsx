@@ -26,7 +26,7 @@ function SuspenseWrapper({ element }) {
     )
 }
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
@@ -90,3 +90,5 @@ export const router = createBrowserRouter([
     }
 
 ]);
+
+export default router;
