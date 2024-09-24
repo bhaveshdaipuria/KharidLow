@@ -19,4 +19,16 @@ const addUser = async (data) => {
 		});
 };
 
-export { addUser };
+const addAddress = async (data) => {
+	const url = `${API_URL}/user/addaddress`;
+
+	const response = await axios.post(url, data, {
+		headers: {
+			"Content-Type": "application/json",
+		}
+	});
+
+	return response;
+}
+
+export { addUser, addAddress };
