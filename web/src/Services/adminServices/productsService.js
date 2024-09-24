@@ -49,14 +49,15 @@ const getCategoryData = async () => {
 const getAllProducts = async () => {
 	const url = `/allproduct`;
 
-	productInstance
-		.get(url)
-		.then((res) => {
-			console.log(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	const res = await productInstance.get(url);
+
+	return res.data;
+		// .then((res) => {
+		// 	console.log(res.data);
+		// })
+		// .catch((err) => {
+		// 	console.log(err);
+		// });
 };
 const addProduct = async (data) => {
 	const url = `/addnewproduct`;
@@ -82,4 +83,14 @@ const updateProducts = async (data) => {
 	return response;
 }
 
-export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts };
+const updateStock = async (id, data) => {
+	const url = `/updatestock/${id}`;
+
+	const response = await productInstance.put(url, data, {
+		"Content-Type": "application/json",
+	})
+
+	return response;
+}
+
+export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts, updateStock };
