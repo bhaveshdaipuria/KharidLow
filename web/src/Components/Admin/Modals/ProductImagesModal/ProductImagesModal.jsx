@@ -1,13 +1,17 @@
-import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react";
+import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useToast } from "@chakra-ui/react";
 import './ProductImagesModal.css'
 import { CiCirclePlus } from "react-icons/ci";
 import { useRef, useState } from "react";
+import { addNewImage } from "../../../../Services/adminServices/productsService";
 const ProductImagesModal = (props) => {
 
     const [mainImage, setMainImage] = useState('');
     const [productImagesArr, setProductImagesArr] = useState([]);
     const [previewImage, setpreviewImage] = useState('');
     const [isSaveMode, setIsSaveMode] = useState(false);
+    const [imgFile, setImgFile] = useState(null);
+
+    const toast = useToast();
 
     let addproductImageInputRef = useRef(null);
 
@@ -20,20 +24,57 @@ const ProductImagesModal = (props) => {
     const onImageChange = (e) => {
         const imageSrc = e.target.files[0];
 
+        if (imageSrc.type !== 'image/png' && imageSrc.type !== 'image/jpeg' && imageSrc.type !== 'image/jpg' && imageSrc.type !== 'image/webp') {
+            toast({
+                title: 'Invalid File Type only .png, .jpg or .webp are allowed',
+                status: 'error',
+                isClosable: true
+            })
+            return;
+        }
+
         if (imageSrc) {
 
             const reader = new FileReader();
 
+            setImgFile(imageSrc);
+            setIsSaveMode(true);
+
             reader.onloadend = () => {
                 console.log(reader.result)
                 const arr = productImagesArr;
-                arr.push(reader.result);
-                setProductImagesArr(arr);
-
-                console.log(productImagesArr)
+                // arr.push(reader.result);
+                setProductImagesArr(prev => {
+                    prev.push(reader.result)
+                    return prev;
+                });
             }
 
             reader.readAsDataURL(imageSrc);
+        }
+    }
+
+    const saveProdImage = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('prodImage', imgFile);
+
+            const res = await addNewImage(props.product._id, formData);
+
+            if (res) {
+                toast({
+                    title: 'Image added Successfully',
+                    status: 'success',
+                    isClosable: true
+                })
+            }
+        } catch (err) {
+            console.log(err);
+            toast({
+                title: 'Error in saving image',
+                status: 'error',
+                isClosable: true
+            });
         }
     }
 
@@ -58,21 +99,23 @@ const ProductImagesModal = (props) => {
                     <div className="modal-product-images-container">
                         <div className="product-images">
                             {
-                                productImagesArr.map((item, index) => {
-                                    console.log(index);
-                                    return(
-                                        <div key={index} className="product-image-item"  style={{
-                                            backgroundImage: `url(${productImagesArr[index]})`,
-                                            backgroundSize: 'cover',
-                                            backgroundPosition: 'center',
-                                            backgroundRepeat: 'no-repeat',
-                                        }}></div>
-                                    )
-                                   
-                                })
+                                console.log(productImagesArr.length)
+                            }
+                            {
+                                productImagesArr.map((item, index) => (
+                                    <div key={index} className="product-image-item" style={{
+                                        backgroundImage: `url(${item})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                    }}>
+                                        {console.log('insiderender', productImagesArr.length)}
+                                    </div>
+                                )
+                                )
                             }
 
-                            {!isSaveMode ? <CiCirclePlus className="text-5xl add-more-icon" onClick={addImage} /> : <Button colorScheme='blue' my={4} size='xs'>Save</Button>}
+                            {!isSaveMode ? <CiCirclePlus className="text-5xl add-more-icon" onClick={addImage} /> : <Button colorScheme='blue' my={4} size='xs' onClick={saveProdImage}>Save</Button>}
                         </div>
                         <div className="product-images-preview">
 

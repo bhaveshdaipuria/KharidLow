@@ -93,4 +93,14 @@ const updateStock = async (id, data) => {
 	return response;
 }
 
-export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts, updateStock };
+const addNewImage = async(id, data) => {
+	const url = `/addnewimage/${id}`;
+
+	const response = await productInstance.put(url, data, {
+		"Content-Type": "application/json",
+	})
+
+	return response;
+}
+
+export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts, updateStock, addNewImage };
