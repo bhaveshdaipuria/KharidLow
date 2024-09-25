@@ -1,8 +1,10 @@
 .add-address-head{
     font-size: 20px;
     font-weight: 600;
+    width: 100%;
+    position: relative;
 }
 
 .form-label-sm{
-    font-size: 14px !important;
+    font-size: 14px !important
 }

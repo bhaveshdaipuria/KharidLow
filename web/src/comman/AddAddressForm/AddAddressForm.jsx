@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './AddAddressForm.css'
 import { Button, FormControl, FormErrorMessage, FormLabel, Input, useToast } from '@chakra-ui/react';
-import { addAddress } from '../Services/userServices/userService';
+import { addAddress } from '../../Services/userServices/userService';
+import Loader from '../../comman/Loader/Loader';
 
 const AddAddressForm = ({refreshAddressList}) => {
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toast = useToast();
 
@@ -29,6 +31,8 @@ const AddAddressForm = ({refreshAddressList}) => {
     try {
       e.preventDefault();
 
+      setLoading(true);
+      
       const res = await addAddress(addAddressForm);
 
       if(res){
@@ -51,6 +55,7 @@ const AddAddressForm = ({refreshAddressList}) => {
       console.log(error);
     } finally{
       setSubmitted(false);
+      setLoading(false);
     }
   
   }
@@ -92,6 +97,8 @@ const AddAddressForm = ({refreshAddressList}) => {
             <Button className='' colorScheme='teal' type='submit' onClick={checkValidation}>Submit</Button>
         </div>
       </form>
+
+      <Loader show={loading}/>
     </div>
   )
 }
