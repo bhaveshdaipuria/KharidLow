@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { RouterProvider } from 'react-router-dom'
 import 'react-multi-carousel/lib/styles.css';
-import { router } from './router/route.jsx';
+import router from './router/route.jsx';
 
 createRoot(document.getElementById('root')).render(
   <>
