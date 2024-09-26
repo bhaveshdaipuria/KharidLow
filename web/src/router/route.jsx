@@ -2,38 +2,23 @@ import UserAuthRoute from "../utils/auth/UserAuth";
 import RoleAuthRoute from "../utils/auth/RoleAuth";
 import NotFound from "../Components/NotFound/NotFound";
 import { createBrowserRouter } from "react-router-dom";
-import { lazy, Suspense } from "react";
-import Loader from "../comman/Loader/Loader";
 import Home from "../Components/Home/Home";
 import Layout from "../Layout/Layout";
 import ProductTable from "../Components/Admin/ProductTable/ProductTable";
-import { getAllProducts } from "../Services/adminServices/productsService";
-
-const LazyHome = lazy(() => import("../Components/Home/Home"));
-const LazyLayout = lazy(() => import("../Layout/Layout"));
-const LazyRegister = lazy(() => import("../Components/Register/Register"));
-const LazyLogin = lazy(() => import("../Components/Login/Login"));
-const LazyProductDetail = lazy(() => import("../Components/ProductDetails/ProductDetails"));
-const LazyCategory = lazy(() => import("../comman/SidebarCategory/Category/Category"));
-const LazyUserAccount = lazy(() => import("../Components/UserAccount/UserAccount"));
-const LazyCheckout = lazy(() => import("../Components/Checkout/Checkout"));
-const LazyCart = lazy(() => import("../Components/Cart/Cart"));
-const LazyProductNew = lazy(() => import("../Components/Admin/ProductNew/ProductNew"));
-const LazyProductTable = lazy(() => import("../Components/Admin/ProductTable/ProductTable"));
-
-function SuspenseWrapper({ element }) {
-    return (
-        <Suspense
-            fallback={<Loader />}>
-            {element}
-        </Suspense>
-    )
-}
+import Register from "../Components/Register/Register";
+import Login from "../Components/Login/Login";
+import ProductDetails from "../Components/ProductDetails/ProductDetails";
+import Category from "../comman/SidebarCategory/Category/Category";
+import UserAccount from "../Components/UserAccount/UserAccount";
+import Cart from "../Components/Cart/Cart";
+import Checkout from "../Components/Checkout/Checkout";
+import ProductNew from "../Components/Admin/ProductNew/ProductNew";
+import { getProducts } from "./Loaders/adminLoaders";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <SuspenseWrapper element={<LazyLayout/>}/>,
+        element: <Layout/>,
         children: [
             {
                 path: '/',
@@ -41,34 +26,34 @@ const router = createBrowserRouter([
             },
             {
                 path: '/register',
-                element: <SuspenseWrapper element={<LazyRegister/>}/>
+                element: <Register/>
             },
             {
                 path: '/login',
-                element: <SuspenseWrapper element={<LazyLogin/>}/>
+                element: <Login/>
             },
             {
                 path: '/product',
-                element: <SuspenseWrapper element={<LazyProductDetail/>}/>
+                element: <ProductDetails/>
             },
             {
                 path: '/category',
-                element: <SuspenseWrapper element={<LazyCategory/>}/>
+                element: <Category/>
             },
             {
                 element: <UserAuthRoute />,
                 children: [
                     {
                         path: '/user-account',
-                        element: <SuspenseWrapper element={<LazyUserAccount/>}/>
+                        element: <UserAccount/>
                     },
                     {
                         path: '/my-cart',
-                        element: <SuspenseWrapper element={<LazyCart/>}/>
+                        element: <Cart/>
                     },
                     {
                         path: '/checkout',
-                        element: <SuspenseWrapper element={<LazyCheckout/>}/>
+                        element: <Checkout/>
                     },
                     {
                         path: '/admin',
@@ -76,11 +61,12 @@ const router = createBrowserRouter([
                         children: [
                             {
                                 path: 'add-product',
-                                element: <SuspenseWrapper element={<LazyProductNew/>}/>
+                                element: <ProductNew/>
                             },
                             {
                                 path: 'product-table',
-                                element: <SuspenseWrapper element={<ProductTable/>}/>,
+                                element: <ProductTable/>,
+                                loader: getProducts
                             }
                         ]
                     }

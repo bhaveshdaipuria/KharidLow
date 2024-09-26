@@ -10,7 +10,7 @@ const { adminAuth } = require("../middlewares/authentication");
 const upload = multer();
 
 router.get("/allproduct", showAllProduct);
-router.get("/getcategorydata", adminAuth, getCategoryData);
+router.get("/getcategorydata", getCategoryData);
 router.post("/addnewproduct", upload.single("mainImage"), addProduct);
 
 module.exports = router;

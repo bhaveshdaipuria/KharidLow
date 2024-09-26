@@ -6,17 +6,12 @@ const API_URL = BACKEND.API_URL;
 const addUser = async (data) => {
 	const url = `${API_URL}/user/register`;
 
-	axios
-		.post(url, data, {
-			"Content-Type": "application/json",
-			withCredentials: true,
-		})
-		.then((res) => {
-			console.log(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	const response = await axios.post(url, data, {
+		"Content-Type": "application/json",
+		withCredentials: true,
+	})
+		
+	return response.data;
 };
 
 const addAddress = async (data) => {

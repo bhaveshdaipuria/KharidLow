@@ -47,38 +47,46 @@ module.exports.userRegister = async (req, res) => {
 };
 
 module.exports.userLogin = async (req, res) => {
-  let { email, password } = req.body;
-
-  let isUserExist = await userModel.findOne({ email: email });
-
-  if (!isUserExist) {
-    return res
-      .status(404)
-      .send("User not registered. Please create an account");
-  }
 
   try {
+    let { email, password } = req.body;
+
+    let isUserExist = await userModel.findOne({ email: email });
+
+    if (!isUserExist) {
+      return res
+        .status(404)
+        .send("User not registered. Please create an account");
+    }
     bcrypt.compare(password, isUserExist.password, function (err, result) {
       if (err) {
         return res.status(500).send("Something went wrong");
       }
-      if (result) {
-        let token = jwt.sign(
-          { email: isUserExist.email, userid: isUserExist._id },
-          process.env.JWT_SECRET,
-        );
-        res.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 15 * 24 * 60 * 60 * 1000,
-        });
-        res.status(200).redirect("/profile");
-      } else {
-        res.redirect("/login");
+       else {
+        if(result){
+          let token = jwt.sign(
+            { email: isUserExist.email, userid: isUserExist._id },
+            process.env.JWT_SECRET,
+          );
+          if (token && isUserExist) {
+    
+            res.cookie("token", token, {
+              httpOnly: false,
+              secure: true,
+            });
+            return res.status(200).json({ message: 'Login Successful' });
+          } else {
+            return res.status(500).json({ message: 'Failed to login' });
+          }
+        } else{
+          return res.status(404).json({ message: 'Wrong Password' });
+        }
+       
       }
+
     });
   } catch (err) {
-    res.status(500).send(err.message);
+    return res.status(500).send(err.message);
   }
 };
 
