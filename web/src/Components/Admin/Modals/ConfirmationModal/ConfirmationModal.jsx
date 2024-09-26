@@ -1,12 +1,11 @@
 import './ConfirmationModal.css'
 import { FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Input, Button } from '@chakra-ui/react';
-import ProductDetails from '../../../../Components/ProductDetails/ProductDetails';
 import { useEffect, useState } from 'react';
 const ConfirmationModal = ({
     isOpen = false,
     setIsOpen,
     onConFirmation,
-    action 
+    action
 }) => {
 
     useEffect(() => {
@@ -39,7 +38,7 @@ const ConfirmationModal = ({
 
         const randomArr = [];
 
-        for(let i = 0; i < 6; i++){
+        for (let i = 0; i < 6; i++) {
             const randomIndex = Math.floor(str.length * Math.random());
             randomArr.push(str[randomIndex]);
         }
@@ -52,7 +51,7 @@ const ConfirmationModal = ({
     const onInputChange = (e) => {
         const input = e.target.value;
         console.log(input);
-        if(input === confirmationPass){
+        if (input === confirmationPass) {
             setTextMatches(true);
         } else {
             setTextMatches(false)
@@ -71,14 +70,14 @@ const ConfirmationModal = ({
                     <p className="confirmation-pass">Type "{confirmationPass}" to confirm your action</p>
                     <br />
                     <FormControl>
-                        <Input type='text' onChange={(e) => {onInputChange(e)}} />
+                        <Input type='text' onChange={(e) => { onInputChange(e) }} />
                     </FormControl>
                     <Button
                         mt={4}
-                        colorScheme={textMatches?'green':'red'}
+                        colorScheme={textMatches ? 'green' : 'red'}
                         isDisabled={!textMatches}
                         onClick={onConfirm}>
-                            Confirm
+                        Confirm
                     </Button>
                 </ModalBody>
             </ModalContent>

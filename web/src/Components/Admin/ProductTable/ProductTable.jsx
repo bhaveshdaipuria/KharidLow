@@ -26,68 +26,86 @@ const ProductTable = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedSubCategory, setSelectedSubCaegory] = useState('');
+    const [selectedSubCategory, setSelectedSubCtaegory] = useState('');
 
     const [selectedProduct, setSelectedProduct] = useState("");
 
     useEffect(() => {
-        setLoading(true);
+        // setLoading(true);
 
-        async function fetchProducts() {
+        async function getCatData() {
             try {
-                const res = await getAllProducts();
+                const res = await getCategoryData();
+                if (res && typeof res === 'object') {
+                    categoryData = res;
+                    const catList = Object.keys(categoryData)
+                    setCategories(() => catList);
+                    setSelectedCategory(catList[0]);
+
+                    const subCatList = Object.keys(categoryData[catList[0]]);
+
+                    setSubCategories(() => subCatList);
+                    setSelectedSubCtaegory(subCatList[0]);
+                    subCatFilter();
+                }
                 setLoading(false);
-                setAllProductsData(res);
             } catch (err) {
                 console.log(err);
                 setLoading(false);
             }
         }
 
-        async function getCatData() {
+        async function fetchProducts() {
             try {
-                const res = await getCategoryData();
-                if (res && typeof res === 'object' && Object.keys(res).length) {
-                    categoryData = res;
-                    setCategories(prev => Object.keys(categoryData));
-                    setSelectedCategory(prev => categories[0]);
-                    setSubCategories(prev => Object.keys(categoryData[categories[0]]));
-                    setSelectedCategory(prev => subCategories[0]);
-                    subCatFilter();
+                const res = await getAllProducts();
+                console.log(res);
+                if(!allProductsData || !allProductsData.length){
+                    
                 }
-                setLoading(false);
-                setAllProductsData(res);
+                setAllProductsData([...res]);
+                console.log(allProductsData)
+                getCatData();
             } catch (err) {
                 console.log(err);
+            } finally {
                 setLoading(false);
             }
         }
 
         fetchProducts();
-        getCatData();
-    }, []);
+    }, [allProductsData]);
 
     //debouncing
     useEffect(() => {
         const timeOut = setTimeout(() => {
             filter();
-        }, 2000);
+        }, 500);
 
         return () => clearTimeout(timeOut);
-    }, [searchQuery, selectedSubCategory]);
+    }, [subCatData, searchQuery]);
+
+    useEffect(() => {
+        subCatFilter()
+    }, [allProductsData]);
+
+    useEffect(() => {
+        filter()
+    }, [selectedSubCategory]);
 
     const onCategoryChange = (e) => {
         const cat = e.target.value;
 
         setSelectedCategory(() => cat);
-        setSubCategories(() => Object.key(categoryData[cat]));
-        setSelectedSubCaegory(() => subCategories[0]);
+
+        console.log(cat);
+        setSubCategories(() => Object.keys(categoryData[cat]));
+        setSelectedSubCtaegory(() => subCategories[0]);
         subCatFilter();
     }
 
     const onSubCatChange = (e) => {
         const subCat = e.target.value;
-        setSelectedSubCaegory(() => subCat);
+        setSelectedSubCtaegory(() => subCat);
         subCatFilter();
     }
 
@@ -104,7 +122,11 @@ const ProductTable = () => {
     }
 
     const subCatFilter = () => {
-        setSubCatData(() => allProductsData.filter(obj => obj.subCategory === selectedSubCategory));
+        if (allProductsData && allProductsData.length) {
+            console.log(allProductsData);
+            setSubCatData(() => allProductsData.filter(obj => obj.subCategory === selectedSubCategory));
+            filter();
+        }
     }
 
     const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
@@ -140,8 +162,9 @@ const ProductTable = () => {
                                                 categories && categories.map((cat) => <option value={cat} key={cat}>{cat}</option>)
                                             }
                                         </Select>
-                                        <Select placeholder="Select Sub Category" size="xs" value={selectedSubCategory}
+                                        <Select size="xs" value={selectedSubCategory}
                                             onChange={onSubCatChange}>
+                                            <option value='' key='0' disabled>Select Sub Category</option>
                                             {
                                                 subCategories && subCategories.map((subCat) => <option value={subCat} key={subCat}>{subCat}</option>)
                                             }
@@ -176,9 +199,9 @@ const ProductTable = () => {
                                             </tr>
                                         </thead>
                                         {
-                                            (allProductsData && allProductsData.length) ?
+                                            (filteredData && filteredData.length) ?
                                                 <tbody>
-                                                    {allProductsData.map((product, index) => (
+                                                    {filteredData.map((product, index) => (
                                                         <ProductTableRow key={index} product={product} index={index}
                                                             setSelectedProduct={setSelectedProduct}
                                                             setIsPriceSlabModalOpen={setIsPriceSlabModalOpen}
@@ -191,7 +214,7 @@ const ProductTable = () => {
                                         }
                                     </table>
                                     {
-                                        (!allProductsData || !allProductsData.length) && <div className="w-full text-center no-data-found text-gray-700"> -----No Data Found-----</div>
+                                        (!filteredData || !filteredData.length) && <div className="w-full text-center no-data-found text-gray-700"> -----No Data Found-----</div>
                                     }
                                 </div>
                             </div>
@@ -203,7 +226,7 @@ const ProductTable = () => {
 
             {/* modals */}
             {
-                !isAddImageModalOpen && <ProductImagesModal isOpen={!isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
+                isAddImageModalOpen && <ProductImagesModal isOpen={isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
             }
             {
                 isPriceSlabModalOpen && <PriceSlabModal isOpen={isPriceSlabModalOpen} setIsOpen={setIsPriceSlabModalOpen}></PriceSlabModal>

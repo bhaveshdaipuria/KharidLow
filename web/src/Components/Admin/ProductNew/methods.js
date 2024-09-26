@@ -50,16 +50,16 @@ const handletaxTypeChange = (e, setProductNewForm) => {
 
 //method for getting category related data
 const getCatData = async (setCategories) => {
-	await getCategoryData()
-		.then((res) => {
-			if (res.data && Object.keys(res.data).length) {
-				categoryData = res.data;
-				setCategories(Object.keys(categoryData));
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	const res = await getCategoryData();
+
+	try {
+		if(res && typeof res === 'object'){
+			categoryData = res;
+			setCategories(Object.keys(categoryData));
+		}
+	} catch(err){
+		console.log(err);
+	}
 };
 
 //method run on ctaegory selection

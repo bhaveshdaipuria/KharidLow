@@ -36,14 +36,9 @@ const deleteProduct = async (id) => {
 const getCategoryData = async () => {
 	const url = `/getcategorydata`;
 
-	productInstance
-		.get(url)
-		.then((res) => {
-			console.log(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	const  response = await productInstance.get(url);
+
+	return response.data;
 };
 
 const getAllProducts = async () => {
@@ -52,12 +47,6 @@ const getAllProducts = async () => {
 	const res = await productInstance.get(url);
 
 	return res.data;
-		// .then((res) => {
-		// 	console.log(res.data);
-		// })
-		// .catch((err) => {
-		// 	console.log(err);
-		// });
 };
 const addProduct = async (data) => {
 	const url = `/addnewproduct`;

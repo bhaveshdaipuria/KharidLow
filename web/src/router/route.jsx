@@ -1,12 +1,16 @@
 import UserAuthRoute from "../utils/auth/UserAuth";
-import Layout from "../Layout/Layout";
 import RoleAuthRoute from "../utils/auth/RoleAuth";
 import NotFound from "../Components/NotFound/NotFound";
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Loader from "../comman/Loader/Loader";
+import Home from "../Components/Home/Home";
+import Layout from "../Layout/Layout";
+import ProductTable from "../Components/Admin/ProductTable/ProductTable";
+import { getAllProducts } from "../Services/adminServices/productsService";
 
 const LazyHome = lazy(() => import("../Components/Home/Home"));
+const LazyLayout = lazy(() => import("../Layout/Layout"));
 const LazyRegister = lazy(() => import("../Components/Register/Register"));
 const LazyLogin = lazy(() => import("../Components/Login/Login"));
 const LazyProductDetail = lazy(() => import("../Components/ProductDetails/ProductDetails"));
@@ -29,11 +33,11 @@ function SuspenseWrapper({ element }) {
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout />,
+        element: <SuspenseWrapper element={<LazyLayout/>}/>,
         children: [
             {
                 path: '/',
-                element: <SuspenseWrapper element={<LazyHome/>}/>
+                element: <Home/>
             },
             {
                 path: '/register',
@@ -76,7 +80,7 @@ const router = createBrowserRouter([
                             },
                             {
                                 path: 'product-table',
-                                element: <SuspenseWrapper element={<LazyProductTable/>}/>
+                                element: <SuspenseWrapper element={<ProductTable/>}/>,
                             }
                         ]
                     }
