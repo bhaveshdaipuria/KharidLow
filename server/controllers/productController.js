@@ -6,7 +6,7 @@ module.exports.addProduct = async (req, res) => {
     try {
 
         const { originalname, buffer } = req.file || {};
-        const { category, subCategory, item, productName, sku, subHead, summary, keyHighlights, basePrice, moq, isDiscounted, baseDiscount, taxType, taxPercentage } = req.body;
+        const { category, subCategory, item, productName, sku, subHead, summary, keyHighlights, basePrice, moq, isDiscounted, baseDiscount, taxType, taxRate } = req.body;
 
         // Validate required fields
         if (!sku || !productName || !category) {
@@ -56,7 +56,7 @@ module.exports.addProduct = async (req, res) => {
                 isDiscounted,
                 baseDiscount,
                 taxType,
-                taxRate: taxPercentage
+                taxRate
             });
 
             return res.status(200).json({ message: 'Product Created Successfully' });

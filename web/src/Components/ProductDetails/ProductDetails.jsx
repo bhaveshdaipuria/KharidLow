@@ -11,7 +11,7 @@ function ProductDetails({ productDetails }) {
     const [activeImageSrc, setActiveImageSrc] = useState('');
     return (
         <>
-            {console.log(productDetails)}
+            {console.log(productDetails = {})}
             <div className="product-details">
                 <div className="product-details-inner">
                     <div className="product-view">
@@ -20,7 +20,8 @@ function ProductDetails({ productDetails }) {
                                 <img src="https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg" alt="" />
                             </div>
                             <div className="product-other-image">
-                                <img src={productDetails.mainImage} alt="Product Main Image" />
+                                <img src={productDetails.mainImage} alt="Product Main Image
+                                " />
                                 {
                                     productDetails && productDetails.productImages && productDetails.productImages.map((img) => (<div className="other-img">
                                         <img src="	https://getketchadmin.getketch.com/product/8909107424479/300/HLTS005214_1.jpg"

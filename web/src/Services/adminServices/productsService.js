@@ -50,16 +50,11 @@ const getAllProducts = async () => {
 };
 const addProduct = async (data) => {
 	const url = `/addnewproduct`;
-	productInstance
+	const response = await productInstance
 		.post(url, data, {
 			"Content-Type": "application/json",
-		})
-		.then((res) => {
-			console.log(res.data);
-		})
-		.catch((err) => {
-			console.log(err);
 		});
+	return response.data;
 };
 
 const updateProducts = async (data) => {

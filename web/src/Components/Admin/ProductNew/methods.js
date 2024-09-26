@@ -264,30 +264,30 @@ const onSubmit = async (
 		}
 
 	} else {
-		await addProduct(formData)
-			.then((res) => {
+		try{
+			const res = await addProduct(formData);
+			if (res) {
 				setSubmitted(false);
 				setLoading(false);
 				reset(setProductNewForm, setMainImageSrc);
 				toast({
 					title: 'Product Added Successfully',
-
 					status: "success",
 					isClosable: true,
 					// variant: 'top-accent'
 				});
-			})
-			.catch((err) => {
-				console.log("error", err);
-				setSubmitted(false);
-				setLoading(false);
-				toast({
-					title: err.response.data.message,
-					status: "error",
-					isClosable: true,
-					// variant: 'top-accent'
-				});
+			}
+		} catch(err){
+			console.log("error", err);
+			setSubmitted(false);
+			setLoading(false);
+			toast({
+				title: err.response.data.message,
+				status: "error",
+				isClosable: true,
+				// variant: 'top-accent'
 			});
+		}
 	}
 };
 

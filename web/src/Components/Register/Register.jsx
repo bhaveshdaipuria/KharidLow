@@ -74,8 +74,9 @@ const Register = () => {
 			return;
 		}
 
-		await addUser(formState)
-			.then((res) => {
+		try {
+			const res = await addUser(formState);
+			if (res) {
 				toast({
 					title: "User registered successfully",
 					status: "success",
@@ -95,18 +96,22 @@ const Register = () => {
 						confirmPassword: false,
 					},
 				});
-
 				isNameError = false;
 				isEmailError = false;
 				isPasswordError = false;
 				isConfirmPasswordError = false;
 				isContactNoError = false;
 				navigate("/");
+			}
+		} catch (err) {
+			console.log(err);
+			toast({
+				title: err.response.data,
+				status: 'error',
+				isClosable: true
 			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
+		}
+	}
 
 	// Error conditions
 	let isNameError = formState.fullName === "" && formState.touched.fullName;

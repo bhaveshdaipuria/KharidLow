@@ -11,6 +11,7 @@ import ProductPreviewModal from "../Modals/ProductPreviewModal/ProductPreviewMod
 import ConfirmationModal from "../Modals/ConfirmationModal/ConfirmationModal";
 import { deleteProduct } from "../../../Services/adminServices/productsService";
 import ProductTableRow from "./ProductTableRow/ProductTableRow";
+import { useLoaderData } from "react-router-dom";
 
 let categoryData = {};
 
@@ -30,8 +31,28 @@ const ProductTable = () => {
 
     const [selectedProduct, setSelectedProduct] = useState("");
 
+    const {products} = useLoaderData();
+
     useEffect(() => {
         // setLoading(true);
+
+
+        async function fetchProducts() {
+            try {
+                // const res = await getAllProducts();
+                setAllProductsData(products);
+                console.log(allProductsData)
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchProducts();
+    }, []);
+
+    useEffect(() => {
 
         async function getCatData() {
             try {
@@ -55,25 +76,11 @@ const ProductTable = () => {
             }
         }
 
-        async function fetchProducts() {
-            try {
-                const res = await getAllProducts();
-                console.log(res);
-                if(!allProductsData || !allProductsData.length){
-                    
-                }
-                setAllProductsData([...res]);
-                console.log(allProductsData)
-                getCatData();
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setLoading(false);
-            }
+        if(allProductsData && (allProductsData.length > 0)){
+            getCatData();
         }
-
-        fetchProducts();
-    }, [allProductsData]);
+        
+    }, [allProductsData])
 
     //debouncing
     useEffect(() => {
@@ -82,15 +89,17 @@ const ProductTable = () => {
         }, 500);
 
         return () => clearTimeout(timeOut);
-    }, [subCatData, searchQuery]);
+    }, [searchQuery, subCatData]);
 
     useEffect(() => {
-        subCatFilter()
-    }, [allProductsData]);
-
-    useEffect(() => {
-        filter()
+        if(selectedCategory){
+            subCatFilter()
+        }
     }, [selectedSubCategory]);
+
+    // useEffect(() => {
+    //     filter()
+    // });
 
     const onCategoryChange = (e) => {
         const cat = e.target.value;

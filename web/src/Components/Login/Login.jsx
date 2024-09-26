@@ -59,18 +59,24 @@ const Login = () => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		await userLogin(formState)
-			.then((res) => {
-				toast({
-					title: "Login Successfully",
-					status: "success",
-					isClosable: true,
-				});
-				navigate("/");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+        try{
+            const res = await userLogin(formState);
+            if(res){
+                toast({
+                    title: "Login Successful",
+                    status: "success",
+                    isClosable: true,
+                });
+                navigate("/");
+            }
+        } catch(err){
+            console.log(err);
+            toast({
+                title: err.response.data.message,
+                status: "error",
+                isClosable: true,
+            });
+        }
 	};
 
     return (
