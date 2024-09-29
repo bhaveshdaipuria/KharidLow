@@ -1,5 +1,5 @@
 import './ProductPreviewModal.css'
-import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 import ProductDetails from '../../../../Components/ProductDetails/ProductDetails';
 const ProductPreviewModal = (props) => {
 
@@ -7,8 +7,10 @@ const ProductPreviewModal = (props) => {
         props.setIsOpen(false);
     }
 
+    const {isOpen, onClose} = useDisclosure({isOpen: props.isOpen});
+
     return (
-        <Modal size='full' isOpen={props.isOpen}>
+        <Modal size='full' isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent className="product-preview-modal-content">
             <ModalCloseButton onClick={closeModal} />

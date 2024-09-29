@@ -44,6 +44,7 @@ import {
 	onMainImageChange,
 	ontaxRateChange,
 	onSubmit,
+	categoryData
 } from "./methods.js";
 import { BACKEND } from "../../../lib/config";
 
@@ -51,14 +52,25 @@ let taxRates = [2.5, 5, 12, 18];
 
 function ProductNew() {
 	useEffect(() => {
-		getCatData(setCategories);
-
-		if(location && location.state && location.state.isEditMode){
-			setProductNewForm(location.state.productDetails);
-			setIsEditMode(true);
-			const apiURL = BACKEND.API_URL;
-			setMainImageSrc(`${apiURL}/${location.state.productDetails.mainImage}`);
+		async function setInitialState() {
+			await getCatData(setCategories);
+			if (location && location.state && location.state.isEditMode) {
+				const productDetails = location.state.productDetails
+				setProductNewForm(productDetails);
+				console.log(productDetails);
+				const subCategoryData = categoryData[productDetails.category];
+				if (subCategoryData && typeof subCategoryData === "object") {
+					setSubCategories(Object.keys(subCategoryData));
+					setItemList(subCategoryData[productDetails.subCategory]);
+				}
+				setIsEditMode(true);
+				const apiURL = BACKEND.API_URL;
+				setMainImageSrc(`${apiURL}/products/productimage/${location.state.productDetails.mainImage}`);
+			}
 		}
+
+		setInitialState()
+
 	}, []);
 
 	const [subCategories, setSubCategories] = useState([]);
@@ -98,7 +110,7 @@ function ProductNew() {
 
 	const toast = useToast();
 
-    const location = useLocation();
+	const location = useLocation();
 
 	return (
 		<>
@@ -132,6 +144,7 @@ function ProductNew() {
 							<Select
 								placeholder="Select category"
 								size="sm"
+								value={productNewForm.category}
 								onChange={(e) => {
 									onCategoryChange(
 										e,
@@ -150,7 +163,7 @@ function ProductNew() {
 										className="category-options"
 										value={category}
 									>
-										{category}
+										{category.split('_').join(" ")}
 									</option>
 								))}
 							</Select>
@@ -164,6 +177,7 @@ function ProductNew() {
 							<Select
 								placeholder="Select subcategory"
 								size="sm"
+								value={productNewForm.subCategory}
 								onChange={(e) => {
 									onSubCategoryChange(e, setItemList, setProductNewForm);
 								}}
@@ -177,7 +191,7 @@ function ProductNew() {
 										className="category-options"
 										value={subCat}
 									>
-										{subCat}
+										{subCat.split('_').join(" ")}
 									</option>
 								))}
 							</Select>
@@ -194,6 +208,7 @@ function ProductNew() {
 							<Select
 								placeholder="Select item"
 								size="sm"
+								value={productNewForm.item}
 								onChange={(e) => {
 									onItemChange(e, setProductNewForm);
 								}}
@@ -204,7 +219,7 @@ function ProductNew() {
 										className="category-options"
 										value={item.categoryCode}
 									>
-										{item.name}
+										{item.name.split('_').join(" ")}
 									</option>
 								))}
 							</Select>
@@ -480,7 +495,7 @@ function ProductNew() {
 							<RadioGroup
 								defaultValue="false"
 								size="sm"
-								value={productNewForm.isDiscounted}
+								value={productNewForm.isDiscounted.toString()}
 								onChange={(e) => {
 									handleIsDiscountedChange(e, setProductNewForm);
 								}}
@@ -560,6 +575,7 @@ function ProductNew() {
 							<Select
 								placeholder="Select Tax Percentage"
 								size="sm"
+								value={productNewForm.taxRate}
 								onChange={(e) => {
 									ontaxRateChange(e, setProductNewForm);
 								}}
@@ -618,7 +634,7 @@ function ProductNew() {
 						}
 					}}
 				>
-					{isEditMode?'Update':'Submit'}
+					{isEditMode ? 'Update' : 'Submit'}
 				</Button>
 			</form>
 

@@ -16,6 +16,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   Select,
+  useDisclosure,
 } from "@chakra-ui/react";
 import "./PriceSlabModal.css";
 import { useState } from "react";
@@ -25,6 +26,8 @@ const PriceSlabModal = (props) => {
     moq: 0,
     price: 0,
   });
+
+  const {isOpen, onClose} = useDisclosure({isOpen: isOpen});
 
   //methord for handling input
   const handleNumberInputChange = (e, name) => {
@@ -46,7 +49,7 @@ const PriceSlabModal = (props) => {
   };
 
   return (
-    <Modal size="xl" isOpen={props.isOpen}>
+    <Modal size="xl" isOpen={isOpen}>
       <ModalOverlay />
       <ModalContent className="price-slab-modal-content">
         <ModalHeader className="product-modal-header">

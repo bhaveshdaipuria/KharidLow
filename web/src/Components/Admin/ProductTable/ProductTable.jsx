@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ProductTable.css"; // Import external CSS file
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { Input, Select } from "@chakra-ui/react";
+import { Input, Select, useToast } from "@chakra-ui/react";
 import { FaEye, FaMagnifyingGlass, FaPen } from "react-icons/fa6";
 import ProductImagesModal from "../Modals/ProductImagesModal/ProductImagesModal";
 import PriceSlabModal from "../Modals/PriceSlabModal/PriceSlabModal";
@@ -31,7 +31,7 @@ const ProductTable = () => {
 
     const [selectedProduct, setSelectedProduct] = useState("");
 
-    const {products} = useLoaderData();
+    const { products } = useLoaderData();
 
     useEffect(() => {
         // setLoading(true);
@@ -76,10 +76,10 @@ const ProductTable = () => {
             }
         }
 
-        if(allProductsData && (allProductsData.length > 0)){
+        if (allProductsData && (allProductsData.length > 0)) {
             getCatData();
         }
-        
+
     }, [allProductsData])
 
     //debouncing
@@ -92,7 +92,7 @@ const ProductTable = () => {
     }, [searchQuery, subCatData]);
 
     useEffect(() => {
-        if(selectedCategory){
+        if (selectedCategory) {
             subCatFilter()
         }
     }, [selectedSubCategory]);
@@ -141,14 +141,31 @@ const ProductTable = () => {
     const [isPriceSlabModalOpen, setIsPriceSlabModalOpen] = useState(false);
     const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
 
-    const delProduct = async (id) => {
-        await deleteProduct(id)
-            .then((res) => {
-                setAllProductsData((prev) => prev.filter((item) => item._id !== id));
-            })
-            .catch((err) => {
-                console.log(err);
+    const toast = useToast();
+
+    const removeProd = async () => {
+        try {
+            console.log(selectedProduct);
+            const res = await deleteProduct(selectedProduct._id);
+
+            if (res.success) {
+                setAllProductsData((prev) => prev.filter((item) => item._id !== selectedProduct._id));
+                toast({
+                    title: 'Product Deleted Successfully',
+                    status: 'success',
+                    isClosable: true
+                });
+            }
+
+        } catch (err) {
+            console.log(err);
+            toast({
+                title: 'Product Deletion Failed',
+                status: 'error',
+                isClosable: true
             });
+        }
+
     };
 
     const onSearch = (e) => {
@@ -167,7 +184,7 @@ const ProductTable = () => {
                                 <div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
                                     <div className="category-filters grid gap-2 grid-cols-2 ">
                                         <Select size="xs" value={selectedCategory} onChange={onCategoryChange}>
-	    					
+
                                             <option value='' key='0' disabled>Select Category</option>
                                             {
                                                 categories && categories.map((cat) => <option value={cat} key={cat}>{cat}</option>)
@@ -215,6 +232,7 @@ const ProductTable = () => {
                                                     {filteredData.map((product, index) => (
                                                         <ProductTableRow key={index} product={product} index={index}
                                                             setSelectedProduct={setSelectedProduct}
+                                                            setIsAddImageModalOpen={setIsAddImageModalOpen}
                                                             setIsPriceSlabModalOpen={setIsPriceSlabModalOpen}
                                                             setIsPreviewOpen={setIsPreviewOpen}
                                                             setIsConfirmationModalOpen={setIsConfirmationModalOpen}
@@ -237,7 +255,7 @@ const ProductTable = () => {
 
             {/* modals */}
             {
-                isAddImageModalOpen && <ProductImagesModal isOpen={isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
+                isAddImageModalOpen && <ProductImagesModal productDetails={selectedProduct} isOpen={isAddImageModalOpen} setIsOpen={setIsAddImageModalOpen}></ProductImagesModal>
             }
             {
                 isPriceSlabModalOpen && <PriceSlabModal isOpen={isPriceSlabModalOpen} setIsOpen={setIsPriceSlabModalOpen}></PriceSlabModal>
@@ -248,7 +266,7 @@ const ProductTable = () => {
             {
                 isConfirmationModalOpen && <ConfirmationModal isOpen={isConfirmationModalOpen} setIsOpen={setIsConfirmationModalOpen}
                     confirmationPass={'Confirm'} action={'Do you really want to delete this item?'}
-                    onConfirmation={() => { deleteProduct(selectedProduct._id) }}></ConfirmationModal>
+                    onConfirmation={removeProd}></ConfirmationModal>
             }
 
 

@@ -1,17 +1,16 @@
 import './ConfirmationModal.css'
-import { FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Input, Button } from '@chakra-ui/react';
+import { FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Input, Button, useDisclosure } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-const ConfirmationModal = ({
-    isOpen = false,
-    setIsOpen,
-    onConFirmation,
-    action
-}) => {
+const ConfirmationModal = (props) => {
 
     useEffect(() => {
         //intially setting random pass
         setConfirmationPass(generateRandomText());
     }, []);
+
+    const { isOpen, onOpen, onClose } = useDisclosure({
+        isOpen: props.isOpen
+    });
 
     //var for determining text matches or not
     const [textMatches, setTextMatches] = useState(false);
@@ -22,13 +21,14 @@ const ConfirmationModal = ({
         //generate now pass on modal close
         setTextMatches(false);
         setConfirmationPass(generateRandomText());
-        setIsOpen && setIsOpen(false);
+        props.setIsOpen && props.setIsOpen(false);
     }
 
     //methord for handling confirmation of the modal
     const onConfirm = () => {
-        console.log();
-        onConFirmation && onConFirmation();
+        console.log('i ma here');
+        console.log(props)
+        props.onConfirmation && props.onConfirmation();
         closeModal();
     }
 
@@ -59,13 +59,13 @@ const ConfirmationModal = ({
     }
 
     return (
-        <Modal size='xl' isOpen={isOpen}>
+        <Modal size='xl' isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent className="confirmation-modal-content">
                 <ModalCloseButton onClick={closeModal} />
-                <ModalBody >
+                <ModalBody>
                     <h4 className="modal-subhead">Confirm Your Action.</h4>
-                    <p className="confirmation-text text-red-600">{action}</p>
+                    <p className="confirmation-text text-red-600">{props.action}</p>
                     <br />
                     <p className="confirmation-pass">Type "{confirmationPass}" to confirm your action</p>
                     <br />

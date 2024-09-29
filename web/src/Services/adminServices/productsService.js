@@ -21,16 +21,11 @@ productInstance.interceptors.request.use(
 );
 
 const deleteProduct = async (id) => {
-  const url = `/addnewproduct/${id}`;
+  const url = `/deleteproduct/${id}`;
 
-  productInstance
-    .delete(url)
-    .then((res) => {
-      console.log(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const response = await productInstance.delete(url)
+
+  return response.data;
 };
 
 const getCategoryData = async () => {
@@ -57,9 +52,9 @@ const addProduct = async (data) => {
 };
 
 const updateProducts = async (data) => {
-  const url = `/updateprodut`;
+  const url = `/updateproduct`;
 
-  const response = await productInstance.patch(url, data, {
+  const response = await productInstance.put(url, data, {
     "Content-Type": "application/json",
   });
 
@@ -86,12 +81,14 @@ const addNewImage = async (id, data) => {
   return response.data;
 };
 
-export {
-  deleteProduct,
-  getCategoryData,
-  getAllProducts,
-  addProduct,
-  updateProducts,
-  updateStock,
-  addNewImage,
-};
+const deleteImg = async (id, name) => {
+  const url = `/addnewimage/${id}`;
+
+  const response = await productInstance.delete(url, { name: name }, {
+    "Content-Type": "application/json",
+  });
+
+  return response;
+}
+
+export { deleteProduct, getCategoryData, getAllProducts, addProduct, updateProducts, updateStock, addNewImage, deleteImg };

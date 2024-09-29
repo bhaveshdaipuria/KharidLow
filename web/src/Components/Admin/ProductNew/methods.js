@@ -213,20 +213,23 @@ const onSubmit = async (
 	setProductNewForm,
 	toast,
 	setMainImageSrc,
-	isEditMode
+	isEditMode, 
+	setIsEditMode
 ) => {
 	event.preventDefault();
 	setLoading(true);
-	let keysToAppend;
+	const keysToAppend = Object.keys(productNewForm);
 	const formData = new FormData();
-	if (isEditMode) {
-		const oldProduct = location.state.productDetails;
-		const keys = Object.keys(oldProduct);
-		const updatedKeys = keys.filter((key) => productNewForm[key] !== oldProduct[key]);
-		keysToAppend = updatedKeys;
-	} else {
-		keysToAppend = Object.keys(productNewForm);
-	}
+	// if (isEditMode) {
+	// 	const oldProduct = location.state.productDetails;
+	// 	const keys = Object.keys(oldProduct);
+	// 	const updatedKeys = keys.filter((key) => productNewForm[key] !== oldProduct[key]);
+	// 	keysToAppend = updatedKeys;
+	// } else {
+	// 	keysToAppend = Object.keys(productNewForm);
+	// }
+
+	console.log(keysToAppend);
 
 	keysToAppend.forEach((key) => {
 		if (key === 'keyHighlights') {
@@ -241,7 +244,6 @@ const onSubmit = async (
 			const res = await updateProducts(formData);
 			if (res) {
 				setSubmitted(false);
-				setLoading(false);
 				reset(setProductNewForm, setMainImageSrc);
 				toast({
 					title: "Product Updated Sucessfully",
@@ -253,7 +255,6 @@ const onSubmit = async (
 		} catch (err) {
 			console.log("error", err);
 			setSubmitted(false);
-			setLoading(false);
 			toast({
 				title: err.response.data.message,
 				status: "error",
@@ -261,6 +262,8 @@ const onSubmit = async (
 				// variant: 'top-accent'
 			});
 			setIsEditMode(false);
+		} finally{
+			setLoading(false)
 		}
 
 	} else {
@@ -268,7 +271,6 @@ const onSubmit = async (
 			const res = await addProduct(formData);
 			if (res) {
 				setSubmitted(false);
-				setLoading(false);
 				reset(setProductNewForm, setMainImageSrc);
 				toast({
 					title: 'Product Added Successfully',
@@ -280,13 +282,14 @@ const onSubmit = async (
 		} catch(err){
 			console.log("error", err);
 			setSubmitted(false);
-			setLoading(false);
 			toast({
 				title: err.response.data.message,
 				status: "error",
 				isClosable: true,
 				// variant: 'top-accent'
 			});
+		} finally{
+			setLoading(false);
 		}
 	}
 };
@@ -335,4 +338,5 @@ export {
 	addImage,
 	onMainImageChange,
 	onSubmit,
+	categoryData
 };

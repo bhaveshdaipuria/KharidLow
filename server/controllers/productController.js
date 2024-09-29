@@ -116,19 +116,6 @@ module.exports.addProduct = async (req, res) => {
 module.exports.showAllProduct = async (req, res) => {
   const allproduct = await productModel.find(
     {},
-    {
-      _id: 1,
-      productName: 1,
-      category: 1,
-      subCategory: 1,
-      item: 1,
-      mainImage: 1,
-      sku: 1,
-      productCode: 1,
-      baseDiscount: 1,
-      basePrice: 1,
-      taxType: 1,
-    },
   );
   if (allproduct) {
     res.status(200).json(allproduct);

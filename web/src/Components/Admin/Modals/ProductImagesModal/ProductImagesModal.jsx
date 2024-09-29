@@ -1,15 +1,22 @@
-import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useToast } from "@chakra-ui/react";
+import { Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from "@chakra-ui/react";
 import './ProductImagesModal.css'
 import { CiCirclePlus } from "react-icons/ci";
 import { useRef, useState } from "react";
 import { addNewImage } from "../../../../Services/adminServices/productsService";
+import { BACKEND } from "../../../../lib/config";
 const ProductImagesModal = (props) => {
 
-    const [mainImage, setMainImage] = useState('');
     const [productImagesArr, setProductImagesArr] = useState([]);
-    const [previewImage, setpreviewImage] = useState('');
     const [isSaveMode, setIsSaveMode] = useState(false);
     const [imgFile, setImgFile] = useState(null);
+
+    const { isOpen, onClose } = useDisclosure({ 
+        isOpen: props.isOpen,
+        onClose: () => {
+            productImagesArr.forEach(item => URL.revokeObjectURL(item));
+        }
+     });
+
 
     const toast = useToast();
 
@@ -35,22 +42,13 @@ const ProductImagesModal = (props) => {
 
         if (imageSrc) {
 
-            const reader = new FileReader();
-
             setImgFile(imageSrc);
             setIsSaveMode(true);
-
-            reader.onloadend = () => {
-                console.log(reader.result)
-                const arr = productImagesArr;
-                // arr.push(reader.result);
-                setProductImagesArr(prev => {
-                    prev.push(reader.result)
-                    return prev;
-                });
-            }
-
-            reader.readAsDataURL(imageSrc);
+            const blobUrl = URL.createObjectURL(imageSrc);
+            setProductImagesArr(prev => {
+                prev.push(blobUrl)
+                return prev;
+            });
         }
     }
 
@@ -59,7 +57,7 @@ const ProductImagesModal = (props) => {
             const formData = new FormData();
             formData.append('prodImage', imgFile);
 
-            const res = await addNewImage(props.product._id, formData);
+            const res = await addNewImage(props.productDetails._id, formData);
 
             if (res) {
                 toast({
@@ -79,7 +77,7 @@ const ProductImagesModal = (props) => {
     }
 
     return (
-        <Modal size='xl' isOpen={props.isOpen}>
+        <Modal size='xl' isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent className="add-images-modal-content">
                 <ModalHeader className="product-modal-header">Product Images<ModalCloseButton onClick={() => props.setIsOpen(false)} /></ModalHeader>
@@ -91,8 +89,14 @@ const ProductImagesModal = (props) => {
                         {/* <Button colorScheme='purple' size='sm'>Update Image</Button> */}
                         {/* <Button colorScheme='blue' size='sm'>Save</Button>
                         </div> */}
-                        <div className="main-image">
-
+                        {console.log(props)}
+                        <div className="main-image"
+                            style={{
+                                backgroundImage: `url(${BACKEND.API_URL}/products/productimage/${props.productDetails.mainImage})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                            }}>
                         </div>
                     </div>
                     <h4 className="modal-subhead">Product Images</h4>
@@ -117,9 +121,9 @@ const ProductImagesModal = (props) => {
 
                             {!isSaveMode ? <CiCirclePlus className="text-5xl add-more-icon" onClick={addImage} /> : <Button colorScheme='blue' my={4} size='xs' onClick={saveProdImage}>Save</Button>}
                         </div>
-                        <div className="product-images-preview">
+                        {/* <div className="product-images-preview">
 
-                        </div>
+                        </div> */}
                     </div>
                     <Input className='hidden-element' type='file' ref={addproductImageInputRef} onChange={onImageChange} />
                 </ModalBody>
