@@ -5,6 +5,7 @@ const {
 	showAllProduct,
 	deleteProduct,
 	productImage,
+	editProduct,
 } = require("../controllers/productController");
 const { getCategoryData } = require("../controllers/generalData");
 const multer = require("multer");
@@ -16,5 +17,6 @@ router.get("/getcategorydata", getCategoryData);
 router.post("/addnewproduct", upload.single("mainImage"), addProduct);
 router.delete("/deleteproduct/:id", deleteProduct);
 router.get("/productimage/:name", productImage);
+router.put("/updateproduct/:id", upload.single("mainImage"), editProduct);
 
 module.exports = router;
