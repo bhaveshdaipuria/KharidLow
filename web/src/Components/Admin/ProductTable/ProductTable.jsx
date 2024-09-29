@@ -166,7 +166,9 @@ const ProductTable = () => {
                                 <h2>Product List</h2>
                                 <div className="table-operations grid grid-cols-1 md:grid-cols-2 gap-2">
                                     <div className="category-filters grid gap-2 grid-cols-2 ">
-                                        <Select placeholder="Select Category" size="xs" value={selectedCategory} onChange={onCategoryChange}>
+                                        <Select size="xs" value={selectedCategory} onChange={onCategoryChange}>
+	    					
+                                            <option value='' key='0' disabled>Select Category</option>
                                             {
                                                 categories && categories.map((cat) => <option value={cat} key={cat}>{cat}</option>)
                                             }

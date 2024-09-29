@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
+const { productBucket } = require("./bucket");
 
-const connectDb = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URL);
-        console.log("connected to db");
-    } catch(err) {
-        console.error("Mongodb connection error", err);
-        process.exit(1);
-    }
+const connectDb = () => {
+  try {
+    mongoose
+      .connect(process.env.MONGO_URL)
+      .then(() => {
+        console.log("Connected to DB");
+      })
+      .catch((err) => {
+        console.log("DB connection error", err);
+      });
+  } catch (err) {
+    console.error("Mongodb connection error", err);
+    process.exit(1);
+  }
 };
 
 module.exports = connectDb;
