@@ -51,8 +51,8 @@ const addProduct = async (data) => {
   return response.data;
 };
 
-const updateProducts = async (data) => {
-  const url = `/updateproduct`;
+const updateProducts = async (id, data) => {
+  const url = `/updateproduct/${id}`;
 
   const response = await productInstance.put(url, data, {
     "Content-Type": "application/json",

@@ -241,7 +241,7 @@ const onSubmit = async (
 
 	if (isEditMode) {
 		try {
-			const res = await updateProducts(formData);
+			const res = await updateProducts(productNewForm._id, formData);
 			if (res) {
 				setSubmitted(false);
 				reset(setProductNewForm, setMainImageSrc);
