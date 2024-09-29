@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className="row">
                     <div className="col-lg-6 offset-lg-3 margin-auto">
                         <div className="contact-content text-center">
-                            <div className='footer-logo'><img src="images/Logo/Black/Textual/PNG/transparent.png" alt="logo" /></div>
+                            <div className='footer-logo'><img src="../images/Logo/Black/Textual/PNG/transparent.png" alt="logo" /></div>
                             <p>Quality Products at Unbeatable Prices – Empowering Your Business</p>
                             <div className="hr"></div>
                             <h6>25-A/22 First Floor <br />

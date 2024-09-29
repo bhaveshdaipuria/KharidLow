@@ -25,8 +25,8 @@ function Home() {
 
             {/* service section */}
                 <div className="homeServiceSection">
-                    <Row>
-                        <Col xs={12} md={3}>
+                    <div className='grid grid-cols-1 md:grid-cols-4'>
+                        <div xs={12} md={3}>
                             <div className='homeServiceCard shipping'>
                                 <div className='homeServiceIcon'>
                                     <CiLocationOn />
@@ -36,8 +36,8 @@ function Home() {
                                     <p>On all orders above 495.00</p>
                                 </div>
                             </div>
-                        </Col>
-                        <Col xs={12} md={3}>
+                        </div>
+                        <div xs={12} md={3}>
                             <div className='homeServiceCard easyReturn'>
                                 <div className='homeServiceIcon'>
                                     <BiTransfer />
@@ -47,8 +47,8 @@ function Home() {
                                     <p>Easy return & refund policy</p>
                                 </div>
                             </div>
-                        </Col>
-                        <Col xs={12} md={3}>
+                        </div>
+                        <div xs={12} md={3}>
                             <div className='homeServiceCard fastShipping'>
                                 <div className='homeServiceIcon'>
                                     <FaEarthEurope />
@@ -58,8 +58,8 @@ function Home() {
                                     <p>Order by 2 pm; same day dispatch</p>
                                 </div>
                             </div>
-                        </Col>
-                        <Col xs={12} md={3}>
+                        </div>
+                        <div xs={12} md={3}>
                             <div className='homeServiceCard checkout'>
                                 <div className='homeServiceIcon'>
                                     <IoLockClosedOutline />
@@ -69,15 +69,15 @@ function Home() {
                                     <p>UPI / Bank Transfer / Card / Wallet</p>
                                 </div>
                             </div>
-                        </Col>
-                    </Row>
+                        </div>
+                    </div>
                 </div>
 
 
             {/* news letter */}
             <div className='homeNewsLetterServices'>
-                <Row>
-                    <Col xs={12} lg={8} >
+                <div className='grid grid-cols-1 md:grid-cols-3'>
+                    <div xs={12} lg={8} >
                         <div className='homeLeftNewsLetter'>
                             <div className='homeNewsHeading'>
                                 Subscribe For Our LOTS Mailer To Get Best Offers
@@ -88,8 +88,8 @@ function Home() {
                                 <button className='mx-2' >SUBSCRIBE</button>
                             </div>
                         </div>
-                    </Col>
-                    <Col xs={12} lg={4} >
+                    </div>
+                    <div xs={12} lg={4} >
                         <div className='homeRightNewsLetter'>
                             <div className='homeNewsLetterImg'>
                                 <img src={newsImg} alt="newsImg" />
@@ -100,8 +100,8 @@ function Home() {
                                 <h6 className='time'>Everyday 9:00 AM - 6:00 PM</h6>
                             </div>
                         </div>
-                    </Col>
-                </Row>
+                    </div>
+                </div>
             </div>
 
 

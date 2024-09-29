@@ -12,20 +12,28 @@ const ProductScroll = () => {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
+            breakpoint: { max: 4000, min: 1600 },
+            items: 6
         },
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: { max: 1600, min: 1443 },
             items: 5
         },
+        laptop: {
+            breakpoint: { max: 1444, min: 1200 },
+            items: 4
+        },
+        smallLaptop: {
+            breakpoint: { max: 1200, min: 1024 },
+            items: 3
+        },
         tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 1
+            breakpoint: { max: 1024, min: 768 },
+            items: 2
         },
         mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
+            breakpoint: { max: 768, min: 0 },
+            items: 2
         }
     };
 
@@ -79,7 +87,7 @@ const ProductScroll = () => {
                                 customTransition="all 1s"
                                 transitionDuration={100}
                                 containerClass="carousel-container"
-                                removeArrowOnDeviceType={["tablet", "mobile"]}
+                                removeArrowOnDeviceType={["mobile"]}
                                 dotListClass="custom-dot-list-style"
                                 itemClass="carousel-item-padding-40-px"
                             >

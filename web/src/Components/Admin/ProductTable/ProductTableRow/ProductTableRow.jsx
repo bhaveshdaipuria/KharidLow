@@ -14,25 +14,14 @@ import "./ProductTableRow.css";
 import { CiCircleRemove } from "react-icons/ci";
 import { RxCrossCircled } from "react-icons/rx";
 import { updateStock } from "../../../../Services/adminServices/productsService";
+import { BACKEND } from "../../../../lib/config";
 
-function ProductTableRow({
-  product,
-  index,
-  setSelectedProduct,
-  setIsPriceSlabModalOpen,
-  setIsPreviewOpen,
-  setIsConfirmationModalOpen,
-  setAllProductsData,
+function ProductTableRow({ product, index, setIsAddImageModalOpen, setSelectedProduct, setIsPriceSlabModalOpen, setIsPreviewOpen, setIsConfirmationModalOpen,
+    setAllProductsData
 }) {
   const navigate = useNavigate();
   const [isStockEditMode, setIsStockEditMode] = useState(false);
   const [stock, setStock] = useState(0);
-
-  const editProduct = () => {
-    navigate("/admin/add-product", {
-      state: { productDetails: product, isEditMode: true },
-    });
-  };
 
   const handleStockChange = (e) => {
     console.log(e);
@@ -54,7 +43,21 @@ function ProductTableRow({
     } finally {
       setIsStockEditMode(false);
     }
+
+   
   };
+
+  const editProduct = () => {
+    navigate('/admin/add-product', {
+        state: {
+            productDetails: {
+                ...product,
+                keyHighlights: (product.keyHighlights && (product.keyHighlights.length > 0)) ?JSON.parse(product.keyHighlights) : [],
+                // keyHighlights: product.keyHighlights?JSON.parse(product.keyHighlights):[]
+            }, isEditMode: true
+        }
+    });
+}
 
   const openStockEditMode = () => {
     setSelectedProduct(product);
@@ -70,9 +73,12 @@ function ProductTableRow({
       </td>
       <td>
         <div className="text-center flex justify-center">
-          <div className="product-image">
+          <div className="product-image" onClick={() => {
+            setSelectedProduct(product)
+            setIsAddImageModalOpen(true)
+            }}>
             <img
-              src={`http://localhost:3000/products/productimage/${product.mainImage}`}
+              src={`${BACKEND.API_URL}/products/productimage/${product.mainImage}`}
               alt="Product Main Image"
               className="image-view"
             />
