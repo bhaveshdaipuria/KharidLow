@@ -3,6 +3,7 @@ import './Footer.css';
 import { FaFacebook, FaTwitter, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 
+
 const Footer = () => {
     return (<>
         <section className="contact-area" id="contact">
