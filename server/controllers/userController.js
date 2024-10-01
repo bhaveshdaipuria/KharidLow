@@ -61,7 +61,7 @@ module.exports.userLogin = async (req, res) => {
 				.status(404)
 				.send("User not registered. Please create an account");
 		}
-		bcrypt.compare(password, userExists.password, function(err, result) {
+		bcrypt.compare(password, userExists.password, function (err, result) {
 			if (err) {
 				return res.status(500).json({ message: "Some error occured" });
 			} else {

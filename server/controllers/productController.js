@@ -247,7 +247,7 @@ module.exports.editProduct = async (req, res) => {
 
 module.exports.addToCart = async (req, res) => {
 	try {
-		const userId = req.user._id; // Assuming that we have user ID
+		const userId = req.userId;
 		const productId = req.params.id;
 		const quantity = req.body.quantity || 6;
 
@@ -256,18 +256,18 @@ module.exports.addToCart = async (req, res) => {
 			return res.status(404).json({ success: false, message: "Product not found" });
 		}
 
-		let cart = await cartModel.findOne({ user: userId });
+		let cart = await cartModel.findOne({ userId: userId });
 
 		if (!cart) {
 			cart = new cartModel({
-				user: userId,
-				items: [{ product: productId, quantity }],
+				userId: userId,
+				items: [{ productId: productId, quantity }],
 			});
 		} else {
-			const productIndex = cart.items.findIndex(item => item.productId.toString() === productId);
+			const existingItem = cart.items.find(item => item.productId.equals(productId));
 
-			if (productIndex > -1) {
-				cart.items[productIndex].quantity += quantity;
+			if (existingItem) {
+				existingItem.quantity += quantity;
 			} else {
 				cart.items.push({ product: productId, quantity });
 			}
@@ -283,26 +283,30 @@ module.exports.addToCart = async (req, res) => {
 };
 
 module.exports.addToWishlist = async (req, res) => {
-	const productId = req.params.id;
-	const userId = req.user._id;
+	try {
+		const productId = req.params.id;
+		const userId = req.userId;
 
-	const product = await productModel.findById(productId);
-	if (!product) {
-		return res.status(404).json({ success: false, message: "Product not found" });
-	}
+		const product = await productModel.findById(productId);
+		if (!product) {
+			return res.status(404).json({ success: false, message: "Product not found" });
+		}
 
-	let wishlist = await wishlistModel.findOne({ productId: productId });
+		let wishlist = await wishlistModel.findOne({ productId: productId });
 
-	if (!wishlist) {
-		wishlist = new wishlistModel({
-			user: userId,
-			productId: productId
-		});
+		if (!wishlist) {
+			wishlist = new wishlistModel({
+				user: userId,
+				productId: productId
+			});
 
-		await wishlist.save();
+			await wishlist.save();
 
-		return res.status(200).json({ success: true, message: "Product added to wishlist", wishlist });
-	} else {
-		return res.status(200).json({ success: true, message: "Already added to wishlist" });
+			return res.status(200).json({ success: true, message: "Product added to wishlist", wishlist });
+		} else {
+			return res.status(200).json({ success: true, message: "Already added to wishlist" });
+		}
+	} catch (error) {
+		return res.status(500).json({ success: false, message: "Internal Server Error" });
 	}
 }

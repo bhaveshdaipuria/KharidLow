@@ -5,15 +5,15 @@ const userSchema = new Schema(
 	{
 		fullName: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		email: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		password: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		role: {
 			type: String,
@@ -21,11 +21,11 @@ const userSchema = new Schema(
 		},
 		contactNo: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		address: {
 			type: String,
-			require: true,
+			// required: true,
 		},
 	},
 	{ timestamps: true },
