@@ -1,4 +1,6 @@
 const productModel = require("../models/product");
+const cartModel = require("../models/cart");
+const wishlistModel = require("../models/wishlist");
 const path = require("path");
 const fs = require("fs");
 const { productBucket } = require("../config/bucket");
@@ -242,3 +244,65 @@ module.exports.editProduct = async (req, res) => {
 		});
 	}
 };
+
+module.exports.addToCart = async (req, res) => {
+	try {
+		const userId = req.user._id; // Assuming that we have user ID
+		const productId = req.params.id;
+		const quantity = req.body.quantity || 6;
+
+		const product = await productModel.findById(productId);
+		if (!product) {
+			return res.status(404).json({ success: false, message: "Product not found" });
+		}
+
+		let cart = await cartModel.findOne({ user: userId });
+
+		if (!cart) {
+			cart = new cartModel({
+				user: userId,
+				items: [{ product: productId, quantity }],
+			});
+		} else {
+			const productIndex = cart.items.findIndex(item => item.productId.toString() === productId);
+
+			if (productIndex > -1) {
+				cart.items[productIndex].quantity += quantity;
+			} else {
+				cart.items.push({ product: productId, quantity });
+			}
+		}
+
+		await cart.save();
+
+		return res.status(200).json({ success: true, message: "Product added to cart", cart });
+
+	} catch (error) {
+		return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
+	}
+};
+
+module.exports.addToWishlist = async (req, res) => {
+	const productId = req.params.id;
+	const userId = req.user._id;
+
+	const product = await productModel.findById(productId);
+	if (!product) {
+		return res.status(404).json({ success: false, message: "Product not found" });
+	}
+
+	let wishlist = await wishlistModel.findOne({ productId: productId });
+
+	if (!wishlist) {
+		wishlist = new wishlistModel({
+			user: userId,
+			productId: productId
+		});
+
+		await wishlist.save();
+
+		return res.status(200).json({ success: true, message: "Product added to wishlist", wishlist });
+	} else {
+		return res.status(200).json({ success: true, message: "Already added to wishlist" });
+	}
+}
